@@ -659,9 +659,6 @@
 </head>
 <body>
 
-  <!-- Hidden iframe for reliable silent sync -->
-  <iframe name="hiddenSyncFrame" id="hiddenSyncFrame" style="display:none;"></iframe>
-
   <div class="top-announcement">
     <span>🌿 خصومات حصرية على باقات العناية المتكاملة لفترة محدودة</span>
     <span>•</span>
@@ -996,7 +993,7 @@
   </div>
 
   <script>
-    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwcx-9y_BBP3TjFGcswzAAJ7K18fAyCLIlh7yzIxaLq1BAo-AaNtNs0jjQTGxnDTYzrhg/exec";
+    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbytGw6bGixYAY9b3YAEuXSjOYv71VDY5eWbr5jZXqYLi1wrvTDaPbtSvoCLgm265U1diQ/exec";
 
     function tryNext(img, fallbacks) {
       if (!img.dataset.idx) img.dataset.idx = 0;
@@ -1147,7 +1144,7 @@
     setInterval(triggerLiveNotification, 14000);
     setTimeout(triggerLiveNotification, 3000);
 
-    function sendOrder(locUrl) {
+    async function sendOrder(locUrl) {
       const name = document.getElementById('custName').value.trim();
       const phone = document.getElementById('custPhone').value.trim();
       const address = document.getElementById('custAddress').value.trim();
@@ -1155,7 +1152,29 @@
       let itemsSummary = cart.map(i => `${i.title} (${i.qty})`).join(' + ');
       let total = cart.reduce((sum, i) => sum + (i.price * i.qty), 0);
 
-      // تجهيز رسالة الواتساب
+      // 1. إرسال الطلب المباشر للشيت عبر fetch
+      try {
+        await fetch(GOOGLE_SCRIPT_URL, {
+          method: "POST",
+          mode: "no-cors",
+          headers: { "Content-Type": "text/plain;charset=utf-8" },
+          body: JSON.stringify({
+            name: name,
+            phone: phone,
+            address: address,
+            locationUrl: locUrl || "",
+            items: itemsSummary,
+            discountApplied: false,
+            finalTotal: total,
+            paymentMethod: selectedPaymentMethod
+          })
+        });
+        await new Promise(r => setTimeout(r, 600));
+      } catch (err) {
+        console.error("Sync error:", err);
+      }
+
+      // 2. تجهيز رسالة الواتساب
       let msg = `🌿 *طلب جديد من متجر دكتورة شروق محمد Natural Oils* 🌿\n\n`;
       msg += `👤 *بيانات العميل:*\n`;
       msg += `• الاسم: ${name}\n`;
@@ -1174,36 +1193,6 @@
       msg += `\n💰 *إجمالي الفاتورة:* ${total} ج.م\n`;
       msg += `✨ *برجاء تأكيد الطلب والبدء في التجهيز والشحن.*`;
 
-      // الإرسال الخفي المباشر لجوجل شيت لضمان عدم الحظر
-      try {
-        const form = document.createElement("form");
-        form.method = "POST";
-        form.action = GOOGLE_SCRIPT_URL;
-        form.target = "hiddenSyncFrame";
-
-        const input = document.createElement("input");
-        input.type = "hidden";
-        input.name = "postData";
-        input.value = JSON.stringify({
-          name: name,
-          phone: phone,
-          address: address,
-          locationUrl: locUrl || "",
-          items: itemsSummary,
-          discountApplied: false,
-          finalTotal: total,
-          paymentMethod: selectedPaymentMethod
-        });
-
-        form.appendChild(input);
-        document.body.appendChild(form);
-        form.submit();
-        setTimeout(() => document.body.removeChild(form), 1000);
-      } catch (err) {
-        console.error("Sync error:", err);
-      }
-
-      // تفريغ السلة وفتح الواتساب
       cart = [];
       saveCart();
       updateCart();
