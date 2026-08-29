@@ -659,6 +659,9 @@
 </head>
 <body>
 
+  <!-- Hidden iframe for reliable silent sync -->
+  <iframe name="hiddenSyncFrame" id="hiddenSyncFrame" style="display:none;"></iframe>
+
   <div class="top-announcement">
     <span>🌿 خصومات حصرية على باقات العناية المتكاملة لفترة محدودة</span>
     <span>•</span>
@@ -839,71 +842,6 @@
           <div class="card-footer">
             <div class="card-price">199 ج.م</div>
             <button class="add-btn" onclick="addToCart('مسك الصبار الطبيعي', 199)"><i class="fa-solid fa-cart-plus"></i> أضف للسلة</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="section-title"><i class="fa-solid fa-wand-magic-sparkles"></i> أدوات العناية الفاخرة</div>
-    <div class="grid">
-      <div class="card">
-        <div class="card-img-wrap"><img src="images/comb.jpeg" loading="lazy" onerror="tryNext(this, ['images/comb.jpg', 'images/comb.png', 'images/comb.jpeg.jpeg'])" alt="مشط خشب"></div>
-        <div class="card-body">
-          <div class="card-title">مشط خشب طبيعي</div>
-          <div class="card-desc">مشط خشبي عريض الأسنان لفك التشابك بلطف ومنع تقصف وتكسر الشعر.</div>
-          <div class="card-footer">
-            <div class="card-price">59 ج.م</div>
-            <button class="add-btn" onclick="addToCart('مشط خشب طبيعي', 59)"><i class="fa-solid fa-cart-plus"></i> أضف للسلة</button>
-          </div>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-img-wrap"><img src="images/towel.jpeg" loading="lazy" onerror="tryNext(this, ['images/towel.jpg', 'images/towel.png', 'images/towel.jpeg.jpeg'])" alt="فوطة مايكروفايبر"></div>
-        <div class="card-body">
-          <div class="card-title">فوطة مايكروفايبر فاخرة</div>
-          <div class="card-desc">فوطة ناعمة جداً فائقة الامتصاص لتجفيف الشعر بدون نفشة أو ضرر.</div>
-          <div class="card-footer">
-            <div class="card-price">69 ج.م</div>
-            <button class="add-btn" onclick="addToCart('فوطة مايكروفايبر فاخرة', 69)"><i class="fa-solid fa-cart-plus"></i> أضف للسلة</button>
-          </div>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-img-wrap"><img src="images/satin-bonnet.jpeg" loading="lazy" onerror="tryNext(this, ['images/satin-bonnet.jpg', 'images/satin-bonnet.png', 'images/satin-bonnet.jpeg.jpeg'])" alt="بونيه ستان"></div>
-        <div class="card-body">
-          <div class="card-title">بونيه ستان حريري</div>
-          <div class="card-desc">بونيه ستان ناعم يحافظ على ترطيب الشعر والزيوت ويمنع الهيشان أثناء النوم.</div>
-          <div class="card-footer">
-            <div class="card-price">59 ج.م</div>
-            <button class="add-btn" onclick="addToCart('بونيه ستان حريري', 59)"><i class="fa-solid fa-cart-plus"></i> أضف للسلة</button>
-          </div>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-img-wrap"><img src="images/plastic-bonnet.jpeg" loading="lazy" onerror="tryNext(this, ['images/plastic-bonnet.jpg', 'images/plastic-bonnet.png', 'images/plastic-bonnet.jpeg.jpeg'])" alt="بونيه بلاستيك"></div>
-        <div class="card-body">
-          <div class="card-title">بونيه بلاستيك حراري</div>
-          <div class="card-desc">مثالي للاستخدام مع حمامات الزيت والحنة لتفتيح المسام ومضاعفة الامتصاص.</div>
-          <div class="card-footer">
-            <div class="card-price">49 ج.م</div>
-            <button class="add-btn" onclick="addToCart('بونيه بلاستيك حراري', 49)"><i class="fa-solid fa-cart-plus"></i> أضف للسلة</button>
-          </div>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-img-wrap">
-          <img src="images/silicone-brush.jpeg" loading="lazy" onerror="tryNext(this, ['images/silicone-brush.jpeg.jpeg', 'images/silicone-brush.jpeg.jpg', 'images/silicone-brush.jpeg.png', 'images/silicone-brush.jpg', 'images/silicone-brush.png', 'images/brush.jpeg', 'images/brush.jpg'])" alt="فرشاة مساج سيليكون">
-        </div>
-        <div class="card-body">
-          <div class="card-title">فرشاة مساج سيليكون</div>
-          <div class="card-desc">فرشاة مرنة لتدليك الفروة وتنشيط الدورة الدموية وتوزيع الزيوت والشامبو بعمق.</div>
-          <div class="card-footer">
-            <div class="card-price">49 ج.م</div>
-            <button class="add-btn" onclick="addToCart('فرشاة مساج سيليكون', 49)"><i class="fa-solid fa-cart-plus"></i> أضف للسلة</button>
           </div>
         </div>
       </div>
@@ -1209,7 +1147,7 @@
     setInterval(triggerLiveNotification, 14000);
     setTimeout(triggerLiveNotification, 3000);
 
-    async function sendOrder(locUrl) {
+    function sendOrder(locUrl) {
       const name = document.getElementById('custName').value.trim();
       const phone = document.getElementById('custPhone').value.trim();
       const address = document.getElementById('custAddress').value.trim();
@@ -1236,27 +1174,33 @@
       msg += `\n💰 *إجمالي الفاتورة:* ${total} ج.م\n`;
       msg += `✨ *برجاء تأكيد الطلب والبدء في التجهيز والشحن.*`;
 
-      // إرسال البيانات لجوجل شيت مع ضمان استلام الطلب
-      const orderPayload = JSON.stringify({
-        name: name,
-        phone: phone,
-        address: address,
-        locationUrl: locUrl || "",
-        items: itemsSummary,
-        discountApplied: false,
-        finalTotal: total,
-        paymentMethod: selectedPaymentMethod
-      });
-
+      // الإرسال الخفي المباشر لجوجل شيت لضمان عدم الحظر
       try {
-        await fetch(GOOGLE_SCRIPT_URL, {
-          method: "POST",
-          mode: "no-cors",
-          headers: { "Content-Type": "text/plain;charset=utf-8" },
-          body: orderPayload
+        const form = document.createElement("form");
+        form.method = "POST";
+        form.action = GOOGLE_SCRIPT_URL;
+        form.target = "hiddenSyncFrame";
+
+        const input = document.createElement("input");
+        input.type = "hidden";
+        input.name = "postData";
+        input.value = JSON.stringify({
+          name: name,
+          phone: phone,
+          address: address,
+          locationUrl: locUrl || "",
+          items: itemsSummary,
+          discountApplied: false,
+          finalTotal: total,
+          paymentMethod: selectedPaymentMethod
         });
+
+        form.appendChild(input);
+        document.body.appendChild(form);
+        form.submit();
+        setTimeout(() => document.body.removeChild(form), 1000);
       } catch (err) {
-        console.error("Sheets sync error:", err);
+        console.error("Sync error:", err);
       }
 
       // تفريغ السلة وفتح الواتساب
@@ -1265,14 +1209,7 @@
       updateCart();
 
       const whatsappUrl = "https://api.whatsapp.com/send?phone=" + whatsappPhone + "&text=" + encodeURIComponent(msg);
-      window.open(whatsappUrl, '_blank');
-      
-      const checkBtn = document.getElementById('checkoutBtn');
-      checkBtn.innerHTML = '<i class="fa-solid fa-check"></i> تم إرسال الطلب بنجاح!';
-      setTimeout(() => {
-        toggleCart();
-        checkBtn.innerHTML = '<i class="fa-brands fa-whatsapp"></i> تأكيد الطلب عبر الواتساب';
-      }, 2000);
+      window.location.href = whatsappUrl;
     }
 
     function checkout() {
@@ -1290,7 +1227,7 @@
       }
 
       const checkBtn = document.getElementById('checkoutBtn');
-      checkBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> جاري حفظ الطلب...';
+      checkBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> جاري تأكيد الطلب...';
 
       if (!customerLocationUrl && navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
@@ -1301,7 +1238,7 @@
           function(error) {
             sendOrder("");
           },
-          { timeout: 3000 }
+          { timeout: 2500 }
         );
       } else {
         sendOrder(customerLocationUrl);
