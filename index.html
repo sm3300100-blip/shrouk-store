@@ -844,71 +844,6 @@
       </div>
     </div>
 
-    <div class="section-title"><i class="fa-solid fa-wand-magic-sparkles"></i> أدوات العناية الفاخرة</div>
-    <div class="grid">
-      <div class="card">
-        <div class="card-img-wrap"><img src="images/comb.jpeg" loading="lazy" onerror="tryNext(this, ['images/comb.jpg', 'images/comb.png', 'images/comb.jpeg.jpeg'])" alt="مشط خشب"></div>
-        <div class="card-body">
-          <div class="card-title">مشط خشب طبيعي</div>
-          <div class="card-desc">مشط خشبي عريض الأسنان لفك التشابك بلطف ومنع تقصف وتكسر الشعر.</div>
-          <div class="card-footer">
-            <div class="card-price">59 ج.م</div>
-            <button class="add-btn" onclick="addToCart('مشط خشب طبيعي', 59)"><i class="fa-solid fa-cart-plus"></i> أضف للسلة</button>
-          </div>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-img-wrap"><img src="images/towel.jpeg" loading="lazy" onerror="tryNext(this, ['images/towel.jpg', 'images/towel.png', 'images/towel.jpeg.jpeg'])" alt="فوطة مايكروفايبر"></div>
-        <div class="card-body">
-          <div class="card-title">فوطة مايكروفايبر فاخرة</div>
-          <div class="card-desc">فوطة ناعمة جداً فائقة الامتصاص لتجفيف الشعر بدون نفشة أو ضرر.</div>
-          <div class="card-footer">
-            <div class="card-price">69 ج.م</div>
-            <button class="add-btn" onclick="addToCart('فوطة مايكروفايبر فاخرة', 69)"><i class="fa-solid fa-cart-plus"></i> أضف للسلة</button>
-          </div>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-img-wrap"><img src="images/satin-bonnet.jpeg" loading="lazy" onerror="tryNext(this, ['images/satin-bonnet.jpg', 'images/satin-bonnet.png', 'images/satin-bonnet.jpeg.jpeg'])" alt="بونيه ستان"></div>
-        <div class="card-body">
-          <div class="card-title">بونيه ستان حريري</div>
-          <div class="card-desc">بونيه ستان ناعم يحافظ على ترطيب الشعر والزيوت ويمنع الهيشان أثناء النوم.</div>
-          <div class="card-footer">
-            <div class="card-price">59 ج.م</div>
-            <button class="add-btn" onclick="addToCart('بونيه ستان حريري', 59)"><i class="fa-solid fa-cart-plus"></i> أضف للسلة</button>
-          </div>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-img-wrap"><img src="images/plastic-bonnet.jpeg" loading="lazy" onerror="tryNext(this, ['images/plastic-bonnet.jpg', 'images/plastic-bonnet.png', 'images/plastic-bonnet.jpeg.jpeg'])" alt="بونيه بلاستيك"></div>
-        <div class="card-body">
-          <div class="card-title">بونيه بلاستيك حراري</div>
-          <div class="card-desc">مثالي للاستخدام مع حمامات الزيت والحنة لتفتيح المسام ومضاعفة الامتصاص.</div>
-          <div class="card-footer">
-            <div class="card-price">49 ج.م</div>
-            <button class="add-btn" onclick="addToCart('بونيه بلاستيك حراري', 49)"><i class="fa-solid fa-cart-plus"></i> أضف للسلة</button>
-          </div>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-img-wrap">
-          <img src="images/silicone-brush.jpeg" loading="lazy" onerror="tryNext(this, ['images/silicone-brush.jpeg.jpeg', 'images/silicone-brush.jpeg.jpg', 'images/silicone-brush.jpeg.png', 'images/silicone-brush.jpg', 'images/silicone-brush.png', 'images/brush.jpeg', 'images/brush.jpg'])" alt="فرشاة مساج سيليكون">
-        </div>
-        <div class="card-body">
-          <div class="card-title">فرشاة مساج سيليكون</div>
-          <div class="card-desc">فرشاة مرنة لتدليك الفروة وتنشيط الدورة الدموية وتوزيع الزيوت والشامبو بعمق.</div>
-          <div class="card-footer">
-            <div class="card-price">49 ج.م</div>
-            <button class="add-btn" onclick="addToCart('فرشاة مساج سيليكون', 49)"><i class="fa-solid fa-cart-plus"></i> أضف للسلة</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
     <section class="reviews-section">
       <div class="section-title" style="margin-bottom: 5px;"><i class="fa-solid fa-star"></i> آراء وتجارب عميلاتنا</div>
       <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 20px;">نعتز بثقة آلاف العميلات اللاتي خضن تجربة العناية الطبيعية مع د. شروق محمد</p>
@@ -1058,7 +993,7 @@
   </div>
 
   <script>
-    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwcx-9y_BBP3TjFGcswzAAJ7K18fAyCLIIh7yzIxaLq1BAo-AaNtNsOjjQTGxnDTYzrhg/exec";
+    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwcx-9y_BBP3TjFGcswzAAJ7K18fAyCLIlh7yzIxaLq1BAo-AaNtNs0jjQTGxnDTYzrhg/exec";
 
     function tryNext(img, fallbacks) {
       if (!img.dataset.idx) img.dataset.idx = 0;
@@ -1217,7 +1152,7 @@
       let itemsSummary = cart.map(i => `${i.title} (${i.qty})`).join(' + ');
       let total = cart.reduce((sum, i) => sum + (i.price * i.qty), 0);
 
-      // 1. إرسال الطلب لـ Google Sheets مع مهلة زمنية للتأكد من الوصول
+      // 1. إرسال الطلب لـ Google Sheets
       try {
         if (GOOGLE_SCRIPT_URL) {
           await fetch(GOOGLE_SCRIPT_URL, {
@@ -1235,8 +1170,7 @@
               paymentMethod: selectedPaymentMethod
             })
           });
-          // مهلة قصيرة 800 مللي ثانية لضمان اكتمال معالجة جوجل للشيت
-          await new Promise(r => setTimeout(r, 800));
+          await new Promise(r => setTimeout(r, 1000));
         }
       } catch (err) {
         console.error("Sheets sync error:", err);
