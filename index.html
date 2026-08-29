@@ -38,6 +38,7 @@
     html { scroll-behavior: smooth; }
     body { background-color: var(--bg-cream); color: var(--text-dark); direction: rtl; overflow-x: hidden; }
     
+    /* 1. الشريط العلوي الإعلاني */
     .top-announcement {
       background: linear-gradient(90deg, #0f3024, #194837, #b38646);
       color: #fff;
@@ -214,6 +215,7 @@
       box-shadow: 0 8px 20px rgba(25, 72, 55, 0.45);
     }
 
+    /* 2. شارات الثقة والضمانات */
     .trust-badges-container {
       max-width: 1200px;
       margin: 10px auto 40px;
@@ -340,6 +342,7 @@
     }
     .add-btn:hover { background: var(--primary-dark); transform: scale(1.02); }
 
+    /* 3. قسم آراء وتجارب العملاء */
     .reviews-section {
       background: #fff;
       padding: 40px 25px;
@@ -370,6 +373,7 @@
     .review-text { font-size: 13.5px; line-height: 1.6; color: #4b5563; }
     .review-badge { display: inline-block; font-size: 11px; background: #e6f4ea; color: #137333; padding: 2px 8px; border-radius: 10px; margin-top: 10px; font-weight: 700; }
 
+    /* 4. قسم الأسئلة الشائعة */
     .faq-section { margin-bottom: 50px; }
     .faq-item {
       background: #fff;
@@ -402,6 +406,7 @@
     .faq-item.active .faq-answer { display: block; }
     .faq-item.active .faq-question i { transform: rotate(180deg); }
 
+    /* فوتر */
     footer {
       background: #ffffff;
       border-top: 1px solid #ede8de;
@@ -450,6 +455,7 @@
     .social-link.wa:hover { background: #25d366; color: #ffffff; transform: translateY(-4px); }
     .footer-copy { font-size: 13px; color: var(--text-muted); font-weight: 500; }
 
+    /* 5. زر الواتساب العائم */
     .whatsapp-float-btn {
       position: fixed;
       bottom: 25px;
@@ -474,6 +480,7 @@
     }
     .whatsapp-float-btn i { font-size: 22px; }
 
+    /* 6. إشعار المبيعات الحية التفاعلي */
     .live-toast {
       position: fixed;
       bottom: 85px;
@@ -507,6 +514,7 @@
     .toast-content p { font-size: 12px; font-weight: 700; color: var(--text-dark); margin-bottom: 2px; }
     .toast-content span { font-size: 10.5px; color: var(--gold-dark); }
 
+    /* سلة المشتريات */
     .cart-drawer {
       position: fixed;
       top: 0;
@@ -659,6 +667,7 @@
 </head>
 <body>
 
+  <!-- شريط الإعلان العلوي -->
   <div class="top-announcement">
     <span>🌿 خصومات حصرية على باقات العناية المتكاملة لفترة محدودة</span>
     <span>•</span>
@@ -676,6 +685,7 @@
     <button class="cart-pill-btn" onclick="toggleCart()"><i class="fa-solid fa-cart-shopping"></i> (<span id="cart-count">0</span>)</button>
   </header>
 
+  <!-- قسم الهيدر الرئيسي -->
   <section class="hero-wrapper">
     <div class="hero-text-box">
       <div class="hero-text-content">
@@ -687,6 +697,7 @@
         <div class="doctor-title">DR SHROUK MOHAMED</div>
         <p class="hero-desc">اكتشفي أرقى منتجات العناية بالشعر الطبيعية 100% المعبأة بأعلى جودة وعناية متخصصة.</p>
 
+        <!-- زر مشاهدة اللقاء على قناة هي TV -->
         <div>
           <a href="https://youtu.be/dKHqsPOXI7I" target="_blank" rel="noopener noreferrer" class="tv-interview-badge" title="شاهد لقاء د. شروق محمد على قناة هي TV">
             <i class="fa-brands fa-youtube"></i> شاهدي لقاء د. شروق محمد على قناة هي TV (برنامج سر الحكاية)
@@ -700,6 +711,7 @@
     </div>
   </section>
 
+  <!-- شارات الضمان والمميزات -->
   <section class="trust-badges-container">
     <div class="trust-card">
       <div class="trust-icon"><i class="fa-solid fa-leaf"></i></div>
@@ -731,10 +743,12 @@
     </div>
   </section>
 
+  <!-- قسم الباقات والمنتجات -->
   <div class="container" id="products-start">
     <div class="section-title"><i class="fa-solid fa-gift"></i> باقات المجموعات الكاملة (عروض التوفير)</div>
     <div class="packages-grid">
       
+      <!-- 1. مجموعة التوفير الأساسية (1099 ج.م) -->
       <div class="card">
         <span class="card-badge">الأكثر طلباً ⭐</span>
         <div class="card-img-wrap">
@@ -750,6 +764,7 @@
         </div>
       </div>
 
+      <!-- 2. بوكس المجموعة الذهبية VIP (1799 ج.م) -->
       <div class="card">
         <span class="card-badge">عرض VIP ✨</span>
         <div class="card-img-wrap">
@@ -767,6 +782,7 @@
 
     </div>
 
+    <!-- المنتجات الفردية الطبيعية -->
     <div class="section-title"><i class="fa-solid fa-spa"></i> المنتجات الفردية الطبيعية</div>
     <div class="grid">
       <div class="card">
@@ -829,6 +845,7 @@
         </div>
       </div>
 
+      <!-- مسك الصبار الطبيعي -->
       <div class="card">
         <div class="card-img-wrap">
           <img src="images/aloe-vera-musk.jpeg" loading="lazy" onerror="tryNext(this, ['images/aloe-vera-musk.jpg', 'images/aloe-vera-musk.png', 'images/aloe-vera-musk.jpeg.jpeg', 'images/aloe.jpeg', 'images/aloe.jpg', 'images/aloe.png', 'images/aloe-vera.jpeg', 'images/aloe-vera.jpg', 'images/aloe-vera-musk.jpeg.jpg'])" alt="مسك الصبار الطبيعي">
@@ -844,6 +861,74 @@
       </div>
     </div>
 
+    <!-- أدوات العناية الفاخرة -->
+    <div class="section-title"><i class="fa-solid fa-wand-magic-sparkles"></i> أدوات العناية الفاخرة</div>
+    <div class="grid">
+      <div class="card">
+        <div class="card-img-wrap"><img src="images/comb.jpeg" loading="lazy" onerror="tryNext(this, ['images/comb.jpg', 'images/comb.png', 'images/comb.jpeg.jpeg'])" alt="مشط خشب"></div>
+        <div class="card-body">
+          <div class="card-title">مشط خشب طبيعي</div>
+          <div class="card-desc">مشط خشبي عريض الأسنان لفك التشابك بلطف ومنع تقصف وتكسر الشعر.</div>
+          <div class="card-footer">
+            <div class="card-price">59 ج.م</div>
+            <button class="add-btn" onclick="addToCart('مشط خشب طبيعي', 59)"><i class="fa-solid fa-cart-plus"></i> أضف للسلة</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-img-wrap"><img src="images/towel.jpeg" loading="lazy" onerror="tryNext(this, ['images/towel.jpg', 'images/towel.png', 'images/towel.jpeg.jpeg'])" alt="فوطة مايكروفايبر"></div>
+        <div class="card-body">
+          <div class="card-title">فوطة مايكروفايبر فاخرة</div>
+          <div class="card-desc">فوطة ناعمة جداً فائقة الامتصاص لتجفيف الشعر بدون نفشة أو ضرر.</div>
+          <div class="card-footer">
+            <div class="card-price">69 ج.م</div>
+            <button class="add-btn" onclick="addToCart('فوطة مايكروفايبر فاخرة', 69)"><i class="fa-solid fa-cart-plus"></i> أضف للسلة</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-img-wrap"><img src="images/satin-bonnet.jpeg" loading="lazy" onerror="tryNext(this, ['images/satin-bonnet.jpg', 'images/satin-bonnet.png', 'images/satin-bonnet.jpeg.jpeg'])" alt="بونيه ستان"></div>
+        <div class="card-body">
+          <div class="card-title">بونيه ستان حريري</div>
+          <div class="card-desc">بونيه ستان ناعم يحافظ على ترطيب الشعر والزيوت ويمنع الهيشان أثناء النوم.</div>
+          <div class="card-footer">
+            <div class="card-price">59 ج.م</div>
+            <button class="add-btn" onclick="addToCart('بونيه ستان حريري', 59)"><i class="fa-solid fa-cart-plus"></i> أضف للسلة</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-img-wrap"><img src="images/plastic-bonnet.jpeg" loading="lazy" onerror="tryNext(this, ['images/plastic-bonnet.jpg', 'images/plastic-bonnet.png', 'images/plastic-bonnet.jpeg.jpeg'])" alt="بونيه بلاستيك"></div>
+        <div class="card-body">
+          <div class="card-title">بونيه بلاستيك حراري</div>
+          <div class="card-desc">مثالي للاستخدام مع حمامات الزيت والحنة لتفتيح المسام ومضاعفة الامتصاص.</div>
+          <div class="card-footer">
+            <div class="card-price">49 ج.م</div>
+            <button class="add-btn" onclick="addToCart('بونيه بلاستيك حراري', 49)"><i class="fa-solid fa-cart-plus"></i> أضف للسلة</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- الفرشاة السيليكون -->
+      <div class="card">
+        <div class="card-img-wrap">
+          <img src="images/silicone-brush.jpeg" loading="lazy" onerror="tryNext(this, ['images/silicone-brush.jpeg.jpeg', 'images/silicone-brush.jpeg.jpg', 'images/silicone-brush.jpeg.png', 'images/silicone-brush.jpg', 'images/silicone-brush.png', 'images/brush.jpeg', 'images/brush.jpg'])" alt="فرشاة مساج سيليكون">
+        </div>
+        <div class="card-body">
+          <div class="card-title">فرشاة مساج سيليكون</div>
+          <div class="card-desc">فرشاة مرنة لتدليك الفروة وتنشيط الدورة الدموية وتوزيع الزيوت والشامبو بعمق.</div>
+          <div class="card-footer">
+            <div class="card-price">49 ج.م</div>
+            <button class="add-btn" onclick="addToCart('فرشاة مساج سيليكون', 49)"><i class="fa-solid fa-cart-plus"></i> أضف للسلة</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- قسم آراء وتقييمات العملاء -->
     <section class="reviews-section">
       <div class="section-title" style="margin-bottom: 5px;"><i class="fa-solid fa-star"></i> آراء وتجارب عميلاتنا</div>
       <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 20px;">نعتز بثقة آلاف العميلات اللاتي خضن تجربة العناية الطبيعية مع د. شروق محمد</p>
@@ -875,6 +960,7 @@
       </div>
     </section>
 
+    <!-- قسم الأسئلة الشائعة -->
     <section class="faq-section">
       <div class="section-title"><i class="fa-solid fa-circle-question"></i> الأسئلة الشائعة</div>
       
@@ -911,11 +997,13 @@
 
   </div>
 
+  <!-- زر واتساب عائم -->
   <a href="https://wa.me/201013275211?text=%D9%85%D8%B1%D8%AD%D8%A8%D8%A7%D9%8B%D8%8C%20%D8%A3%D8%B1%D9%8A%D8%AF%20%D8%A7%D8%B3%D8%AA%D8%B4%D8%A7%D8%B1%D8%A9%20%D8%AD%D9%88%D9%84%20%D9%83%D9%88%D8%B1%D8%B3%20%D8%A7%D9%84%D8%B9%D9%86%D8%A7%D9%8A%D8%A9%20%D8%A8%D8%A7%D9%84%D8%B4%D8%B9%D8%B1%20%D9%85%D9%86%20Natural%20Oils" target="_blank" rel="noopener noreferrer" class="whatsapp-float-btn" title="تحدثي مع د. شروق محمد عبر واتساب">
     <i class="fa-brands fa-whatsapp"></i>
     <span>استشارة مجانية عبر واتساب</span>
   </a>
 
+  <!-- إشعار المبيعات التفاعلي -->
   <div class="live-toast" id="liveToast">
     <div class="toast-icon"><i class="fa-solid fa-bag-shopping"></i></div>
     <div class="toast-content">
@@ -924,6 +1012,7 @@
     </div>
   </div>
 
+  <!-- الفوتر -->
   <footer>
     <div class="social-title">تواصل مع دكتورة شروق محمد</div>
     <div class="social-subtitle">تابعي حساباتنا الرسمية على منصات التواصل الاجتماعي للحصول على نصائح العناية وأحدث العروض</div>
@@ -939,6 +1028,7 @@
 
   <div class="overlay" id="overlay" onclick="toggleCart()"></div>
 
+  <!-- سلة المشتريات -->
   <div class="cart-drawer" id="cartDrawer">
     <div class="cart-header">
       <h3 style="font-size: 16px;"><i class="fa-solid fa-bag-shopping"></i> سلة مشترياتك</h3>
@@ -968,6 +1058,7 @@
         </button>
       </div>
 
+      <!-- خيارات الدفع -->
       <div class="form-group">
         <label>طريقة الدفع:</label>
         <div class="payment-options">
@@ -993,8 +1084,6 @@
   </div>
 
   <script>
-    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbytGw6bGixYAY9b3YAEuXSjOYv71VDY5eWbr5jZXqYLi1wrvTDaPbtSvoCLgm265U1diQ/exec";
-
     function tryNext(img, fallbacks) {
       if (!img.dataset.idx) img.dataset.idx = 0;
       let idx = parseInt(img.dataset.idx);
@@ -1004,6 +1093,7 @@
       }
     }
 
+    // استعادة السلة من المتصفح لو وجدت
     let cart = JSON.parse(localStorage.getItem('shrouk_cart')) || [];
     const whatsappPhone = "201013275211";
     let selectedPaymentMethod = "الدفع عند الاستلام (نقدي)";
@@ -1116,6 +1206,7 @@
       element.classList.toggle('active');
     }
 
+    // إشعارات الطلبات التفاعلية
     const buyers = [
       { name: "سارة من القاهرة", item: "مجموعة التوفير الأساسية" },
       { name: "ندى من الإسكندرية", item: "بوكس المجموعة الذهبية VIP" },
@@ -1144,37 +1235,11 @@
     setInterval(triggerLiveNotification, 14000);
     setTimeout(triggerLiveNotification, 3000);
 
-    async function sendOrder(locUrl) {
+    function sendOrder(locUrl) {
       const name = document.getElementById('custName').value.trim();
       const phone = document.getElementById('custPhone').value.trim();
       const address = document.getElementById('custAddress').value.trim();
 
-      let itemsSummary = cart.map(i => `${i.title} (${i.qty})`).join(' + ');
-      let total = cart.reduce((sum, i) => sum + (i.price * i.qty), 0);
-
-      // 1. إرسال الطلب المباشر للشيت عبر fetch
-      try {
-        await fetch(GOOGLE_SCRIPT_URL, {
-          method: "POST",
-          mode: "no-cors",
-          headers: { "Content-Type": "text/plain;charset=utf-8" },
-          body: JSON.stringify({
-            name: name,
-            phone: phone,
-            address: address,
-            locationUrl: locUrl || "",
-            items: itemsSummary,
-            discountApplied: false,
-            finalTotal: total,
-            paymentMethod: selectedPaymentMethod
-          })
-        });
-        await new Promise(r => setTimeout(r, 600));
-      } catch (err) {
-        console.error("Sync error:", err);
-      }
-
-      // 2. تجهيز رسالة الواتساب
       let msg = `🌿 *طلب جديد من متجر دكتورة شروق محمد Natural Oils* 🌿\n\n`;
       msg += `👤 *بيانات العميل:*\n`;
       msg += `• الاسم: ${name}\n`;
@@ -1186,13 +1251,16 @@
       msg += `• طريقة الدفع: ${selectedPaymentMethod}\n\n`;
       msg += `🛍️ *تفاصيل الطلب:*\n`;
       
+      let total = 0;
       cart.forEach(item => {
         msg += `• ${item.title} (الكمية: ${item.qty}) - ${item.price * item.qty} ج.م\n`;
+        total += item.price * item.qty;
       });
 
       msg += `\n💰 *إجمالي الفاتورة:* ${total} ج.م\n`;
       msg += `✨ *برجاء تأكيد الطلب والبدء في التجهيز والشحن.*`;
 
+      // إفراغ السلة بعد إرسال الطلب بنجاح
       cart = [];
       saveCart();
       updateCart();
@@ -1216,7 +1284,7 @@
       }
 
       const checkBtn = document.getElementById('checkoutBtn');
-      checkBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> جاري تأكيد الطلب...';
+      checkBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> جاري فتح الواتساب...';
 
       if (!customerLocationUrl && navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
@@ -1227,18 +1295,20 @@
           function(error) {
             sendOrder("");
           },
-          { timeout: 2500 }
+          { timeout: 3500 }
         );
       } else {
         sendOrder(customerLocationUrl);
       }
     }
 
+    // تهيئة السلة عند الفتح الأول
     document.addEventListener('DOMContentLoaded', () => {
       updateCart();
     });
   </script>
 
+  <!-- كود إحصائيات Vercel Analytics -->
   <script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>
