@@ -664,12 +664,6 @@
       .hero-main-title { font-size: 30px; }
     }
   </style>
-  
-  <!-- Vercel Speed Insights -->
-  <script>
-    window.si = window.si || function () { (window.siq = window.siq || []).push(arguments); };
-  </script>
-  <script defer src="/_vercel/speed-insights/script.js"></script>
 </head>
 <body>
 
@@ -1090,6 +1084,8 @@
   </div>
 
   <script>
+    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwcx-9y_BBP3TjFGcswzAAJ7K18fAyCLIIh7yzIxaLq1BAo-AaNtNsOjjQTGxnDTYzrhg/exec";
+
     function tryNext(img, fallbacks) {
       if (!img.dataset.idx) img.dataset.idx = 0;
       let idx = parseInt(img.dataset.idx);
@@ -1241,11 +1237,38 @@
     setInterval(triggerLiveNotification, 14000);
     setTimeout(triggerLiveNotification, 3000);
 
-    function sendOrder(locUrl) {
+    async function sendOrder(locUrl) {
       const name = document.getElementById('custName').value.trim();
       const phone = document.getElementById('custPhone').value.trim();
       const address = document.getElementById('custAddress').value.trim();
 
+      let itemsSummary = cart.map(i => `${i.title} (${i.qty})`).join(' + ');
+      let total = cart.reduce((sum, i) => sum + (i.price * i.qty), 0);
+
+      // 1. إرسال الطلب تلقائياً إلى Google Sheets
+      try {
+        if (GOOGLE_SCRIPT_URL) {
+          fetch(GOOGLE_SCRIPT_URL, {
+            method: "POST",
+            mode: "no-cors",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              name: name,
+              phone: phone,
+              address: address,
+              locationUrl: locUrl || "",
+              items: itemsSummary,
+              discountApplied: false,
+              finalTotal: total,
+              paymentMethod: selectedPaymentMethod
+            })
+          }).catch(e => console.log(e));
+        }
+      } catch (err) {
+        console.error("Sheets sync error:", err);
+      }
+
+      // 2. تجهيز رسالة الواتساب
       let msg = `🌿 *طلب جديد من متجر دكتورة شروق محمد Natural Oils* 🌿\n\n`;
       msg += `👤 *بيانات العميل:*\n`;
       msg += `• الاسم: ${name}\n`;
@@ -1257,16 +1280,14 @@
       msg += `• طريقة الدفع: ${selectedPaymentMethod}\n\n`;
       msg += `🛍️ *تفاصيل الطلب:*\n`;
       
-      let total = 0;
       cart.forEach(item => {
         msg += `• ${item.title} (الكمية: ${item.qty}) - ${item.price * item.qty} ج.م\n`;
-        total += item.price * item.qty;
       });
 
       msg += `\n💰 *إجمالي الفاتورة:* ${total} ج.م\n`;
       msg += `✨ *برجاء تأكيد الطلب والبدء في التجهيز والشحن.*`;
 
-      // إفراغ السلة بعد إرسال الطلب بنجاح
+      // إفراغ السلة بعد إرسال الطلب
       cart = [];
       saveCart();
       updateCart();
@@ -1290,7 +1311,7 @@
       }
 
       const checkBtn = document.getElementById('checkoutBtn');
-      checkBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> جاري فتح الواتساب...';
+      checkBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> جاري تأكيد الطلب...';
 
       if (!customerLocationUrl && navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
