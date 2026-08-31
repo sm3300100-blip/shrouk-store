@@ -14,14 +14,11 @@
   <meta property="og:description" content="اكتشفي أرقى منتجات العناية بالشعر الطبيعية 100% تحت إشراف د. شروق محمد. شحن لجميع المحافظات.">
   <meta property="og:image" content="images/logo.jpeg">
 
-  <!-- Preconnect & Asynchronous Fonts (إلغاء حظر العرض نهائياً) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" media="print" onload="this.media='all'">
-  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap"></noscript>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
   
-  <!-- FontAwesome Non-blocking -->
+  <!-- تحميل FontAwesome بدون حظر العرض -->
   <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
   <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
   
@@ -30,17 +27,17 @@
       --primary: #194837;
       --primary-dark: #0f3024;
       --primary-light: #eef8f2;
-      --gold: #9e6f28;
+      --gold: #9e6f28; /* درجة محسنة لتباين إمكانية الوصول */
       --gold-dark: #7a5214;
       --gold-light: #f6eedf;
       --bg-cream: #faf7f2;
       --card-bg: #ffffff;
       --text-dark: #1f2937;
-      --text-muted: #4b5563;
+      --text-muted: #4b5563; /* تباين أوضح للنصوص التوضيحية */
       --radius: 18px;
     }
     
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Tajawal', system-ui, -apple-system, sans-serif; }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Tajawal', sans-serif; }
     html { scroll-behavior: smooth; }
     body { background-color: var(--bg-cream); color: var(--text-dark); direction: rtl; overflow-x: hidden; }
     
@@ -129,10 +126,14 @@
       box-shadow: 0 10px 30px rgba(0,0,0,0.06);
     }
 
-    .hero-bg-img {
+    .hero-text-box::before {
+      content: "";
       position: absolute;
-      top: 0; left: 0; width: 100%; height: 100%;
-      object-fit: cover;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-image: url('images/hero-banner.png'), url('images/hero-banner.jpeg'), url('images/hero-banner.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
       opacity: 0.60;
       z-index: 1;
     }
@@ -765,12 +766,11 @@
     <button class="cart-pill-btn" onclick="toggleCart()" aria-label="عرض سلة المشتريات"><i class="fa-solid fa-cart-shopping"></i> (<span id="cart-count">0</span>)</button>
   </header>
 
-  <!-- المعلم الرئيسي للمتجر -->
+  <!-- وسم المعلم الرئيسي لتنظيم الصفحة بالكامل وتحسين السيو -->
   <main>
-    <!-- قسم الهيدر الرئيسي المحسن للسرعة -->
+    <!-- قسم الهيدر الرئيسي -->
     <section class="hero-wrapper" aria-label="مقدمة المتجر">
       <div class="hero-text-box">
-        <img src="images/hero-banner.png" width="870" height="380" fetchpriority="high" loading="eager" onerror="tryNext(this, ['images/hero-banner.jpeg', 'images/hero-banner.jpg'])" alt="خلفية العناية بالشعر" class="hero-bg-img">
         <div class="hero-text-content">
           <div class="hero-subtitle">من الطبيعة إلى روتينك</div>
           <h1 class="hero-main-title">
@@ -1235,6 +1235,7 @@
     let customerLocationUrl = "";
     let selectedStarCount = 5;
 
+    // قائمة التقييمات الموثقة من السحابة لتغذية الإشعارات
     window.cloudReviewsList = [];
 
     function saveCart() {
@@ -1344,6 +1345,7 @@
       element.classList.toggle('active');
     }
 
+    // إدارة نافذة التقييمات
     function toggleReviewModal(show) {
       const modal = document.getElementById('reviewModal');
       const overlay = document.getElementById('overlay');
@@ -1377,6 +1379,7 @@
       });
     }
 
+    // نظام الإشعارات الذكي (مبيعات + تقييمات موثقة بالتبادل)
     const buyers = [
       { name: "سارة من القاهرة", item: "مجموعة التوفير الأساسية" },
       { name: "ندى من الإسكندرية", item: "بوكس المجموعة الذهبية VIP" },
@@ -1493,7 +1496,7 @@
     });
   </script>
 
-  <!-- تحميل Firebase دون التأثير على سرعة التحميل الأولي -->
+  <!-- تحميل كود Firebase بشكل متوازي بعد تحميل الصفحة لتسريع فتح المتجر -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
     import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
@@ -1539,6 +1542,7 @@
       </div>
     `;
 
+    // قراءة التقييمات في الوقت الفعلي وتغذية الإشعارات
     const q = query(reviewsCol, orderBy("createdAt", "desc"));
     onSnapshot(q, (snapshot) => {
       let liveReviewsHtml = '';
@@ -1562,6 +1566,7 @@
       document.getElementById('reviewsGrid').innerHTML = liveReviewsHtml + defaultReviewsHtml;
     });
 
+    // إرسال التقييم لقاعدة البيانات السحابية
     window.submitUserReview = async function() {
       const name = document.getElementById('revName').value.trim();
       const text = document.getElementById('revText').value.trim();
