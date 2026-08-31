@@ -373,7 +373,68 @@
     .review-text { font-size: 13.5px; line-height: 1.6; color: #4b5563; }
     .review-badge { display: inline-block; font-size: 11px; background: #e6f4ea; color: #137333; padding: 2px 8px; border-radius: 10px; margin-top: 10px; font-weight: 700; }
 
-    /* 4. قسم الأسئلة الشائعة */
+    /* زر إضافة التقييم التفاعلي */
+    .add-review-btn-box {
+      text-align: center;
+      margin-top: 25px;
+    }
+    .btn-add-review {
+      background: var(--gold-light);
+      color: var(--gold-dark);
+      border: 1.5px solid var(--gold);
+      padding: 10px 24px;
+      border-radius: 25px;
+      font-weight: 800;
+      font-size: 14.5px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+    }
+    .btn-add-review:hover {
+      background: var(--gold);
+      color: #fff;
+      transform: translateY(-2px);
+    }
+
+    /* صندوق تقييم العملاء المنبثق */
+    .review-modal {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0.9);
+      background: #ffffff;
+      padding: 25px;
+      border-radius: 20px;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+      z-index: 2500;
+      width: 90%;
+      max-width: 440px;
+      display: none;
+      border: 1px solid #ebd7b9;
+      opacity: 0;
+      transition: all 0.3s ease;
+    }
+    .review-modal.active {
+      display: block;
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+    }
+    .rating-stars-select {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      font-size: 24px;
+      color: #ddd;
+      cursor: pointer;
+      margin: 10px 0 15px;
+    }
+    .rating-stars-select i.active, .rating-stars-select i:hover {
+      color: #f59e0b;
+    }
+
+    /* 4. قسم الأسئلة الشائعة والاسترجاع */
     .faq-section { margin-bottom: 50px; }
     .faq-item {
       background: #fff;
@@ -405,6 +466,22 @@
     }
     .faq-item.active .faq-answer { display: block; }
     .faq-item.active .faq-question i { transform: rotate(180deg); }
+
+    .return-btn-wa {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #25d366;
+      color: white;
+      text-decoration: none;
+      padding: 6px 14px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 700;
+      margin-top: 10px;
+      transition: 0.2s;
+    }
+    .return-btn-wa:hover { background: #1eb956; }
 
     /* فوتر */
     footer {
@@ -932,7 +1009,8 @@
     <section class="reviews-section">
       <div class="section-title" style="margin-bottom: 5px;"><i class="fa-solid fa-star"></i> آراء وتجارب عميلاتنا</div>
       <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 20px;">نعتز بثقة آلاف العميلات اللاتي خضن تجربة العناية الطبيعية مع د. شروق محمد</p>
-      <div class="reviews-grid">
+      
+      <div class="reviews-grid" id="reviewsGrid">
         <div class="review-card">
           <div class="review-header">
             <span class="review-name">مريم الأحمدي - القاهرة</span>
@@ -958,12 +1036,33 @@
           <span class="review-badge">مشترية مؤكدة ✓</span>
         </div>
       </div>
+
+      <!-- زر يفتح نافذة كتابة الرأي -->
+      <div class="add-review-btn-box">
+        <button class="btn-add-review" onclick="toggleReviewModal(true)">
+          <i class="fa-solid fa-pen-to-square"></i> شاركينا رأيك وتجربتك
+        </button>
+      </div>
     </section>
 
-    <!-- قسم الأسئلة الشائعة -->
+    <!-- قسم الأسئلة الشائعة وسياسة الاسترجاع -->
     <section class="faq-section">
-      <div class="section-title"><i class="fa-solid fa-circle-question"></i> الأسئلة الشائعة</div>
+      <div class="section-title"><i class="fa-solid fa-circle-question"></i> الأسئلة الشائعة وسياسة الاستبدال</div>
       
+      <!-- خانة الاسترجاع والضمان (خلال أسبوع) -->
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-question">
+          <span><i class="fa-solid fa-rotate-left" style="color:var(--gold); margin-left:8px;"></i> ما هي سياسة وضمان الاسترجاع؟ (خلال أسبوع)</span>
+          <i class="fa-solid fa-chevron-down"></i>
+        </div>
+        <div class="faq-answer">
+          نضمن لكِ حق الاسترجاع أو الاستبدال خلال <strong>7 أيام (أسبوع)</strong> من تاريخ استلام الشحنة، بشرط توضيح سبب الاسترجاع بشكل واضح ومفصل (مثل وجود تلف في الشحن، أو عدم مطابقة المنتج).<br>
+          <a href="https://wa.me/201013275211?text=%D9%85%D8%B1%D8%AD%D8%A8%D8%A7%D9%8B%D8%8C%20%D8%A3%D8%B1%D9%8A%D8%AF%20%D8%AA%D9%82%D8%AF%D9%8A%D9%85%20%D8%B7%D9%84%D8%A8%20%D8%A7%D8%B3%D8%AA%D8%B1%D8%AC%D8%A7%D8%B9%20%D8%A3%D9%88%20%D8%A7%D8%B3%D8%AA%D8%A8%D8%AF%D8%A7%D9%84%20%D9%84%D9%84%D8%B4%D8%AD%D9%86%D8%A9%20%D8%AE%D9%84%D8%A7%D9%84%20%D9%85%D8%AF%D8%A9%20%D8%A7%D9%84%D8%A3%D8%B3%D8%A8%D9%88%D8%B9%D8%8C%20%D9%88%D8%A7%D9%84%D8%B3%D8%A8%D8%A8%20%D9%87%D9%88%3A%20" target="_blank" rel="noopener noreferrer" class="return-btn-wa">
+            <i class="fa-brands fa-whatsapp"></i> تقديم طلب استرجاع عبر الواتساب مع ذكر السبب
+          </a>
+        </div>
+      </div>
+
       <div class="faq-item" onclick="toggleFaq(this)">
         <div class="faq-question">
           <span>متى تظهر نتائج كورس الشعر والزيوت؟</span>
@@ -997,6 +1096,35 @@
 
   </div>
 
+  <!-- نافذة كتابة الرأي المنبثقة -->
+  <div class="review-modal" id="reviewModal">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
+      <h3 style="font-size:16px; color:var(--primary); font-weight:800;"><i class="fa-solid fa-star"></i> أضيفي تقييمك ورأيك</h3>
+      <button onclick="toggleReviewModal(false)" style="background:none; border:none; font-size:22px; cursor:pointer; color:#777;">&times;</button>
+    </div>
+    <div class="form-group">
+      <label>اسمك الكريم (أو الاسم والمحافظة):</label>
+      <input type="text" id="revName" class="form-control" placeholder="مثال: ياسمين أحمد - الجيزة">
+    </div>
+    <div class="form-group">
+      <label style="text-align:center;">تقييمك بالنجوم:</label>
+      <div class="rating-stars-select" id="starRatingSelect">
+        <i class="fa-solid fa-star active" onclick="setRating(1)"></i>
+        <i class="fa-solid fa-star active" onclick="setRating(2)"></i>
+        <i class="fa-solid fa-star active" onclick="setRating(3)"></i>
+        <i class="fa-solid fa-star active" onclick="setRating(4)"></i>
+        <i class="fa-solid fa-star active" onclick="setRating(5)"></i>
+      </div>
+    </div>
+    <div class="form-group">
+      <label>رأيك وتجربتك بالتفصيل:</label>
+      <textarea id="revText" class="form-control" rows="3" placeholder="اكتبي تجربتك مع المنتجات والنتائج..."></textarea>
+    </div>
+    <button onclick="submitUserReview()" class="checkout-btn" style="background:var(--primary); margin-top:15px;">
+      <i class="fa-solid fa-paper-plane"></i> نشر التقييم الآن
+    </button>
+  </div>
+
   <!-- زر واتساب عائم -->
   <a href="https://wa.me/201013275211?text=%D9%85%D8%B1%D8%AD%D8%A8%D8%A7%D9%8B%D8%8C%20%D8%A3%D8%B1%D9%8A%D8%AF%20%D8%A7%D8%B3%D8%AA%D8%B4%D8%A7%D8%B1%D8%A9%20%D8%AD%D9%88%D9%84%20%D9%83%D9%88%D8%B1%D8%B3%20%D8%A7%D9%84%D8%B9%D9%86%D8%A7%D9%8A%D8%A9%20%D8%A8%D8%A7%D9%84%D8%B4%D8%B9%D8%B1%20%D9%85%D9%86%20Natural%20Oils" target="_blank" rel="noopener noreferrer" class="whatsapp-float-btn" title="تحدثي مع د. شروق محمد عبر واتساب">
     <i class="fa-brands fa-whatsapp"></i>
@@ -1026,7 +1154,7 @@
     <div class="footer-copy">جميع الحقوق محفوظة © متجر دكتورة شروق محمد Natural Oils</div>
   </footer>
 
-  <div class="overlay" id="overlay" onclick="toggleCart()"></div>
+  <div class="overlay" id="overlay" onclick="closeAllModals()"></div>
 
   <!-- سلة المشتريات -->
   <div class="cart-drawer" id="cartDrawer">
@@ -1093,11 +1221,13 @@
       }
     }
 
-    // استعادة السلة من المتصفح لو وجدت
+    // استعادة السلة والتقييمات
     let cart = JSON.parse(localStorage.getItem('shrouk_cart')) || [];
+    let customReviews = JSON.parse(localStorage.getItem('shrouk_custom_reviews')) || [];
     const whatsappPhone = "201013275211";
     let selectedPaymentMethod = "الدفع عند الاستلام (نقدي)";
     let customerLocationUrl = "";
+    let selectedStarCount = 5;
 
     function saveCart() {
       localStorage.setItem('shrouk_cart', JSON.stringify(cart));
@@ -1206,6 +1336,106 @@
       element.classList.toggle('active');
     }
 
+    // إدارة نافذة التقييمات التفاعلية
+    function toggleReviewModal(show) {
+      const modal = document.getElementById('reviewModal');
+      const overlay = document.getElementById('overlay');
+      if (show) {
+        modal.classList.add('active');
+        overlay.classList.add('active');
+      } else {
+        modal.classList.remove('active');
+        overlay.classList.remove('active');
+      }
+    }
+
+    function closeAllModals() {
+      const drawer = document.getElementById('cartDrawer');
+      const modal = document.getElementById('reviewModal');
+      const overlay = document.getElementById('overlay');
+      drawer.classList.remove('active');
+      modal.classList.remove('active');
+      overlay.classList.remove('active');
+    }
+
+    function setRating(stars) {
+      selectedStarCount = stars;
+      const starIcons = document.querySelectorAll('#starRatingSelect i');
+      starIcons.forEach((star, idx) => {
+        if (idx < stars) {
+          star.classList.add('active');
+        } else {
+          star.classList.remove('active');
+        }
+      });
+    }
+
+    function submitUserReview() {
+      const name = document.getElementById('revName').value.trim();
+      const text = document.getElementById('revText').value.trim();
+
+      if (!name || !text) {
+        alert('يرجى كتابة اسمك ورأيك الكريم لنشره');
+        return;
+      }
+
+      const starsStr = '★'.repeat(selectedStarCount) + '☆'.repeat(5 - selectedStarCount);
+      const newReview = { name, text, stars: starsStr };
+
+      customReviews.unshift(newReview);
+      localStorage.setItem('shrouk_custom_reviews', JSON.stringify(customReviews));
+
+      renderReviews();
+      toggleReviewModal(false);
+      document.getElementById('revName').value = '';
+      document.getElementById('revText').value = '';
+      alert('شكراً لمشاركتك رأيك وتجربتك القيّمة معنا 🌿');
+    }
+
+    function renderReviews() {
+      if (customReviews.length > 0) {
+        const grid = document.getElementById('reviewsGrid');
+        const customHtml = customReviews.map(r => `
+          <div class="review-card" style="border-right: 4px solid var(--gold);">
+            <div class="review-header">
+              <span class="review-name">${r.name}</span>
+              <div class="stars">${r.stars}</div>
+            </div>
+            <p class="review-text">"${r.text}"</p>
+            <span class="review-badge">عميلة موثقة ✓</span>
+          </div>
+        `).join('');
+
+        const defaultHtml = `
+          <div class="review-card">
+            <div class="review-header">
+              <span class="review-name">مريم الأحمدي - القاهرة</span>
+              <div class="stars">★★★★★</div>
+            </div>
+            <p class="review-text">"زيت الإنبات غير شعري تماماً في 3 أسابيع، الفراغات اللي في مقدمة الرأس بدأت تملأ وشعري بطل يتساقط نهائياً، بجد تسلم إيدك دكتورة شروق."</p>
+            <span class="review-badge">مشترية مؤكدة ✓</span>
+          </div>
+          <div class="review-card">
+            <div class="review-header">
+              <span class="review-name">نور الهدى - الإسكندرية</span>
+              <div class="stars">★★★★★</div>
+            </div>
+            <p class="review-text">"طلبت بوكس الـ VIP كامل.. السدر نقي جداً والمشط الخشب والبونيه تحفة وفرقوا في الروتين. جودة المنتجات والتغليف فوق الممتاز."</p>
+            <span class="review-badge">مشترية مؤكدة ✓</span>
+          </div>
+          <div class="review-card">
+            <div class="review-header">
+              <span class="review-name">أسماء خالد - المنصورة</span>
+              <div class="stars">★★★★★</div>
+            </div>
+            <p class="review-text">"مسك الصبار ريحته بتفضل في الشعر أيام مع ترطيب ولمعان طبيعي خطير، ومجموعة التوفير الأساسية سعرها مناسب جداً لكمية المنتجات."</p>
+            <span class="review-badge">مشترية مؤكدة ✓</span>
+          </div>
+        `;
+        grid.innerHTML = customHtml + defaultHtml;
+      }
+    }
+
     // إشعارات الطلبات التفاعلية
     const buyers = [
       { name: "سارة من القاهرة", item: "مجموعة التوفير الأساسية" },
@@ -1260,7 +1490,6 @@
       msg += `\n💰 *إجمالي الفاتورة:* ${total} ج.م\n`;
       msg += `✨ *برجاء تأكيد الطلب والبدء في التجهيز والشحن.*`;
 
-      // إفراغ السلة بعد إرسال الطلب بنجاح
       cart = [];
       saveCart();
       updateCart();
@@ -1302,9 +1531,10 @@
       }
     }
 
-    // تهيئة السلة عند الفتح الأول
+    // تهيئة السلة والتقييمات عند الفتح
     document.addEventListener('DOMContentLoaded', () => {
       updateCart();
+      renderReviews();
     });
   </script>
 
