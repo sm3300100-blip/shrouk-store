@@ -1005,7 +1005,7 @@
       </div>
     </div>
 
-    <!-- قسم آراء وتقييمات العملاء -->
+    <!-- قسم آراء وتقييمات العملاء المباشر -->
     <section class="reviews-section">
       <div class="section-title" style="margin-bottom: 5px;"><i class="fa-solid fa-star"></i> آراء وتجارب عميلاتنا</div>
       <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 20px;">نعتز بثقة آلاف العميلات اللاتي خضن تجربة العناية الطبيعية مع د. شروق محمد</p>
@@ -1120,7 +1120,7 @@
       <label>رأيك وتجربتك بالتفصيل:</label>
       <textarea id="revText" class="form-control" rows="3" placeholder="اكتبي تجربتك مع المنتجات والنتائج..."></textarea>
     </div>
-    <button onclick="submitUserReview()" class="checkout-btn" style="background:var(--primary); margin-top:15px;">
+    <button id="submitReviewBtn" onclick="submitUserReview()" class="checkout-btn" style="background:var(--primary); margin-top:15px;">
       <i class="fa-solid fa-paper-plane"></i> نشر التقييم الآن
     </button>
   </div>
@@ -1221,9 +1221,8 @@
       }
     }
 
-    // استعادة السلة والتقييمات
+    // استعادة السلة
     let cart = JSON.parse(localStorage.getItem('shrouk_cart')) || [];
-    let customReviews = JSON.parse(localStorage.getItem('shrouk_custom_reviews')) || [];
     const whatsappPhone = "201013275211";
     let selectedPaymentMethod = "الدفع عند الاستلام (نقدي)";
     let customerLocationUrl = "";
@@ -1336,7 +1335,7 @@
       element.classList.toggle('active');
     }
 
-    // إدارة نافذة التقييمات التفاعلية
+    // إدارة نافذة التقييمات
     function toggleReviewModal(show) {
       const modal = document.getElementById('reviewModal');
       const overlay = document.getElementById('overlay');
@@ -1368,72 +1367,6 @@
           star.classList.remove('active');
         }
       });
-    }
-
-    function submitUserReview() {
-      const name = document.getElementById('revName').value.trim();
-      const text = document.getElementById('revText').value.trim();
-
-      if (!name || !text) {
-        alert('يرجى كتابة اسمك ورأيك الكريم لنشره');
-        return;
-      }
-
-      const starsStr = '★'.repeat(selectedStarCount) + '☆'.repeat(5 - selectedStarCount);
-      const newReview = { name, text, stars: starsStr };
-
-      customReviews.unshift(newReview);
-      localStorage.setItem('shrouk_custom_reviews', JSON.stringify(customReviews));
-
-      renderReviews();
-      toggleReviewModal(false);
-      document.getElementById('revName').value = '';
-      document.getElementById('revText').value = '';
-      alert('شكراً لمشاركتك رأيك وتجربتك القيّمة معنا 🌿');
-    }
-
-    function renderReviews() {
-      if (customReviews.length > 0) {
-        const grid = document.getElementById('reviewsGrid');
-        const customHtml = customReviews.map(r => `
-          <div class="review-card" style="border-right: 4px solid var(--gold);">
-            <div class="review-header">
-              <span class="review-name">${r.name}</span>
-              <div class="stars">${r.stars}</div>
-            </div>
-            <p class="review-text">"${r.text}"</p>
-            <span class="review-badge">عميلة موثقة ✓</span>
-          </div>
-        `).join('');
-
-        const defaultHtml = `
-          <div class="review-card">
-            <div class="review-header">
-              <span class="review-name">مريم الأحمدي - القاهرة</span>
-              <div class="stars">★★★★★</div>
-            </div>
-            <p class="review-text">"زيت الإنبات غير شعري تماماً في 3 أسابيع، الفراغات اللي في مقدمة الرأس بدأت تملأ وشعري بطل يتساقط نهائياً، بجد تسلم إيدك دكتورة شروق."</p>
-            <span class="review-badge">مشترية مؤكدة ✓</span>
-          </div>
-          <div class="review-card">
-            <div class="review-header">
-              <span class="review-name">نور الهدى - الإسكندرية</span>
-              <div class="stars">★★★★★</div>
-            </div>
-            <p class="review-text">"طلبت بوكس الـ VIP كامل.. السدر نقي جداً والمشط الخشب والبونيه تحفة وفرقوا في الروتين. جودة المنتجات والتغليف فوق الممتاز."</p>
-            <span class="review-badge">مشترية مؤكدة ✓</span>
-          </div>
-          <div class="review-card">
-            <div class="review-header">
-              <span class="review-name">أسماء خالد - المنصورة</span>
-              <div class="stars">★★★★★</div>
-            </div>
-            <p class="review-text">"مسك الصبار ريحته بتفضل في الشعر أيام مع ترطيب ولمعان طبيعي خطير، ومجموعة التوفير الأساسية سعرها مناسب جداً لكمية المنتجات."</p>
-            <span class="review-badge">مشترية مؤكدة ✓</span>
-          </div>
-        `;
-        grid.innerHTML = customHtml + defaultHtml;
-      }
     }
 
     // إشعارات الطلبات التفاعلية
@@ -1531,11 +1464,111 @@
       }
     }
 
-    // تهيئة السلة والتقييمات عند الفتح
     document.addEventListener('DOMContentLoaded', () => {
       updateCart();
-      renderReviews();
     });
+  </script>
+
+  <!-- كود ربط قاعدة بيانات Firebase للتقييمات اللحظية -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
+    import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDR0aJ2Q27x7KESwV0lTEkJ30SyoptLWA0",
+      authDomain: "natural-oils-ce42c.firebaseapp.com",
+      projectId: "natural-oils-ce42c",
+      storageBucket: "natural-oils-ce42c.firebasestorage.app",
+      messagingSenderId: "1048327604490",
+      appId: "1:1048327604490:web:8ef3b04d27db750ea112f3",
+      measurementId: "G-6M58J89NN3"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    const reviewsCol = collection(db, "reviews");
+
+    const defaultReviewsHtml = `
+      <div class="review-card">
+        <div class="review-header">
+          <span class="review-name">مريم الأحمدي - القاهرة</span>
+          <div class="stars">★★★★★</div>
+        </div>
+        <p class="review-text">"زيت الإنبات غير شعري تماماً في 3 أسابيع، الفراغات اللي في مقدمة الرأس بدأت تملأ وشعري بطل يتساقط نهائياً، بجد تسلم إيدك دكتورة شروق."</p>
+        <span class="review-badge">مشترية مؤكدة ✓</span>
+      </div>
+      <div class="review-card">
+        <div class="review-header">
+          <span class="review-name">نور الهدى - الإسكندرية</span>
+          <div class="stars">★★★★★</div>
+        </div>
+        <p class="review-text">"طلبت بوكس الـ VIP كامل.. السدر نقي جداً والمشط الخشب والبونيه تحفة وفرقوا في الروتين. جودة المنتجات والتغليف فوق الممتاز."</p>
+        <span class="review-badge">مشترية مؤكدة ✓</span>
+      </div>
+      <div class="review-card">
+        <div class="review-header">
+          <span class="review-name">أسماء خالد - المنصورة</span>
+          <div class="stars">★★★★★</div>
+        </div>
+        <p class="review-text">"مسك الصبار ريحته بتفضل في الشعر أيام مع ترطيب ولمعان طبيعي خطير، ومجموعة التوفير الأساسية سعرها مناسب جداً لكمية المنتجات."</p>
+        <span class="review-badge">مشترية مؤكدة ✓</span>
+      </div>
+    `;
+
+    // قراءة التقييمات في الوقت الفعلي
+    const q = query(reviewsCol, orderBy("createdAt", "desc"));
+    onSnapshot(q, (snapshot) => {
+      let liveReviewsHtml = '';
+      snapshot.forEach(doc => {
+        const data = doc.data();
+        const starsStr = '★'.repeat(data.stars || 5) + '☆'.repeat(5 - (data.stars || 5));
+        liveReviewsHtml += `
+          <div class="review-card" style="border-right: 4px solid var(--gold);">
+            <div class="review-header">
+              <span class="review-name">${data.name}</span>
+              <div class="stars">${starsStr}</div>
+            </div>
+            <p class="review-text">"${data.text}"</p>
+            <span class="review-badge">عميلة موثقة ✓</span>
+          </div>
+        `;
+      });
+      document.getElementById('reviewsGrid').innerHTML = liveReviewsHtml + defaultReviewsHtml;
+    });
+
+    // إرسال التقييم لقاعدة البيانات السحابية
+    window.submitUserReview = async function() {
+      const name = document.getElementById('revName').value.trim();
+      const text = document.getElementById('revText').value.trim();
+      const submitBtn = document.getElementById('submitReviewBtn');
+
+      if (!name || !text) {
+        alert('يرجى كتابة اسمك ورأيك الكريم لنشره');
+        return;
+      }
+
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> جاري النشر...';
+
+      try {
+        await addDoc(reviewsCol, {
+          name: name,
+          text: text,
+          stars: selectedStarCount,
+          createdAt: serverTimestamp()
+        });
+
+        toggleReviewModal(false);
+        document.getElementById('revName').value = '';
+        document.getElementById('revText').value = '';
+        alert('شكراً لمشاركتك رأيك وتجربتك القيّمة معنا 🌿');
+      } catch (err) {
+        alert('حدث خطأ أثناء إرسال التقييم: ' + err.message);
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = '<i class="fa-solid fa-paper-plane"></i> نشر التقييم الآن';
+      }
+    };
   </script>
 
   <!-- كود إحصائيات Vercel Analytics -->
