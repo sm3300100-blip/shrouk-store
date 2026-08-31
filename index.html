@@ -557,7 +557,7 @@
     }
     .whatsapp-float-btn i { font-size: 22px; }
 
-    /* 6. إشعار المبيعات الحية التفاعلي */
+    /* 6. إشعار المبيعات والتقييمات الحية التفاعلي */
     .live-toast {
       position: fixed;
       bottom: 85px;
@@ -573,14 +573,14 @@
       z-index: 1100;
       max-width: 320px;
       transform: translateX(-150%);
-      transition: transform 0.5s ease;
+      transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
     .live-toast.show { transform: translateX(0); }
     .toast-icon {
       background: var(--primary-light);
       color: var(--primary);
-      width: 36px;
-      height: 36px;
+      width: 38px;
+      height: 38px;
       border-radius: 50%;
       display: flex;
       align-items: center;
@@ -589,7 +589,7 @@
       flex-shrink: 0;
     }
     .toast-content p { font-size: 12px; font-weight: 700; color: var(--text-dark); margin-bottom: 2px; }
-    .toast-content span { font-size: 10.5px; color: var(--gold-dark); }
+    .toast-content span { font-size: 11px; color: var(--gold-dark); display: block; line-height: 1.4; }
 
     /* سلة المشتريات */
     .cart-drawer {
@@ -1131,9 +1131,9 @@
     <span>استشارة مجانية عبر واتساب</span>
   </a>
 
-  <!-- إشعار المبيعات التفاعلي -->
+  <!-- إشعار المبيعات والتقييمات التفاعلي المزدوج -->
   <div class="live-toast" id="liveToast">
-    <div class="toast-icon"><i class="fa-solid fa-bag-shopping"></i></div>
+    <div class="toast-icon" id="toastIcon"><i class="fa-solid fa-bag-shopping"></i></div>
     <div class="toast-content">
       <p id="toastCustomer">قامت ريم من الجيزة</p>
       <span id="toastProduct">بطلب بوكس المجموعة الذهبية VIP 🌿</span>
@@ -1227,6 +1227,9 @@
     let selectedPaymentMethod = "الدفع عند الاستلام (نقدي)";
     let customerLocationUrl = "";
     let selectedStarCount = 5;
+
+    // قائمة التقييمات الموثقة من السحابة لتغذية الإشعارات
+    window.cloudReviewsList = [];
 
     function saveCart() {
       localStorage.setItem('shrouk_cart', JSON.stringify(cart));
@@ -1369,7 +1372,7 @@
       });
     }
 
-    // إشعارات الطلبات التفاعلية
+    // نظام الإشعارات الذكي (مبيعات + تقييمات موثقة بالتبادل)
     const buyers = [
       { name: "سارة من القاهرة", item: "مجموعة التوفير الأساسية" },
       { name: "ندى من الإسكندرية", item: "بوكس المجموعة الذهبية VIP" },
@@ -1378,25 +1381,43 @@
       { name: "ياسمين من الجيزة", item: "سدر مطحون + حنة طبيعية" }
     ];
     let buyerIdx = 0;
+    let reviewIdx = 0;
+    let showReviewNext = false;
 
     function triggerLiveNotification() {
       const toast = document.getElementById('liveToast');
       const custElem = document.getElementById('toastCustomer');
       const itemElem = document.getElementById('toastProduct');
-      
-      const buyer = buyers[buyerIdx];
-      custElem.innerText = `قامت ${buyer.name}`;
-      itemElem.innerText = `بطلب ${buyer.item} منذ قليل 🌿`;
+      const iconElem = document.getElementById('toastIcon');
+
+      // التبديل بين إشعار التقييم الحقيقي وإشعار طلب الشراء
+      if (showReviewNext && window.cloudReviewsList && window.cloudReviewsList.length > 0) {
+        const rev = window.cloudReviewsList[reviewIdx % window.cloudReviewsList.length];
+        iconElem.innerHTML = '<i class="fa-solid fa-star" style="color:#f59e0b;"></i>';
+        custElem.innerHTML = `⭐ تقييم موثق من <strong>${rev.name}</strong>`;
+        const shortText = rev.text.length > 55 ? rev.text.substring(0, 52) + '...' : rev.text;
+        itemElem.innerText = `"${shortText}"`;
+        reviewIdx++;
+        showReviewNext = false;
+      } else {
+        const buyer = buyers[buyerIdx % buyers.length];
+        iconElem.innerHTML = '<i class="fa-solid fa-bag-shopping"></i>';
+        custElem.innerText = `قامت ${buyer.name}`;
+        itemElem.innerText = `بطلب ${buyer.item} منذ قليل 🌿`;
+        buyerIdx++;
+        if (window.cloudReviewsList && window.cloudReviewsList.length > 0) {
+          showReviewNext = true;
+        }
+      }
 
       toast.classList.add('show');
       setTimeout(() => {
         toast.classList.remove('show');
-      }, 5000);
-
-      buyerIdx = (buyerIdx + 1) % buyers.length;
+      }, 5500);
     }
-    setInterval(triggerLiveNotification, 14000);
-    setTimeout(triggerLiveNotification, 3000);
+    
+    setInterval(triggerLiveNotification, 13000);
+    setTimeout(triggerLiveNotification, 3500);
 
     function sendOrder(locUrl) {
       const name = document.getElementById('custName').value.trim();
@@ -1469,7 +1490,7 @@
     });
   </script>
 
-  <!-- كود ربط قاعدة بيانات Firebase للتقييمات اللحظية -->
+  <!-- كود ربط قاعدة بيانات Firebase للتقييمات اللحظية والتنبيهات المباشرة -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
     import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
@@ -1515,12 +1536,14 @@
       </div>
     `;
 
-    // قراءة التقييمات في الوقت الفعلي
+    // قراءة التقييمات في الوقت الفعلي وتغذية الإشعارات
     const q = query(reviewsCol, orderBy("createdAt", "desc"));
     onSnapshot(q, (snapshot) => {
       let liveReviewsHtml = '';
+      const fetchedList = [];
       snapshot.forEach(doc => {
         const data = doc.data();
+        fetchedList.push(data);
         const starsStr = '★'.repeat(data.stars || 5) + '☆'.repeat(5 - (data.stars || 5));
         liveReviewsHtml += `
           <div class="review-card" style="border-right: 4px solid var(--gold);">
@@ -1533,6 +1556,7 @@
           </div>
         `;
       });
+      window.cloudReviewsList = fetchedList;
       document.getElementById('reviewsGrid').innerHTML = liveReviewsHtml + defaultReviewsHtml;
     });
 
