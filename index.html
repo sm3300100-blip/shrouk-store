@@ -14,10 +14,16 @@
   <meta property="og:description" content="اكتشفي أرقى منتجات العناية بالشعر الطبيعية 100% تحت إشراف د. شروق محمد. شحن لجميع المحافظات.">
   <meta property="og:image" content="images/logo.jpeg">
 
+  <!-- تسريع تحميل الخطوط والأيقونات بدون حظر العرض -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'">
+  <noscript>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  </noscript>
   
   <style>
     :root {
@@ -34,7 +40,7 @@
       --radius: 18px;
     }
     
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Tajawal', sans-serif; }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Tajawal', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
     html { scroll-behavior: smooth; }
     body { background-color: var(--bg-cream); color: var(--text-dark); direction: rtl; overflow-x: hidden; }
     
@@ -51,6 +57,7 @@
       align-items: center;
       gap: 15px;
       flex-wrap: wrap;
+      min-height: 38px;
     }
 
     header {
@@ -63,6 +70,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+      min-height: 72px;
     }
     .header-brand {
       display: flex;
@@ -100,7 +108,7 @@
       align-items: center;
       gap: 8px;
       font-size: 15px;
-      transition: all 0.2s ease;
+      transition: transform 0.2s ease;
     }
     .cart-pill-btn:hover { background-color: #eddeca; transform: scale(1.03); }
 
@@ -113,13 +121,14 @@
 
     .hero-text-box {
       position: relative;
-      background-color: rgba(255, 255, 255, 0.85);
+      background-color: #ffffff;
       border-radius: 24px;
       padding: 45px 20px;
       margin-bottom: 25px;
       overflow: hidden;
       border: 1.5px solid rgba(179, 134, 70, 0.3);
       box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+      min-height: 380px;
     }
 
     .hero-text-box::before {
@@ -137,7 +146,7 @@
     .hero-text-content { 
       position: relative; 
       z-index: 2; 
-      background: rgba(255, 255, 255, 0.75);
+      background: rgba(255, 255, 255, 0.82);
       backdrop-filter: blur(4px);
       padding: 30px 20px;
       border-radius: 20px;
@@ -183,7 +192,7 @@
       font-weight: 800;
       text-decoration: none;
       margin-bottom: 20px;
-      transition: all 0.3s ease;
+      transition: transform 0.2s ease;
       box-shadow: 0 4px 12px rgba(230, 81, 0, 0.15);
     }
     .tv-interview-badge:hover {
@@ -191,9 +200,7 @@
       color: #ffffff;
       border-color: #d32f2f;
       transform: translateY(-2px);
-      box-shadow: 0 6px 18px rgba(211, 47, 47, 0.3);
     }
-    .tv-interview-badge i { font-size: 17px; }
 
     .shop-now-btn {
       background-color: var(--primary);
@@ -207,12 +214,11 @@
       display: inline-block;
       text-decoration: none;
       box-shadow: 0 6px 16px rgba(25, 72, 55, 0.35);
-      transition: all 0.3s ease;
+      transition: background-color 0.2s ease, transform 0.2s ease;
     }
     .shop-now-btn:hover {
       background-color: var(--primary-dark);
       transform: translateY(-2px);
-      box-shadow: 0 8px 20px rgba(25, 72, 55, 0.45);
     }
 
     /* 2. شارات الثقة والضمانات */
@@ -285,11 +291,8 @@
       flex-direction: column;
       border: 1px solid #ede8de;
       position: relative;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-    .card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+      content-visibility: auto;
+      contain-intrinsic-size: 450px;
     }
     .card-badge {
       position: absolute;
@@ -317,9 +320,7 @@
       width: 100%; 
       height: 100%; 
       object-fit: contain; 
-      transition: transform 0.4s ease;
     }
-    .card:hover img { transform: scale(1.06); }
     .card-body { padding: 20px; display: flex; flex-direction: column; flex-grow: 1; }
     .card-title { font-size: 18px; font-weight: 800; margin-bottom: 8px; color: var(--primary); }
     .card-desc { font-size: 13.5px; color: var(--text-muted); margin-bottom: 15px; line-height: 1.6; flex-grow: 1; }
@@ -335,12 +336,11 @@
       cursor: pointer;
       font-weight: 700;
       font-size: 14px;
-      transition: 0.2s;
       display: flex;
       align-items: center;
       gap: 6px;
     }
-    .add-btn:hover { background: var(--primary-dark); transform: scale(1.02); }
+    .add-btn:hover { background: var(--primary-dark); }
 
     /* 3. قسم آراء وتجارب العملاء */
     .reviews-section {
@@ -381,7 +381,6 @@
       border: 1px solid #ede8de;
       margin-bottom: 12px;
       overflow: hidden;
-      transition: all 0.2s ease;
     }
     .faq-question {
       padding: 16px 20px;
@@ -395,7 +394,6 @@
       background: #fff;
       user-select: none;
     }
-    .faq-question i { transition: transform 0.3s ease; }
     .faq-answer {
       padding: 0 20px 16px;
       font-size: 14px;
@@ -446,13 +444,13 @@
       color: var(--primary);
       font-size: 20px;
       text-decoration: none;
-      transition: all 0.3s ease;
+      transition: all 0.2s ease;
     }
-    .social-link.yt:hover { background: #ff0000; color: #ffffff; transform: translateY(-4px); }
-    .social-link.insta:hover { background: linear-gradient(135deg, #f9ce34, #ee2a7b, #6228d7); color: #ffffff; transform: translateY(-4px); }
-    .social-link.fb:hover { background: #1877f2; color: #ffffff; transform: translateY(-4px); }
-    .social-link.tt:hover { background: #111111; color: #ffffff; transform: translateY(-4px); }
-    .social-link.wa:hover { background: #25d366; color: #ffffff; transform: translateY(-4px); }
+    .social-link.yt:hover { background: #ff0000; color: #ffffff; }
+    .social-link.insta:hover { background: linear-gradient(135deg, #f9ce34, #ee2a7b, #6228d7); color: #ffffff; }
+    .social-link.fb:hover { background: #1877f2; color: #ffffff; }
+    .social-link.tt:hover { background: #111111; color: #ffffff; }
+    .social-link.wa:hover { background: #25d366; color: #ffffff; }
     .footer-copy { font-size: 13px; color: var(--text-muted); font-weight: 500; }
 
     /* 5. زر الواتساب العائم */
@@ -472,11 +470,6 @@
       text-decoration: none;
       box-shadow: 0 8px 24px rgba(37, 211, 102, 0.4);
       z-index: 1200;
-      transition: all 0.3s ease;
-    }
-    .whatsapp-float-btn:hover {
-      background-color: #1eb956;
-      transform: translateY(-3px) scale(1.03);
     }
     .whatsapp-float-btn i { font-size: 22px; }
 
@@ -496,7 +489,7 @@
       z-index: 1100;
       max-width: 320px;
       transform: translateX(-150%);
-      transition: transform 0.5s ease;
+      transition: transform 0.4s ease;
     }
     .live-toast.show { transform: translateX(0); }
     .toast-icon {
@@ -590,7 +583,6 @@
       justify-content: center;
       gap: 6px;
       margin-top: 6px;
-      transition: 0.2s;
     }
     .loc-btn:hover { background: #f7eedf; }
     .loc-btn.detected {
@@ -616,7 +608,6 @@
       cursor: pointer;
       font-weight: 700;
       font-size: 12px;
-      transition: all 0.2s;
       background: #fff;
     }
     .payment-label input[type="radio"] { display: none; }
@@ -651,7 +642,6 @@
       justify-content: center; 
       gap: 8px; 
       margin-top: 10px; 
-      transition: background 0.2s;
     }
     .checkout-btn:hover { background: #1eb956; }
     .overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 1500; display: none; }
@@ -676,7 +666,7 @@
 
   <header>
     <div class="header-brand">
-      <img src="images/logo.jpeg" onerror="tryNext(this, ['images/logo.jpg', 'images/logo.png', 'images/logo.jpeg.jpg'])" alt="لوجو شروق محمد" class="header-logo-img">
+      <img src="images/logo.jpeg" fetchpriority="high" width="48" height="48" onerror="tryNext(this, ['images/logo.jpg', 'images/logo.png', 'images/logo.jpeg.jpg'])" alt="لوجو شروق محمد" class="header-logo-img">
       <div class="brand-titles">
         <h1>Natural Oils</h1>
         <p>زيوت وأعشاب طبيعية</p>
@@ -752,7 +742,7 @@
       <div class="card">
         <span class="card-badge">الأكثر طلباً ⭐</span>
         <div class="card-img-wrap">
-          <img src="images/offer1099.jpg" loading="lazy" onerror="tryNext(this, ['images/offer1099.jpeg', 'images/offer1099.png', 'images/offer1099.jpg.jpg', 'images/offer1099.jpeg.jpeg'])" alt="مجموعة التوفير الأساسية">
+          <img src="images/offer1099.jpg" width="300" height="280" fetchpriority="high" decoding="async" onerror="tryNext(this, ['images/offer1099.jpeg', 'images/offer1099.png', 'images/offer1099.jpg.jpg', 'images/offer1099.jpeg.jpeg'])" alt="مجموعة التوفير الأساسية">
         </div>
         <div class="card-body">
           <div class="card-title">مجموعة التوفير الأساسية</div>
@@ -768,7 +758,7 @@
       <div class="card">
         <span class="card-badge">عرض VIP ✨</span>
         <div class="card-img-wrap">
-          <img src="images/box-1800.jpeg" loading="lazy" onerror="tryNext(this, ['images/box-1800.jpg', 'images/box-1800.png', 'images/box-1800.jpeg.jpeg', 'images/box-1800.jp.jpeg'])" alt="بوكس المجموعة الذهبية VIP">
+          <img src="images/box-1800.jpeg" width="300" height="280" fetchpriority="high" decoding="async" onerror="tryNext(this, ['images/box-1800.jpg', 'images/box-1800.png', 'images/box-1800.jpeg.jpeg', 'images/box-1800.jp.jpeg'])" alt="بوكس المجموعة الذهبية VIP">
         </div>
         <div class="card-body">
           <div class="card-title">بوكس المجموعة الذهبية VIP</div>
@@ -786,7 +776,7 @@
     <div class="section-title"><i class="fa-solid fa-spa"></i> المنتجات الفردية الطبيعية</div>
     <div class="grid">
       <div class="card">
-        <div class="card-img-wrap"><img src="images/enbat.jpeg" loading="lazy" onerror="tryNext(this, ['images/enbat.jpg', 'images/enbat.png', 'images/enbat.jpeg.jpeg'])" alt="زيت الإنبات"></div>
+        <div class="card-img-wrap"><img src="images/enbat.jpeg" width="260" height="260" loading="lazy" decoding="async" onerror="tryNext(this, ['images/enbat.jpg', 'images/enbat.png', 'images/enbat.jpeg.jpeg'])" alt="زيت الإنبات"></div>
         <div class="card-body">
           <div class="card-title">زيت الإنبات والإطالة</div>
           <div class="card-desc">تركيبة مركزة لتحفيز بصيلات الشعر وملء الفراغات وتكثيف الشعر.</div>
@@ -798,7 +788,7 @@
       </div>
 
       <div class="card">
-        <div class="card-img-wrap"><img src="images/herbs.jpeg" loading="lazy" onerror="tryNext(this, ['images/herbs.jpg', 'images/herbs.png', 'images/herbs.jpeg.jpeg'])" alt="مجموعة الأعشاب"></div>
+        <div class="card-img-wrap"><img src="images/herbs.jpeg" width="260" height="260" loading="lazy" decoding="async" onerror="tryNext(this, ['images/herbs.jpg', 'images/herbs.png', 'images/herbs.jpeg.jpeg'])" alt="مجموعة الأعشاب"></div>
         <div class="card-body">
           <div class="card-title">مجموعة الأعشاب الطبيعية</div>
           <div class="card-desc">توليفة ممتازة من أنقى الأعشاب لتغذية فروة الرأس وتقوية الجذور.</div>
@@ -810,7 +800,7 @@
       </div>
 
       <div class="card">
-        <div class="card-img-wrap"><img src="images/sedr.jpeg" loading="lazy" onerror="tryNext(this, ['images/sedr.jpg', 'images/sedr.png', 'images/sedr.jpeg.jpeg'])" alt="سدر مطحون"></div>
+        <div class="card-img-wrap"><img src="images/sedr.jpeg" width="260" height="260" loading="lazy" decoding="async" onerror="tryNext(this, ['images/sedr.jpg', 'images/sedr.png', 'images/sedr.jpeg.jpeg'])" alt="سدر مطحون"></div>
         <div class="card-body">
           <div class="card-title">سدر مطحون نقي</div>
           <div class="card-desc">سدر عضوي نقي 100% لتنظيف الفروة وإعطاء كثافة ولمعان فائق للشعر.</div>
@@ -822,7 +812,7 @@
       </div>
 
       <div class="card">
-        <div class="card-img-wrap"><img src="images/meshat.jpeg" loading="lazy" onerror="tryNext(this, ['images/meshat.jpg', 'images/meshat.png', 'images/meshat.jpeg.jpeg'])" alt="مشاط بني"></div>
+        <div class="card-img-wrap"><img src="images/meshat.jpeg" width="260" height="260" loading="lazy" decoding="async" onerror="tryNext(this, ['images/meshat.jpg', 'images/meshat.png', 'images/meshat.jpeg.jpeg'])" alt="مشاط بني"></div>
         <div class="card-body">
           <div class="card-title">مشاط بني أصلي</div>
           <div class="card-desc">خلطة المشاط التراثية الأصيلة لتعطير الشعر وتنعيمه وتقويته.</div>
@@ -834,7 +824,7 @@
       </div>
 
       <div class="card">
-        <div class="card-img-wrap"><img src="images/henna.jpeg" loading="lazy" onerror="tryNext(this, ['images/henna.jpg', 'images/henna.png', 'images/henna.jpeg.jpeg'])" alt="حنة طبيعية"></div>
+        <div class="card-img-wrap"><img src="images/henna.jpeg" width="260" height="260" loading="lazy" decoding="async" onerror="tryNext(this, ['images/henna.jpg', 'images/henna.png', 'images/henna.jpeg.jpeg'])" alt="حنة طبيعية"></div>
         <div class="card-body">
           <div class="card-title">حنة طبيعية فاخرة</div>
           <div class="card-desc">حنة نقية معالجة ومغذية تمنح الشعر حيوية ولون طبيعي جذاب.</div>
@@ -848,7 +838,7 @@
       <!-- مسك الصبار الطبيعي -->
       <div class="card">
         <div class="card-img-wrap">
-          <img src="images/aloe-vera-musk.jpeg" loading="lazy" onerror="tryNext(this, ['images/aloe-vera-musk.jpg', 'images/aloe-vera-musk.png', 'images/aloe-vera-musk.jpeg.jpeg', 'images/aloe.jpeg', 'images/aloe.jpg', 'images/aloe.png', 'images/aloe-vera.jpeg', 'images/aloe-vera.jpg', 'images/aloe-vera-musk.jpeg.jpg'])" alt="مسك الصبار الطبيعي">
+          <img src="images/aloe-vera-musk.jpeg" width="260" height="260" loading="lazy" decoding="async" onerror="tryNext(this, ['images/aloe-vera-musk.jpg', 'images/aloe-vera-musk.png', 'images/aloe-vera-musk.jpeg.jpeg', 'images/aloe.jpeg', 'images/aloe.jpg', 'images/aloe.png', 'images/aloe-vera.jpeg', 'images/aloe-vera.jpg', 'images/aloe-vera-musk.jpeg.jpg'])" alt="مسك الصبار الطبيعي">
         </div>
         <div class="card-body">
           <div class="card-title">مسك الصبار الطبيعي</div>
@@ -865,7 +855,7 @@
     <div class="section-title"><i class="fa-solid fa-wand-magic-sparkles"></i> أدوات العناية الفاخرة</div>
     <div class="grid">
       <div class="card">
-        <div class="card-img-wrap"><img src="images/comb.jpeg" loading="lazy" onerror="tryNext(this, ['images/comb.jpg', 'images/comb.png', 'images/comb.jpeg.jpeg'])" alt="مشط خشب"></div>
+        <div class="card-img-wrap"><img src="images/comb.jpeg" width="260" height="260" loading="lazy" decoding="async" onerror="tryNext(this, ['images/comb.jpg', 'images/comb.png', 'images/comb.jpeg.jpeg'])" alt="مشط خشب"></div>
         <div class="card-body">
           <div class="card-title">مشط خشب طبيعي</div>
           <div class="card-desc">مشط خشبي عريض الأسنان لفك التشابك بلطف ومنع تقصف وتكسر الشعر.</div>
@@ -877,7 +867,7 @@
       </div>
 
       <div class="card">
-        <div class="card-img-wrap"><img src="images/towel.jpeg" loading="lazy" onerror="tryNext(this, ['images/towel.jpg', 'images/towel.png', 'images/towel.jpeg.jpeg'])" alt="فوطة مايكروفايبر"></div>
+        <div class="card-img-wrap"><img src="images/towel.jpeg" width="260" height="260" loading="lazy" decoding="async" onerror="tryNext(this, ['images/towel.jpg', 'images/towel.png', 'images/towel.jpeg.jpeg'])" alt="فوطة مايكروفايبر"></div>
         <div class="card-body">
           <div class="card-title">فوطة مايكروفايبر فاخرة</div>
           <div class="card-desc">فوطة ناعمة جداً فائقة الامتصاص لتجفيف الشعر بدون نفشة أو ضرر.</div>
@@ -889,7 +879,7 @@
       </div>
 
       <div class="card">
-        <div class="card-img-wrap"><img src="images/satin-bonnet.jpeg" loading="lazy" onerror="tryNext(this, ['images/satin-bonnet.jpg', 'images/satin-bonnet.png', 'images/satin-bonnet.jpeg.jpeg'])" alt="بونيه ستان"></div>
+        <div class="card-img-wrap"><img src="images/satin-bonnet.jpeg" width="260" height="260" loading="lazy" decoding="async" onerror="tryNext(this, ['images/satin-bonnet.jpg', 'images/satin-bonnet.png', 'images/satin-bonnet.jpeg.jpeg'])" alt="بونيه ستان"></div>
         <div class="card-body">
           <div class="card-title">بونيه ستان حريري</div>
           <div class="card-desc">بونيه ستان ناعم يحافظ على ترطيب الشعر والزيوت ويمنع الهيشان أثناء النوم.</div>
@@ -901,7 +891,7 @@
       </div>
 
       <div class="card">
-        <div class="card-img-wrap"><img src="images/plastic-bonnet.jpeg" loading="lazy" onerror="tryNext(this, ['images/plastic-bonnet.jpg', 'images/plastic-bonnet.png', 'images/plastic-bonnet.jpeg.jpeg'])" alt="بونيه بلاستيك"></div>
+        <div class="card-img-wrap"><img src="images/plastic-bonnet.jpeg" width="260" height="260" loading="lazy" decoding="async" onerror="tryNext(this, ['images/plastic-bonnet.jpg', 'images/plastic-bonnet.png', 'images/plastic-bonnet.jpeg.jpeg'])" alt="بونيه بلاستيك"></div>
         <div class="card-body">
           <div class="card-title">بونيه بلاستيك حراري</div>
           <div class="card-desc">مثالي للاستخدام مع حمامات الزيت والحنة لتفتيح المسام ومضاعفة الامتصاص.</div>
@@ -915,7 +905,7 @@
       <!-- الفرشاة السيليكون -->
       <div class="card">
         <div class="card-img-wrap">
-          <img src="images/silicone-brush.jpeg" loading="lazy" onerror="tryNext(this, ['images/silicone-brush.jpeg.jpeg', 'images/silicone-brush.jpeg.jpg', 'images/silicone-brush.jpeg.png', 'images/silicone-brush.jpg', 'images/silicone-brush.png', 'images/brush.jpeg', 'images/brush.jpg'])" alt="فرشاة مساج سيليكون">
+          <img src="images/silicone-brush.jpeg" width="260" height="260" loading="lazy" decoding="async" onerror="tryNext(this, ['images/silicone-brush.jpeg.jpeg', 'images/silicone-brush.jpeg.jpg', 'images/silicone-brush.jpeg.png', 'images/silicone-brush.jpg', 'images/silicone-brush.png', 'images/brush.jpeg', 'images/brush.jpg'])" alt="فرشاة مساج سيليكون">
         </div>
         <div class="card-body">
           <div class="card-title">فرشاة مساج سيليكون</div>
@@ -1093,7 +1083,6 @@
       }
     }
 
-    // استعادة السلة من المتصفح لو وجدت
     let cart = JSON.parse(localStorage.getItem('shrouk_cart')) || [];
     const whatsappPhone = "201013275211";
     let selectedPaymentMethod = "الدفع عند الاستلام (نقدي)";
@@ -1260,7 +1249,6 @@
       msg += `\n💰 *إجمالي الفاتورة:* ${total} ج.م\n`;
       msg += `✨ *برجاء تأكيد الطلب والبدء في التجهيز والشحن.*`;
 
-      // إفراغ السلة بعد إرسال الطلب بنجاح
       cart = [];
       saveCart();
       updateCart();
@@ -1302,7 +1290,6 @@
       }
     }
 
-    // تهيئة السلة عند الفتح الأول
     document.addEventListener('DOMContentLoaded', () => {
       updateCart();
     });
