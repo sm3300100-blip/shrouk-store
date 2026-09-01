@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss xmlns:g="http://base.google.com/ns/1.0" version="2.0">
+  <channel>
+    <title>شروق محمد Natural Oils</title>
+    <link>https://shrouk-store-e3i4.vercel.app</link>
+    <description>منتجات طبيعية 100% للعناية بالشعر والزيوت والأعشاب</description>
+
+    <!-- 1. مجموعة التوفير الأساسية -->
+    <item>
+      <g:id>shrouk_001</g:id>
+      <g:title>مجموعة التوفير الأساسية للعناية بالشعر</g:title>
+      <g:description>مجموعة العناية المتكاملة لتغذية وإصلاح وترطيب الشعر بالكامل مع شحن سريع.</g:description>
+      <g:link>https://shrouk-store-e3i4.vercel.app/#products-start</g:link>
+      <g:image_link>https://shrouk-store-e3i4.vercel.app/images/offer1099.jpg</g:image_link>
+      <g:brand>شروق محمد Natural Oils</g:brand>
+      <g:condition>new</g:condition>
+      <g:availability>in_stock</g:availability>
+      <g:price>1099 EGP</g:price>
+      <g:identifier_exists>no</g:identifier_exists>
+    </item>
+
+    <!-- 2. بوكس المجموعة الذهبية VIP -->
+    <item>
+      <g:id>shrouk_002</g:id>
+      <g:title>بوكس المجموعة الذهبية VIP</g:title>
+      <g:description>الكورس المتكامل الأكبر بجميع منتجات البراند بأحجام ممتدة مع أدوات العناية الفاخرة.</g:description>
+      <g:link>https://shrouk-store-e3i4.vercel.app/#products-start</g:link>
+      <g:image_link>https://shrouk-store-e3i4.vercel.app/images/box-1800.jpeg</g:image_link>
+      <g:brand>شروق محمد Natural Oils</g:brand>
+      <g:condition>new</g:condition>
+      <g:availability>in_stock</g:availability>
+      <g:price>1799 EGP</g:price>
+      <g:identifier_exists>no</g:identifier_exists>
+    </item>
+
+    <!-- 3. زيت الإنبات والإطالة -->
+    <item>
+      <g:id>shrouk_003</g:id>
+      <g:title>زيت الإنبات والإطالة</g:title>
+      <g:description>تركيبة مركزة لتحفيز بصيلات الشعر وملء الفراغات وتكثيف الشعر ومنع التساقط.</g:description>
+      <g:link>https://shrouk-store-e3i4.vercel.app/#products-start</g:link>
+      <g:image_link>https://shrouk-store-e3i4.vercel.app/images/enbat.jpeg</g:image_link>
+      <g:brand>شروق محمد Natural Oils</g:brand>
+      <g:condition>new</g:condition>
+      <g:availability>in_stock</g:availability>
+      <g:price>349 EGP</g:price>
+      <g:identifier_exists>no</g:identifier_exists>
+    </item>
+
+    <!-- 4. مجموعة الأعشاب الطبيعية -->
+    <item>
+      <g:id>shrouk_004</g:id>
+      <g:title>مجموعة الأعشاب الطبيعية</g:title>
+      <g:description>توليفة ممتازة من أنقى الأعشاب لتغذية فروة الرأس وتقوية الجذور.</g:description>
+      <g:link>https://shrouk-store-e3i4.vercel.app/#products-start</g:link>
+      <g:image_link>https://shrouk-store-e3i4.vercel.app/images/herbs.jpeg</g:image_link>
+      <g:brand>شروق محمد Natural Oils</g:brand>
+      <g:condition>new</g:condition>
+      <g:availability>in_stock</g:availability>
+      <g:price>149 EGP</g:price>
+      <g:identifier_exists>no</g:identifier_exists>
+    </item>
+
+    <!-- 5. سدر مطحون نقي -->
+    <item>
+      <g:id>shrouk_005</g:id>
+      <g:title>سدر مطحون نقي</g:title>
+      <g:description>سدر عضوي نقي 100% لتنظيف الفروة وإعطاء كثافة ولمعان فائق للشعر.</g:description>
+      <g:link>https://shrouk-store-e3i4.vercel.app/#products-start</g:link>
+      <g:image_link>https://shrouk-store-e3i4.vercel.app/images/sedr.jpeg</g:image_link>
+      <g:brand>شروق محمد Natural Oils</g:brand>
+      <g:condition>new</g:condition>
+      <g:availability>in_stock</g:availability>
+      <g:price>149 EGP</g:price>
+      <g:identifier_exists>no</g:identifier_exists>
+    </item>
+
+    <!-- 6. مشاط بني أصلي -->
+    <item>
+      <g:id>shrouk_006</g:id>
+      <g:title>مشاط بني أصلي</g:title>
+      <g:description>خلطة المشاط التراثية الأصيلة لتعطير الشعر وتنعيمه وتقويته.</g:description>
+      <g:link>https://shrouk-store-e3i4.vercel.app/#products-start</g:link>
+      <g:image_link>https://shrouk-store-e3i4.vercel.app/images/meshat.jpeg</g:image_link>
+      <g:brand>شروق محمد Natural Oils</g:brand>
+      <g:condition>new</g:condition>
+      <g:availability>in_stock</g:availability>
+      <g:price>249 EGP</g:price>
+      <g:identifier_exists>no</g:identifier_exists>
+    </item>
+
+    <!-- 7. حنة طبيعية فاخرة -->
+    <item>
+      <g:id>shrouk_007</g:id>
+      <g:title>حنة طبيعية فاخرة</g:title>
+      <g:description>حنة نقية معالجة ومغذية تمنح الشعر حيوية ولون طبيعي جذاب.</g:description>
+      <g:link>https://shrouk-store-e3i4.vercel.app/#products-start</g:link>
+      <g:image_link>https://shrouk-store-e3i4.vercel.app/images/henna.jpeg</g:image_link>
+      <g:brand>شروق محمد Natural Oils</g:brand>
+      <g:condition>new</g:condition>
+      <g:availability>in_stock</g:availability>
+      <g:price>149 EGP</g:price>
+      <g:identifier_exists>no</g:identifier_exists>
+    </item>
+
+    <!-- 8. مسك الصبار الطبيعي -->
+    <item>
+      <g:id>shrouk_008</g:id>
+      <g:title>مسك الصبار الطبيعي</g:title>
+      <g:description>خلاصة الصبار الطبيعي مع لمسات المسك المنعش لترطيب وتغذية وتعطير الشعر بعمق.</g:description>
+      <g:link>https://shrouk-store-e3i4.vercel.app/#products-start</g:link>
+      <g:image_link>https://shrouk-store-e3i4.vercel.app/images/aloe-vera-musk.jpeg</g:image_link>
+      <g:brand>شروق محمد Natural Oils</g:brand>
+      <g:condition>new</g:condition>
+      <g:availability>in_stock</g:availability>
+      <g:price>199 EGP</g:price>
+      <g:identifier_exists>no</g:identifier_exists>
+    </item>
+
+    <!-- 9. مشط خشب طبيعي -->
+    <item>
+      <g:id>shrouk_009</g:id>
+      <g:title>مشط خشب طبيعي</g:title>
+      <g:description>مشط خشبي عريض الأسنان لفك التشابك بلطف ومنع تقصف وتكسر الشعر.</g:description>
+      <g:link>https://shrouk-store-e3i4.vercel.app/#products-start</g:link>
+      <g:image_link>https://shrouk-store-e3i4.vercel.app/images/comb.jpeg</g:image_link>
+      <g:brand>شروق محمد Natural Oils</g:brand>
+      <g:condition>new</g:condition>
+      <g:availability>in_stock</g:availability>
+      <g:price>59 EGP</g:price>
+      <g:identifier_exists>no</g:identifier_exists>
+    </item>
+
+    <!-- 10. فوطة مايكروفايبر فاخرة -->
+    <item>
+      <g:id>shrouk_010</g:id>
+      <g:title>فوطة مايكروفايبر فاخرة</g:title>
+      <g:description>فوطة ناعمة جداً فائقة الامتصاص لتجفيف الشعر بدون نفشة أو ضرر.</g:description>
+      <g:link>https://shrouk-store-e3i4.vercel.app/#products-start</g:link>
+      <g:image_link>https://shrouk-store-e3i4.vercel.app/images/towel.jpeg</g:image_link>
+      <g:brand>شروق محمد Natural Oils</g:brand>
+      <g:condition>new</g:condition>
+      <g:availability>in_stock</g:availability>
+      <g:price>69 EGP</g:price>
+      <g:identifier_exists>no</g:identifier_exists>
+    </item>
+
+    <!-- 11. بونيه ستان حريري -->
+    <item>
+      <g:id>shrouk_011</g:id>
+      <g:title>بونيه ستان حريري</g:title>
+      <g:description>بونيه ستان ناعم يحافظ على ترطيب الشعر والزيوت ويمنع الهيشان أثناء النوم.</g:description>
+      <g:link>https://shrouk-store-e3i4.vercel.app/#products-start</g:link>
+      <g:image_link>https://shrouk-store-e3i4.vercel.app/images/satin-bonnet.jpeg</g:image_link>
+      <g:brand>شروق محمد Natural Oils</g:brand>
+      <g:condition>new</g:condition>
+      <g:availability>in_stock</g:availability>
+      <g:price>59 EGP</g:price>
+      <g:identifier_exists>no</g:identifier_exists>
+    </item>
+
+    <!-- 12. بونيه بلاستيك حراري -->
+    <item>
+      <g:id>shrouk_012</g:id>
+      <g:title>بونيه بلاستيك حراري</g:title>
+      <g:description>مثالي للاستخدام مع حمامات الزيت والحنة لتفتيح المسام ومضاعفة الامتصاص.</g:description>
+      <g:link>https://shrouk-store-e3i4.vercel.app/#products-start</g:link>
+      <g:image_link>https://shrouk-store-e3i4.vercel.app/images/plastic-bonnet.jpeg</g:image_link>
+      <g:brand>شروق محمد Natural Oils</g:brand>
+      <g:condition>new</g:condition>
+      <g:availability>in_stock</g:availability>
+      <g:price>49 EGP</g:price>
+      <g:identifier_exists>no</g:identifier_exists>
+    </item>
+
+    <!-- 13. فرشاة مساج سيليكون -->
+    <item>
+      <g:id>shrouk_013</g:id>
+      <g:title>فرشاة مساج سيليكون لفروة الرأس</g:title>
+      <g:description>فرشاة مرنة لتدليك الفروة وتنشيط الدورة الدموية وتوزيع الزيوت والشامبو بعمق.</g:description>
+      <g:link>https://shrouk-store-e3i4.vercel.app/#products-start</g:link>
+      <g:image_link>https://shrouk-store-e3i4.vercel.app/images/silicone-brush.jpeg</g:image_link>
+      <g:brand>شروق محمد Natural Oils</g:brand>
+      <g:condition>new</g:condition>
+      <g:availability>in_stock</g:availability>
+      <g:price>49 EGP</g:price>
+      <g:identifier_exists>no</g:identifier_exists>
+    </item>
+  </channel>
+</rss>
