@@ -3,206 +3,389 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>لوحة التحكم | إدارة المتجر والمظهر</title>
+  <title>لوحة التحكم | متجر د. شروق محمد Natural Oils</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
   <style>
     :root {
-      --primary: #10b981;
-      --primary-hover: #059669;
-      --bg: #f3f4f6;
-      --card-bg: #ffffff;
-      --text: #1f2937;
-      --danger: #ef4444;
+      --primary: #194837;
+      --primary-dark: #0f3024;
+      --primary-light: #eef8f2;
       --gold: #9e6f28;
-      --blue: #2563eb;
-      --blue-hover: #1d4ed8;
+      --gold-light: #f6eedf;
+      --danger: #dc2626;
+      --danger-light: #fee2e2;
+      --card-bg: #ffffff;
+      --bg-cream: #faf7f2;
+      --text-dark: #1f2937;
+      --text-muted: #6b7280;
+      --radius: 14px;
+      --border: #e5e7eb;
     }
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-    body { background-color: var(--bg); color: var(--text); padding: 20px; }
-    .container { max-width: 950px; margin: 0 auto; }
-    header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; flex-wrap: wrap; gap: 10px; }
-    .tabs-nav { display: flex; gap: 10px; margin-bottom: 25px; }
-    .tab-btn { background: #e5e7eb; color: #4b5563; border: none; padding: 10px 20px; border-radius: 8px; font-weight: 700; cursor: pointer; transition: 0.2s; }
-    .tab-btn.active { background: var(--primary); color: #fff; }
-    .tab-content { display: none; }
-    .tab-content.active { display: block; }
-    .card { background: var(--card-bg); border-radius: 12px; padding: 25px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); margin-bottom: 25px; }
-    h2 { margin-bottom: 15px; font-size: 1.25rem; }
-    .form-group { margin-bottom: 15px; }
-    .form-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; }
-    label { display: block; margin-bottom: 6px; font-weight: 600; font-size: 0.9rem; }
-    input, textarea { width: 100%; padding: 10px 14px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 0.95rem; outline: none; }
-    input[type="color"] { height: 45px; padding: 4px; cursor: pointer; }
-    input:focus, textarea:focus { border-color: var(--primary); }
-    .file-input { padding: 6px; background: #fafafa; }
-    .img-preview { width: 70px; height: 70px; object-fit: cover; border-radius: 8px; margin-top: 8px; border: 1px solid #ccc; display: none; }
-    button { background-color: var(--primary); color: white; border: none; padding: 10px 20px; border-radius: 8px; font-size: 1rem; cursor: pointer; transition: 0.2s; font-weight: 600; }
-    button:hover { background-color: var(--primary-hover); }
-    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 15px; }
-    .product-item { background: var(--card-bg); border-radius: 10px; border: 1px solid #e5e7eb; overflow: hidden; display: flex; flex-direction: column; }
-    .product-img { width: 100%; height: 160px; object-fit: cover; background: #e5e7eb; }
-    .product-info { padding: 15px; flex-grow: 1; display: flex; flex-direction: column; }
-    .product-title { font-weight: bold; font-size: 1.1rem; margin-bottom: 5px; }
-    .product-price { color: var(--primary); font-weight: bold; font-size: 1.1rem; margin-bottom: 8px; }
-    .product-desc { font-size: 0.85rem; color: #6b7280; margin-bottom: 15px; flex-grow: 1; }
-    .btn-actions { display: flex; gap: 8px; align-self: flex-start; }
-    .btn-edit { background-color: var(--blue); font-size: 0.85rem; padding: 6px 14px; }
-    .btn-edit:hover { background-color: var(--blue-hover); }
-    .btn-delete { background-color: var(--danger); font-size: 0.85rem; padding: 6px 14px; }
-    .btn-delete:hover { background-color: #dc2626; }
-    #login-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); display: flex; align-items: center; justify-content: center; z-index: 100; }
-    .login-box { background: white; padding: 30px; border-radius: 12px; width: 100%; max-width: 350px; text-align: center; }
-    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); display: none; align-items: center; justify-content: center; z-index: 200; padding: 15px; }
-    .modal-content { background: #ffffff; width: 100%; max-width: 500px; border-radius: 14px; padding: 25px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); }
-    .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 1px solid #e5e7eb; padding-bottom: 10px; }
-    .modal-close { background: none; border: none; font-size: 24px; color: #9ca3af; cursor: pointer; }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Tajawal', sans-serif; }
+    body { background-color: var(--bg-cream); color: var(--text-dark); direction: rtl; min-height: 100vh; }
+
+    /* شاشة الدخول السرية */
+    #loginOverlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 48, 36, 0.92);
+      backdrop-filter: blur(6px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+    }
+    .login-card {
+      background: white;
+      padding: 35px 30px;
+      border-radius: 20px;
+      width: 90%;
+      max-width: 400px;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+    }
+
+    /* الشريط العلوي */
+    header {
+      background: #ffffff;
+      border-bottom: 1px solid var(--border);
+      padding: 15px 5%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .header-title {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .header-title h1 {
+      font-size: 19px;
+      font-weight: 800;
+      color: var(--primary);
+    }
+    .view-store-btn {
+      text-decoration: none;
+      background: var(--gold-light);
+      color: var(--gold);
+      border: 1px solid var(--gold);
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: 0.2s;
+    }
+    .view-store-btn:hover { background: var(--gold); color: white; }
+
+    /* الحاوية الرئيسية */
+    .dashboard-container {
+      max-width: 1250px;
+      margin: 25px auto;
+      padding: 0 20px 60px;
+    }
+
+    /* بطاقات المؤشرات */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 18px;
+      margin-bottom: 25px;
+    }
+    .kpi-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 18px;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+    }
+    .kpi-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: var(--primary-light);
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+    }
+    .kpi-info span { font-size: 12.5px; color: var(--text-muted); font-weight: 600; }
+    .kpi-info h3 { font-size: 22px; font-weight: 800; color: var(--text-dark); margin-top: 3px; }
+
+    /* تقسيم الواجهة */
+    .content-grid {
+      display: grid;
+      grid-template-columns: 360px 1fr;
+      gap: 25px;
+      align-items: start;
+    }
+    @media (max-width: 950px) {
+      .content-grid { grid-template-columns: 1fr; }
+    }
+
+    .panel-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 22px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+      margin-bottom: 25px;
+    }
+    .panel-title {
+      font-size: 16px;
+      font-weight: 800;
+      color: var(--primary);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border-bottom: 2px solid var(--primary-light);
+      padding-bottom: 10px;
+    }
+
+    /* النماذج */
+    .form-group { margin-bottom: 13px; }
+    .form-group label { display: block; font-size: 13px; font-weight: 700; margin-bottom: 5px; }
+    .form-control {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1.5px solid #d1d5db;
+      border-radius: 8px;
+      font-size: 13px;
+      outline: none;
+      transition: 0.2s;
+    }
+    .form-control:focus { border-color: var(--primary); }
+
+    .btn-submit {
+      width: 100%;
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 12px;
+      border-radius: 8px;
+      font-size: 14.5px;
+      font-weight: 800;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: 0.2s;
+    }
+    .btn-submit:hover { background: var(--primary-dark); }
+
+    /* الجداول */
+    .table-wrap { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; text-align: right; font-size: 13px; }
+    th { background: #f9fafb; padding: 12px; font-weight: 800; border-bottom: 1.5px solid var(--border); }
+    td { padding: 12px; border-bottom: 1px solid #f3f4f6; vertical-align: middle; }
+    .prod-thumb { width: 42px; height: 42px; border-radius: 8px; object-fit: cover; background: #eee; }
+    
+    .badge {
+      display: inline-block;
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 700;
+    }
+    .badge-cloud { background: #e0f2fe; color: #0369a1; }
+    .badge-static { background: #f3f4f6; color: #4b5563; }
+
+    .btn-del {
+      background: var(--danger-light);
+      color: var(--danger);
+      border: none;
+      padding: 6px 10px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 11.5px;
+      transition: 0.2s;
+    }
+    .btn-del:hover { background: var(--danger); color: white; }
+
+    .review-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      padding: 12px;
+      border: 1px solid #f3f4f6;
+      border-radius: 10px;
+      margin-bottom: 10px;
+      background: #fafafa;
+    }
+    .review-stars { color: #f59e0b; font-size: 12px; margin: 2px 0; }
   </style>
 </head>
 <body>
 
-  <div id="login-overlay">
-    <div class="login-box">
-      <h3 style="margin-bottom:15px;">تسجيل دخول المسؤول</h3>
-      <input type="password" id="admin-pass" placeholder="أدخل كلمة المرور" style="margin-bottom:15px;">
-      <button onclick="checkAuth()" style="width:100%;">دخول</button>
-      <p id="auth-error" style="color:red; font-size:0.85rem; margin-top:10px; display:none;">كلمة المرور غير صحيحة</p>
+  <!-- رمز المرور الافتراضي: 1234 -->
+  <div id="loginOverlay">
+    <div class="login-card">
+      <i class="fa-solid fa-shield-halved" style="font-size: 40px; color: var(--primary); margin-bottom: 15px;"></i>
+      <h2 style="font-size: 19px; font-weight: 800; margin-bottom: 8px;">لوحة تحكم Natural Oils</h2>
+      <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 18px;">يرجى إدخال رمز المرور للمتابعة</p>
+      <input type="password" id="adminPin" class="form-control" placeholder="••••" style="text-align: center; font-size: 18px; letter-spacing: 4px; margin-bottom: 14px;">
+      <button onclick="checkAdminPin()" class="btn-submit">تسجيل الدخول</button>
+      <p id="loginError" style="color: var(--danger); font-size: 12px; margin-top: 10px; display: none;">رمز المرور غير صحيح!</p>
     </div>
   </div>
 
-  <div class="container" id="admin-content" style="display:none;">
-    <header>
-      <h1>لوحة التحكم الشاملة</h1>
-    </header>
-
-    <div class="tabs-nav">
-      <button class="tab-btn active" onclick="switchTab('products-tab')">📦 إدارة المنتجات</button>
-      <button class="tab-btn" onclick="switchTab('theme-tab')">🎨 إعدادات مظهر المتجر</button>
+  <header>
+    <div class="header-title">
+      <i class="fa-solid fa-sliders" style="font-size: 20px; color: var(--primary);"></i>
+      <h1>لوحة إدارة المتجر</h1>
     </div>
+    <a href="index.html" class="view-store-btn" target="_blank">
+      <i class="fa-solid fa-arrow-up-right-from-square"></i> فتح المتجر مباشرة
+    </a>
+  </header>
 
-    <!-- تبويب إدارة المنتجات -->
-    <div id="products-tab" class="tab-content active">
-      <div class="card">
-        <h2>إضافة منتج جديد</h2>
-        <form id="add-product-form">
+  <main class="dashboard-container">
+
+    <!-- الإحصائيات -->
+    <section class="kpi-grid">
+      <div class="kpi-card">
+        <div class="kpi-icon"><i class="fa-solid fa-boxes-stacked"></i></div>
+        <div class="kpi-info">
+          <span>إجمالي منتجات المتجر</span>
+          <h3 id="statTotalProducts">13</h3>
+        </div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-icon" style="background: #fef3c7; color: #b45309;"><i class="fa-solid fa-sparkles"></i></div>
+        <div class="kpi-info">
+          <span>منتجات مضافة بالسحابة</span>
+          <h3 id="statDynamicProducts">0</h3>
+        </div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-icon" style="background: var(--gold-light); color: var(--gold);"><i class="fa-solid fa-comments"></i></div>
+        <div class="kpi-info">
+          <span>تقييمات العميلات</span>
+          <h3 id="statReviewsCount">0</h3>
+        </div>
+      </div>
+    </section>
+
+    <!-- منطقة التحكم -->
+    <div class="content-grid">
+      
+      <!-- إضافة منتج -->
+      <aside class="panel-card">
+        <h2 class="panel-title"><i class="fa-solid fa-plus-circle"></i> إضافة منتج جديد</h2>
+        <form id="addProductForm" onsubmit="handleNewProduct(event)">
           <div class="form-group">
-            <label>اسم المنتج</label>
-            <input type="text" id="p-name" required placeholder="مثال: زيت الأرجان الطبيعي">
+            <label for="prodName">اسم المنتج:</label>
+            <input type="text" id="prodName" class="form-control" placeholder="مثال: سيروم الأرجان للشعر" required>
           </div>
           <div class="form-group">
-            <label>السعر (ج.م)</label>
-            <input type="number" id="p-price" required placeholder="مثال: 120">
+            <label for="prodPrice">السعر (ج.م):</label>
+            <input type="number" id="prodPrice" class="form-control" placeholder="250" required>
           </div>
           <div class="form-group">
-            <label>اختر صورة من جهازك (أو الصق رابط)</label>
-            <input type="file" id="p-file" accept="image/*" class="file-input" onchange="previewNewImage(this)">
-            <input type="text" id="p-image" placeholder="أو مسار الصورة: images/enbat.jpeg" style="margin-top: 6px;">
-            <img id="new-preview" class="img-preview" alt="معاينة الصورة">
+            <label for="prodImage">مسار الصورة:</label>
+            <input type="text" id="prodImage" class="form-control" placeholder="images/enbat.jpeg أو رابط إنترنت" required>
           </div>
           <div class="form-group">
-            <label>وصف المنتج</label>
-            <textarea id="p-desc" rows="3" placeholder="اكتب تفاصيل المنتج..."></textarea>
+            <label for="prodDesc">وصف المنتج:</label>
+            <textarea id="prodDesc" class="form-control" rows="3" placeholder="مميزات وفوائد المنتج..."></textarea>
           </div>
-          <button type="submit" id="save-btn">إضافة المنتج إلى المتجر</button>
+          <button type="submit" id="addProdBtn" class="btn-submit">
+            <i class="fa-solid fa-cloud-arrow-up"></i> نشر بالمتجر فوراً
+          </button>
         </form>
-      </div>
+      </aside>
 
-      <div class="card">
-        <h2>المنتجات الحالية في لوحة التحكم</h2>
-        <div class="grid" id="products-list">
-          <p style="color:#6b7280;">جاري التحميل...</p>
+      <!-- الجداول والبيانات -->
+      <section>
+        <div class="panel-card">
+          <h2 class="panel-title"><i class="fa-solid fa-list-check"></i> قائمة منتجات المتجر</h2>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>الصورة</th>
+                  <th>المنتج</th>
+                  <th>السعر</th>
+                  <th>النوع</th>
+                  <th>الإجراء</th>
+                </tr>
+              </thead>
+              <tbody id="productsTableBody">
+                <tr><td colspan="5" style="text-align:center; padding: 15px; color:#888;">جاري تحميل المنتجات...</td></tr>
+              </tbody>
+            </table>
+          </div>
         </div>
-      </div>
+
+        <!-- التقييمات -->
+        <div class="panel-card">
+          <h2 class="panel-title"><i class="fa-solid fa-star"></i> التقييمات المنشورة في المتجر</h2>
+          <div id="reviewsContainer">
+            <p style="text-align:center; color:#888; padding: 15px;">جاري تحميل التقييمات...</p>
+          </div>
+        </div>
+      </section>
+
     </div>
+  </main>
 
-    <!-- تبويب إعدادات المظهر والواجهة -->
-    <div id="theme-tab" class="tab-content">
-      <div class="card">
-        <h2>تخصيص الألوان والهوية</h2>
-        <form id="theme-form">
-          <div class="form-row">
-            <div class="form-group">
-              <label>اللون الأساسي (للأزرار والفوتر والهيدر):</label>
-              <input type="color" id="theme-primary" value="#194837">
-            </div>
-            <div class="form-group">
-              <label>اللون الثانوي (الذهبي / التمييز):</label>
-              <input type="color" id="theme-gold" value="#9e6f28">
-            </div>
-            <div class="form-group">
-              <label>لون خلفية الموقع بالكامل:</label>
-              <input type="color" id="theme-bg" value="#faf7f2">
-            </div>
-          </div>
+  <script>
+    const SECRET_PIN = "1234";
 
-          <h2 style="margin-top: 25px;">نصوص الواجهة والبانر</h2>
-          <div class="form-group">
-            <label>نص الشريط الإعلاني العلوي:</label>
-            <input type="text" id="theme-announcement" placeholder="🌿 خصومات حصرية على باقات العناية المتكاملة لفترة محدودة • 🚚 شحن لجميع محافظات مصر">
-          </div>
-          <div class="form-row">
-            <div class="form-group">
-              <label>العنوان الرئيسي - السطر الأول:</label>
-              <input type="text" id="theme-title-1" placeholder="جمال طبيعي">
-            </div>
-            <div class="form-group">
-              <label>العنوان الرئيسي - السطر الثاني:</label>
-              <input type="text" id="theme-title-2" placeholder="بلمسة مصرية">
-            </div>
-          </div>
-          <div class="form-group">
-            <label>الوصف الترحيبي تحت العنوان:</label>
-            <textarea id="theme-desc" rows="2" placeholder="اكتشفي أرقى منتجات العناية بالشعر الطبيعية 100%..."></textarea>
-          </div>
-          <div class="form-group">
-            <label>خلفية قسم البانر (ارفع صورة جديدة من جهازك):</label>
-            <input type="file" id="hero-file" accept="image/*" class="file-input" onchange="previewHeroImage(this)">
-            <input type="text" id="theme-hero-bg" placeholder="رابط صورة الخلفية" style="margin-top: 6px;">
-            <img id="hero-preview" class="img-preview" alt="معاينة الخلفية">
-          </div>
+    function checkAdminPin() {
+      const pin = document.getElementById('adminPin').value;
+      if(pin === SECRET_PIN) {
+        document.getElementById('loginOverlay').style.display = 'none';
+        sessionStorage.setItem('shrouk_admin_auth', 'true');
+      } else {
+        document.getElementById('loginError').style.display = 'block';
+      }
+    }
 
-          <button type="submit" id="save-theme-btn" style="background-color: var(--blue);">💾 حفظ وتطبيق المظهر فوراً على المتجر</button>
-        </form>
-      </div>
-    </div>
-  </div>
+    if(sessionStorage.getItem('shrouk_admin_auth') === 'true') {
+      document.getElementById('loginOverlay').style.display = 'none';
+    }
 
-  <!-- نافذة تعديل المنتج -->
-  <div class="modal-overlay" id="edit-modal">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h3>تعديل بيانات المنتج</h3>
-        <button class="modal-close" onclick="closeEditModal()">&times;</button>
-      </div>
-      <form id="edit-product-form">
-        <input type="hidden" id="edit-id">
-        <div class="form-group">
-          <label>اسم المنتج</label>
-          <input type="text" id="edit-name" required>
-        </div>
-        <div class="form-group">
-          <label>السعر (ج.م)</label>
-          <input type="number" id="edit-price" required>
-        </div>
-        <div class="form-group">
-          <label>رفع صورة جديدة من جهازك:</label>
-          <input type="file" id="edit-file" accept="image/*" class="file-input" onchange="previewEditImage(this)">
-          <input type="text" id="edit-image" placeholder="رابط الصورة" style="margin-top: 6px;">
-          <img id="edit-preview" class="img-preview" alt="معاينة الصورة">
-        </div>
-        <div class="form-group">
-          <label>وصف المنتج</label>
-          <textarea id="edit-desc" rows="3"></textarea>
-        </div>
-        <div style="display:flex; gap:10px;">
-          <button type="submit" id="update-btn" style="background-color: var(--blue); flex:1;">حفظ التعديلات</button>
-          <button type="button" onclick="closeEditModal()" style="background-color:#9ca3af;">إلغاء</button>
-        </div>
-      </form>
-    </div>
-  </div>
+    // المنتجات الأساسية الموجودة في صفحة المتجر
+    const staticProducts = [
+      { name: "مجموعة التوفير الأساسية", price: 1099, image: "images/offer1099.jpg" },
+      { name: "بوكس المجموعة الذهبية VIP", price: 1799, image: "images/box-1800.jpeg" },
+      { name: "زيت الإنبات والإطالة", price: 349, image: "images/enbat.jpeg" },
+      { name: "مجموعة الأعشاب الطبيعية", price: 149, image: "images/herbs.jpeg" },
+      { name: "سدر مطحون نقي", price: 149, image: "images/sedr.jpeg" },
+      { name: "مشاط بني أصلي", price: 249, image: "images/meshat.jpeg" },
+      { name: "حنة طبيعية فاخرة", price: 149, image: "images/henna.jpeg" },
+      { name: "مسك الصبار الطبيعي", price: 199, image: "images/aloe-vera-musk.jpeg" },
+      { name: "مشط خشب طبيعي", price: 59, image: "images/comb.jpeg" },
+      { name: "فوطة مايكروفايبر فاخرة", price: 69, image: "images/towel.jpeg" },
+      { name: "بونيه ستان حريري", price: 59, image: "images/satin-bonnet.jpeg" },
+      { name: "بونيه بلاستيك حراري", price: 49, image: "images/plastic-bonnet.jpeg" },
+      { name: "فرشاة مساج سيليكون", price: 49, image: "images/silicone-brush.jpeg" }
+    ];
+  </script>
 
+  <!-- اتصال Firebase Firestore مباشرة -->
   <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-    import { getFirestore, collection, addDoc, getDocs, deleteDoc, updateDoc, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
+    import { getFirestore, collection, addDoc, deleteDoc, doc, onSnapshot, query, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyDR8aJ2Q27x7KESwV0LTEKJ38SyoptLWA0",
@@ -216,243 +399,132 @@
 
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
-    const productsRef = collection(db, "products");
-    const settingsDocRef = doc(db, "settings", "store_theme");
+    const productsCol = collection(db, "products");
+    const reviewsCol = collection(db, "reviews");
 
-    let allProductsData = {};
-
-    function fileToBase64(file, maxWidth = 600) {
-      return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onload = (e) => {
-          const img = new Image();
-          img.onload = () => {
-            const canvas = document.createElement("canvas");
-            const scaleSize = maxWidth / img.width;
-            canvas.width = (img.width > maxWidth) ? maxWidth : img.width;
-            canvas.height = (img.width > maxWidth) ? (img.height * scaleSize) : img.height;
-            const ctx = canvas.getContext("2d");
-            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-            resolve(canvas.toDataURL("image/jpeg", 0.75));
-          };
-          img.src = e.target.result;
-        };
-        reader.onerror = reject;
-        reader.readAsDataURL(file);
+    // مزامنة وعرض المنتجات
+    onSnapshot(productsCol, (snapshot) => {
+      const dynamicProds = [];
+      snapshot.forEach(docSnap => {
+        dynamicProds.push({ id: docSnap.id, ...docSnap.data() });
       });
-    }
 
-    window.previewNewImage = async function(input) {
-      if (input.files && input.files[0]) {
-        const base64 = await fileToBase64(input.files[0]);
-        document.getElementById("p-image").value = base64;
-        const preview = document.getElementById("new-preview");
-        preview.src = base64;
-        preview.style.display = "block";
-      }
-    };
+      document.getElementById('statDynamicProducts').innerText = dynamicProds.length;
+      document.getElementById('statTotalProducts').innerText = staticProducts.length + dynamicProds.length;
 
-    window.previewEditImage = async function(input) {
-      if (input.files && input.files[0]) {
-        const base64 = await fileToBase64(input.files[0]);
-        document.getElementById("edit-image").value = base64;
-        const preview = document.getElementById("edit-preview");
-        preview.src = base64;
-        preview.style.display = "block";
-      }
-    };
+      const tbody = document.getElementById('productsTableBody');
+      let rows = '';
 
-    window.previewHeroImage = async function(input) {
-      if (input.files && input.files[0]) {
-        const base64 = await fileToBase64(input.files[0], 900);
-        document.getElementById("theme-hero-bg").value = base64;
-        const preview = document.getElementById("hero-preview");
-        preview.src = base64;
-        preview.style.display = "block";
-      }
-    };
+      dynamicProds.forEach(p => {
+        rows += `
+          <tr>
+            <td><img src="${p.image || 'images/logo.jpeg'}" class="prod-thumb" alt="${p.name}" onerror="this.src='images/logo.jpeg'"></td>
+            <td><strong>${p.name}</strong><br><small style="color:#666;">${p.desc ? p.desc.substring(0, 32) + '...' : ''}</small></td>
+            <td><strong style="color:var(--primary);">${p.price} ج.م</strong></td>
+            <td><span class="badge badge-cloud">سحابي جديد</span></td>
+            <td><button class="btn-del" onclick="deleteProduct('${p.id}')"><i class="fa-solid fa-trash"></i> حذف</button></td>
+          </tr>
+        `;
+      });
 
-    // تبديل التبويبات
-    window.switchTab = function(tabId) {
-      document.querySelectorAll(".tab-content").forEach(el => el.classList.remove("active"));
-      document.querySelectorAll(".tab-btn").forEach(el => el.classList.remove("active"));
-      document.getElementById(tabId).classList.add("active");
-      event.target.classList.add("active");
-    };
+      staticProducts.forEach(p => {
+        rows += `
+          <tr>
+            <td><img src="${p.image}" class="prod-thumb" alt="${p.name}" onerror="this.src='images/logo.jpeg'"></td>
+            <td>${p.name}</td>
+            <td><strong style="color:var(--primary);">${p.price} ج.م</strong></td>
+            <td><span class="badge badge-static">أساسي</span></td>
+            <td><span style="color:#9ca3af; font-size:11px;">مدمج بالقالب</span></td>
+          </tr>
+        `;
+      });
 
-    // جلب وحفظ إعدادات المظهر
-    async function loadThemeSettings() {
-      const snap = await getDoc(settingsDocRef);
-      if (snap.exists()) {
-        const data = snap.data();
-        if (data.primary) document.getElementById("theme-primary").value = data.primary;
-        if (data.gold) document.getElementById("theme-gold").value = data.gold;
-        if (data.bg) document.getElementById("theme-bg").value = data.bg;
-        if (data.announcement) document.getElementById("theme-announcement").value = data.announcement;
-        if (data.title1) document.getElementById("theme-title-1").value = data.title1;
-        if (data.title2) document.getElementById("theme-title-2").value = data.title2;
-        if (data.desc) document.getElementById("theme-desc").value = data.desc;
-        if (data.heroBg) {
-          document.getElementById("theme-hero-bg").value = data.heroBg;
-          const prev = document.getElementById("hero-preview");
-          prev.src = data.heroBg;
-          prev.style.display = "block";
-        }
-      }
-    }
-
-    document.getElementById("theme-form").addEventListener("submit", async (e) => {
-      e.preventDefault();
-      const btn = document.getElementById("save-theme-btn");
-      btn.disabled = true;
-      btn.innerText = "جاري حفظ وتطبيق المظهر...";
-
-      const themeData = {
-        primary: document.getElementById("theme-primary").value,
-        gold: document.getElementById("theme-gold").value,
-        bg: document.getElementById("theme-bg").value,
-        announcement: document.getElementById("theme-announcement").value,
-        title1: document.getElementById("theme-title-1").value,
-        title2: document.getElementById("theme-title-2").value,
-        desc: document.getElementById("theme-desc").value,
-        heroBg: document.getElementById("theme-hero-bg").value
-      };
-
-      await setDoc(settingsDocRef, themeData, { merge: true });
-      btn.disabled = false;
-      btn.innerText = "💾 حفظ وتطبيق المظهر فوراً على المتجر";
-      alert("تم حفظ المظهر بنجاح، تم تطبيقه تلقائياً على المتجر!");
+      tbody.innerHTML = rows;
     });
 
-    // المنتجات
-    async function loadProducts() {
-      const container = document.getElementById("products-list");
-      container.innerHTML = "";
-      const querySnapshot = await getDocs(productsRef);
-      allProductsData = {};
-      
-      if (querySnapshot.empty) {
-        container.innerHTML = "<p>لا توجد منتجات مضافة بعد.</p>";
+    // حفظ منتج جديد
+    window.handleNewProduct = async function(e) {
+      e.preventDefault();
+      const btn = document.getElementById('addProdBtn');
+      const name = document.getElementById('prodName').value.trim();
+      const price = Number(document.getElementById('prodPrice').value);
+      const image = document.getElementById('prodImage').value.trim();
+      const desc = document.getElementById('prodDesc').value.trim();
+
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> جاري الإضافة...';
+
+      try {
+        await addDoc(productsCol, {
+          name,
+          price,
+          image,
+          desc,
+          createdAt: serverTimestamp()
+        });
+        document.getElementById('addProductForm').reset();
+        alert('تم إضافة المنتج بنجاح وسيظهر في متجرك فوراً! 🌿');
+      } catch(err) {
+        alert('تعذر حفظ المنتج: ' + err.message);
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fa-solid fa-cloud-arrow-up"></i> نشر بالمتجر فوراً';
+      }
+    };
+
+    // حذف منتج
+    window.deleteProduct = async function(id) {
+      if(confirm('هل أنت متأكد من رغبتك في حذف هذا المنتج من المتجر؟')) {
+        try {
+          await deleteDoc(doc(db, "products", id));
+        } catch(err) {
+          alert('خطأ أثناء الحذف: ' + err.message);
+        }
+      }
+    };
+
+    // مزامنة التقييمات
+    const reviewsQ = query(reviewsCol, orderBy("createdAt", "desc"));
+    onSnapshot(reviewsQ, (snapshot) => {
+      document.getElementById('statReviewsCount').innerText = snapshot.size;
+      const container = document.getElementById('reviewsContainer');
+
+      if (snapshot.empty) {
+        container.innerHTML = '<p style="text-align:center; color:#888; padding: 15px;">لا توجد تقييمات جديدة حتى الآن.</p>';
         return;
       }
 
-      querySnapshot.forEach((documentItem) => {
-        const p = documentItem.data();
-        const id = documentItem.id;
-        allProductsData[id] = p;
+      let revHtml = '';
+      snapshot.forEach(docSnap => {
+        const r = docSnap.data();
+        const rid = docSnap.id;
+        const stars = '★'.repeat(r.stars || 5);
 
-        const div = document.createElement("div");
-        div.className = "product-item";
-        div.innerHTML = `
-          <img src="${p.image}" class="product-img" alt="${p.name}">
-          <div class="product-info">
-            <div class="product-title">${p.name}</div>
-            <div class="product-price">${p.price} ج.م</div>
-            <div class="product-desc">${p.desc || ''}</div>
-            <div class="btn-actions">
-              <button class="btn-edit" onclick="openEditModal('${id}')">تعديل</button>
-              <button class="btn-delete" onclick="removeProduct('${id}')">حذف</button>
+        revHtml += `
+          <div class="review-item">
+            <div>
+              <strong>${r.name}</strong>
+              <div class="review-stars">${stars}</div>
+              <p style="font-size: 13px; color:#4b5563;">"${r.text}"</p>
             </div>
+            <button class="btn-del" onclick="deleteReview('${rid}')"><i class="fa-solid fa-trash"></i></button>
           </div>
         `;
-        container.appendChild(div);
-      });
-    }
-
-    window.openEditModal = function(id) {
-      const prod = allProductsData[id];
-      if (!prod) return;
-
-      document.getElementById("edit-id").value = id;
-      document.getElementById("edit-name").value = prod.name || "";
-      document.getElementById("edit-price").value = prod.price || "";
-      document.getElementById("edit-image").value = prod.image || "";
-      document.getElementById("edit-desc").value = prod.desc || "";
-      document.getElementById("edit-file").value = "";
-
-      const preview = document.getElementById("edit-preview");
-      if (prod.image) {
-        preview.src = prod.image;
-        preview.style.display = "block";
-      } else {
-        preview.style.display = "none";
-      }
-
-      document.getElementById("edit-modal").style.display = "flex";
-    };
-
-    window.closeEditModal = function() {
-      document.getElementById("edit-modal").style.display = "none";
-    };
-
-    document.getElementById("edit-product-form").addEventListener("submit", async (e) => {
-      e.preventDefault();
-      const id = document.getElementById("edit-id").value;
-      const updateBtn = document.getElementById("update-btn");
-      updateBtn.disabled = true;
-      updateBtn.innerText = "جاري الحفظ...";
-
-      await updateDoc(doc(db, "products", id), {
-        name: document.getElementById("edit-name").value,
-        price: Number(document.getElementById("edit-price").value),
-        image: document.getElementById("edit-image").value,
-        desc: document.getElementById("edit-desc").value
       });
 
-      updateBtn.disabled = false;
-      updateBtn.innerText = "حفظ التعديلات";
-      closeEditModal();
-      loadProducts();
+      container.innerHTML = revHtml;
     });
 
-    document.getElementById("add-product-form").addEventListener("submit", async (e) => {
-      e.preventDefault();
-      const saveBtn = document.getElementById("save-btn");
-      saveBtn.disabled = true;
-      saveBtn.innerText = "جاري الإضافة...";
-
-      const newProduct = {
-        name: document.getElementById("p-name").value,
-        price: Number(document.getElementById("p-price").value),
-        image: document.getElementById("p-image").value,
-        desc: document.getElementById("p-desc").value,
-        createdAt: new Date().toISOString()
-      };
-
-      await addDoc(productsRef, newProduct);
-      document.getElementById("add-product-form").reset();
-      document.getElementById("new-preview").style.display = "none";
-      saveBtn.disabled = false;
-      saveBtn.innerText = "إضافة المنتج إلى المتجر";
-      loadProducts();
-    });
-
-    window.removeProduct = async function(id) {
-      if (confirm("هل أنت متأكد من رغبتك في حذف هذا المنتج؟")) {
-        await deleteDoc(doc(db, "products", id));
-        loadProducts();
+    // حذف تقييم
+    window.deleteReview = async function(id) {
+      if(confirm('هل ترغب في حذف هذا التقييم؟')) {
+        try {
+          await deleteDoc(doc(db, "reviews", id));
+        } catch(err) {
+          alert('خطأ أثناء الحذف: ' + err.message);
+        }
       }
     };
-
-    window.loadAdminDashboard = function() {
-      loadProducts();
-      loadThemeSettings();
-    };
-  </script>
-
-  <script>
-    const ADMIN_PASSWORD = "SHROUK308";
-
-    function checkAuth() {
-      const pass = document.getElementById("admin-pass").value;
-      if (pass === ADMIN_PASSWORD) {
-        document.getElementById("login-overlay").style.display = "none";
-        document.getElementById("admin-content").style.display = "block";
-        window.loadAdminDashboard();
-      } else {
-        document.getElementById("auth-error").style.display = "block";
-      }
-    }
   </script>
 </body>
 </html>
