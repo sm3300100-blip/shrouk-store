@@ -26,6 +26,8 @@
     label { display: block; margin-bottom: 6px; font-weight: 600; font-size: 0.9rem; }
     input, textarea { width: 100%; padding: 10px 14px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 0.95rem; outline: none; }
     input:focus, textarea:focus { border-color: var(--primary); }
+    .file-input { padding: 6px; background: #fafafa; }
+    .img-preview { width: 70px; height: 70px; object-fit: cover; border-radius: 8px; margin-top: 8px; border: 1px solid #ccc; display: none; }
     button { background-color: var(--primary); color: white; border: none; padding: 10px 20px; border-radius: 8px; font-size: 1rem; cursor: pointer; transition: 0.2s; font-weight: 600; }
     button:hover { background-color: var(--primary-hover); }
     .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 15px; }
@@ -41,11 +43,9 @@
     .btn-delete { background-color: var(--danger); font-size: 0.85rem; padding: 6px 14px; }
     .btn-delete:hover { background-color: #dc2626; }
     
-    /* شاشة الدخول */
     #login-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); display: flex; align-items: center; justify-content: center; z-index: 100; }
     .login-box { background: white; padding: 30px; border-radius: 12px; width: 100%; max-width: 350px; text-align: center; }
 
-    /* نافذة التعديل الشامل المنبثقة */
     .modal-overlay {
       position: fixed;
       inset: 0;
@@ -78,14 +78,11 @@
       font-size: 24px;
       color: #9ca3af;
       cursor: pointer;
-      padding: 0;
     }
-    .modal-close:hover { color: #111; }
   </style>
 </head>
 <body>
 
-  <!-- شاشة الدخول -->
   <div id="login-overlay">
     <div class="login-box">
       <h3 style="margin-bottom:15px;">تسجيل دخول المسؤول</h3>
@@ -100,7 +97,7 @@
       <h1>لوحة إدارة المنتجات</h1>
     </header>
 
-    <!-- إضافة منتج -->
+    <!-- إضافة منتج جديد -->
     <div class="card">
       <h2>إضافة منتج جديد</h2>
       <form id="add-product-form">
@@ -113,8 +110,10 @@
           <input type="number" id="p-price" required placeholder="مثال: 120">
         </div>
         <div class="form-group">
-          <label>رابط الصورة</label>
-          <input type="text" id="p-image" required placeholder="images/enbat.jpeg أو رابط إنترنت">
+          <label>اختر صورة من جهازك (أو الصق رابط بالأسفل)</label>
+          <input type="file" id="p-file" accept="image/*" class="file-input" onchange="previewNewImage(this)">
+          <input type="text" id="p-image" placeholder="أو مسار الصورة: images/enbat.jpeg" style="margin-top: 6px;">
+          <img id="new-preview" class="img-preview" alt="معاينة الصورة">
         </div>
         <div class="form-group">
           <label>وصف المنتج</label>
@@ -133,7 +132,7 @@
     </div>
   </div>
 
-  <!-- نافذة التعديل الشامل (Modal) -->
+  <!-- نافذة التعديل (Modal) -->
   <div class="modal-overlay" id="edit-modal">
     <div class="modal-content">
       <div class="modal-header">
@@ -151,8 +150,10 @@
           <input type="number" id="edit-price" required>
         </div>
         <div class="form-group">
-          <label>رابط الصورة</label>
-          <input type="text" id="edit-image" required>
+          <label>رفع صورة جديدة من جهازك:</label>
+          <input type="file" id="edit-file" accept="image/*" class="file-input" onchange="previewEditImage(this)">
+          <input type="text" id="edit-image" placeholder="رابط الصورة" style="margin-top: 6px;">
+          <img id="edit-preview" class="img-preview" alt="معاينة الصورة">
         </div>
         <div class="form-group">
           <label>وصف المنتج</label>
@@ -185,6 +186,49 @@
     const productsRef = collection(db, "products");
 
     let allProductsData = {};
+
+    // تحويل الصورة المرفوعة وضغطها تلقائياً لتناسب قاعدة البيانات
+    function fileToBase64(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          const img = new Image();
+          img.onload = () => {
+            const canvas = document.createElement("canvas");
+            const MAX_WIDTH = 500;
+            const scaleSize = MAX_WIDTH / img.width;
+            canvas.width = (img.width > MAX_WIDTH) ? MAX_WIDTH : img.width;
+            canvas.height = (img.width > MAX_WIDTH) ? (img.height * scaleSize) : img.height;
+            const ctx = canvas.getContext("2d");
+            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+            resolve(canvas.toDataURL("image/jpeg", 0.75));
+          };
+          img.src = e.target.result;
+        };
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+      });
+    }
+
+    window.previewNewImage = async function(input) {
+      if (input.files && input.files[0]) {
+        const base64 = await fileToBase64(input.files[0]);
+        document.getElementById("p-image").value = base64;
+        const preview = document.getElementById("new-preview");
+        preview.src = base64;
+        preview.style.display = "block";
+      }
+    };
+
+    window.previewEditImage = async function(input) {
+      if (input.files && input.files[0]) {
+        const base64 = await fileToBase64(input.files[0]);
+        document.getElementById("edit-image").value = base64;
+        const preview = document.getElementById("edit-preview");
+        preview.src = base64;
+        preview.style.display = "block";
+      }
+    };
 
     async function loadProducts() {
       const container = document.getElementById("products-list");
@@ -220,7 +264,6 @@
       });
     }
 
-    // فتح نافذة التعديل وتعبئة البيانات القديمة
     window.openEditModal = function(id) {
       const prod = allProductsData[id];
       if (!prod) return;
@@ -230,6 +273,15 @@
       document.getElementById("edit-price").value = prod.price || "";
       document.getElementById("edit-image").value = prod.image || "";
       document.getElementById("edit-desc").value = prod.desc || "";
+      document.getElementById("edit-file").value = "";
+
+      const preview = document.getElementById("edit-preview");
+      if (prod.image) {
+        preview.src = prod.image;
+        preview.style.display = "block";
+      } else {
+        preview.style.display = "none";
+      }
 
       document.getElementById("edit-modal").style.display = "flex";
     };
@@ -238,7 +290,6 @@
       document.getElementById("edit-modal").style.display = "none";
     };
 
-    // حفظ كل التعديلات
     document.getElementById("edit-product-form").addEventListener("submit", async (e) => {
       e.preventDefault();
       const id = document.getElementById("edit-id").value;
@@ -259,7 +310,6 @@
       loadProducts();
     });
 
-    // إضافة منتج جديد
     document.getElementById("add-product-form").addEventListener("submit", async (e) => {
       e.preventDefault();
       const saveBtn = document.getElementById("save-btn");
@@ -276,12 +326,12 @@
 
       await addDoc(productsRef, newProduct);
       document.getElementById("add-product-form").reset();
+      document.getElementById("new-preview").style.display = "none";
       saveBtn.disabled = false;
       saveBtn.innerText = "إضافة المنتج إلى المتجر";
       loadProducts();
     });
 
-    // حذف منتج
     window.removeProduct = async function(id) {
       if (confirm("هل أنت متأكد من رغبتك في حذف هذا المنتج؟")) {
         await deleteDoc(doc(db, "products", id));
