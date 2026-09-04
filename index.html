@@ -7,10 +7,9 @@
   <meta name="google-site-verification" content="aSIcm4FWd1E_2OPR2HwyCe4AhrrsbF6Ci2rXPsR8FMA" />
   <meta name="google-site-verification" content="77x_UO-V5Mri3M9MoJL-U1WkD4L7D4jFNdK4dQrhhKA" />
   
-  <title>شروق محمد Natural Oils - منتجات طبيعية 100% للعناية بالشعر</title>
+  <title id="pageTitle">شروق محمد Natural Oils - منتجات طبيعية 100% للعناية بالشعر</title>
   <meta name="description" content="متجر دكتورة شروق محمد Natural Oils - كورس العناية الطبيعية المتكامل، زيوت وأعشاب طبيعية 100% وسدر ومشاط وحنة لتكثيف وتطويل الشعر.">
 
-  <!-- Open Graph / Meta Social -->
   <meta property="og:type" content="website">
   <meta property="og:title" content="شروق محمد Natural Oils - زيوت وأعشاب طبيعية 100%">
   <meta property="og:description" content="اكتشفي أرقى منتجات العناية بالشعر الطبيعية 100% تحت إشراف د. شروق محمد. شحن لجميع المحافظات.">
@@ -20,7 +19,6 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
   
-  <!-- تحميل FontAwesome بدون حظر العرض -->
   <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
   <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
   
@@ -29,13 +27,13 @@
       --primary: #194837;
       --primary-dark: #0f3024;
       --primary-light: #eef8f2;
-      --gold: #9e6f28; /* درجة محسنة لتباين إمكانية الوصول */
+      --gold: #9e6f28;
       --gold-dark: #7a5214;
       --gold-light: #f6eedf;
       --bg-cream: #faf7f2;
       --card-bg: #ffffff;
       --text-dark: #1f2937;
-      --text-muted: #4b5563; /* تباين أوضح للنصوص التوضيحية */
+      --text-muted: #4b5563;
       --radius: 18px;
     }
     
@@ -45,7 +43,7 @@
     
     /* 1. الشريط العلوي الإعلاني */
     .top-announcement {
-      background: linear-gradient(90deg, #0f3024, #194837, #9e6f28);
+      background: linear-gradient(90deg, var(--primary-dark), var(--primary), var(--gold));
       color: #fff;
       font-size: 13px;
       font-weight: 700;
@@ -268,13 +266,6 @@
       padding-right: 15px;
     }
     
-    .packages-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 30px;
-      margin-bottom: 50px;
-    }
-    
     .grid { 
       display: grid; 
       grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); 
@@ -323,7 +314,7 @@
       width: 100%; 
       height: 100%; 
       object-fit: contain; 
-      transition: transform 0.4s ease;
+      transition: transform 0.4s ease; 
     }
     .card:hover img { transform: scale(1.06); }
     .card-body { padding: 20px; display: flex; flex-direction: column; flex-grow: 1; }
@@ -379,7 +370,6 @@
     .review-text { font-size: 13.5px; line-height: 1.6; color: #374151; }
     .review-badge { display: inline-block; font-size: 11px; background: #e6f4ea; color: #137333; padding: 2px 8px; border-radius: 10px; margin-top: 10px; font-weight: 700; }
 
-    /* زر إضافة التقييم التفاعلي */
     .add-review-btn-box {
       text-align: center;
       margin-top: 25px;
@@ -404,7 +394,6 @@
       transform: translateY(-2px);
     }
 
-    /* صندوق تقييم العملاء المنبثق */
     .review-modal {
       position: fixed;
       top: 50%;
@@ -563,7 +552,7 @@
     }
     .whatsapp-float-btn i { font-size: 22px; }
 
-    /* 6. إشعار المبيعات والتقييمات الحية التفاعلي */
+    /* 6. إشعار المبيعات التفاعلي */
     .live-toast {
       position: fixed;
       bottom: 85px;
@@ -734,7 +723,7 @@
       justify-content: center; 
       gap: 8px; 
       margin-top: 10px; 
-      transition: background 0.2s;
+      transition: background 0.2s; 
     }
     .checkout-btn:hover { background: #1eb956; }
     .overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 1500; display: none; }
@@ -750,9 +739,8 @@
 </head>
 <body>
 
-  <!-- شريط الإعلان العلوي -->
-  <aside class="top-announcement" aria-label="شريط العروض الترويجية">
-    <span>🌿 خصومات حصرية على باقات العناية المتكاملة لفترة محدودة</span>
+  <aside class="top-announcement" id="topAnnouncementBar" aria-label="شريط العروض الترويجية">
+    <span id="announcementText">🌿 خصومات حصرية على باقات العناية المتكاملة لفترة محدودة</span>
     <span>•</span>
     <span>🚚 شحن لجميع محافظات مصر والدفع عند الاستلام</span>
   </aside>
@@ -768,23 +756,20 @@
     <button class="cart-pill-btn" onclick="toggleCart()" aria-label="عرض سلة المشتريات"><i class="fa-solid fa-cart-shopping"></i> (<span id="cart-count">0</span>)</button>
   </header>
 
-  <!-- وسم المعلم الرئيسي لتنظيم الصفحة بالكامل وتحسين السيو -->
   <main>
-    <!-- قسم الهيدر الرئيسي -->
     <section class="hero-wrapper" aria-label="مقدمة المتجر">
       <div class="hero-text-box">
         <div class="hero-text-content">
-          <div class="hero-subtitle">من الطبيعة إلى روتينك</div>
+          <div class="hero-subtitle" id="heroSubtitle">من الطبيعة إلى روتينك</div>
           <h1 class="hero-main-title">
             <span class="title-green">جمال طبيعي</span><br>
             <span class="title-gold">بلمسة مصرية</span>
           </h1>
-          <div class="doctor-title">DR SHROUK MOHAMED</div>
-          <p class="hero-desc">اكتشفي أرقى منتجات العناية بالشعر الطبيعية 100% المعبأة بأعلى جودة وعناية متخصصة.</p>
+          <div class="doctor-title" id="doctorTitle">DR SHROUK MOHAMED</div>
+          <p class="hero-desc" id="heroDesc">اكتشفي أرقى منتجات العناية بالشعر الطبيعية 100% المعبأة بأعلى جودة وعناية متخصصة.</p>
 
-          <!-- زر مشاهدة اللقاء على قناة هي TV -->
           <div>
-            <a href="https://youtu.be/dKHqsPOXI7I" target="_blank" rel="noopener noreferrer" class="tv-interview-badge" title="شاهد لقاء د. شروق محمد على قناة هي TV">
+            <a href="https://youtu.be/dKHqsPOXI7I" target="_blank" rel="noopener noreferrer" class="tv-interview-badge" id="tvInterviewLink" title="شاهد لقاء د. شروق محمد على قناة هي TV">
               <i class="fa-brands fa-youtube"></i> شاهدي لقاء د. شروق محمد على قناة هي TV (برنامج سر الحكاية)
             </a>
           </div>
@@ -796,7 +781,6 @@
       </div>
     </section>
 
-    <!-- شارات الضمان والمميزات -->
     <section class="trust-badges-container" aria-label="مميزات المتجر">
       <div class="trust-card">
         <div class="trust-icon"><i class="fa-solid fa-leaf"></i></div>
@@ -828,16 +812,14 @@
       </div>
     </section>
 
-    <!-- قسم الباقات والمنتجات -->
     <div class="container" id="products-start">
-      <h2 class="section-title"><i class="fa-solid fa-gift"></i> باقات المجموعات الكاملة (عروض التوفير)</h2>
-      <section class="packages-grid">
-        
-        <!-- 1. مجموعة التوفير الأساسية (1099 ج.م) -->
+      <h2 class="section-title"><i class="fa-solid fa-sparkles"></i> منتجات وعروض المتجر الحالية</h2>
+      
+      <section class="grid" id="mainProductsGrid">
         <article class="card">
           <span class="card-badge">الأكثر طلباً ⭐</span>
           <div class="card-img-wrap">
-            <img src="images/offer1099.jpg" width="300" height="280" loading="lazy" onerror="tryNext(this, ['images/offer1099.jpeg', 'images/offer1099.png', 'images/offer1099.jpg.jpg', 'images/offer1099.jpeg.jpeg'])" alt="مجموعة التوفير الأساسية للعناية بالشعر">
+            <img src="images/offer1099.jpg" width="300" height="280" loading="lazy" alt="مجموعة التوفير الأساسية">
           </div>
           <div class="card-body">
             <h3 class="card-title">مجموعة التوفير الأساسية</h3>
@@ -849,11 +831,10 @@
           </div>
         </article>
 
-        <!-- 2. بوكس المجموعة الذهبية VIP (1799 ج.م) -->
         <article class="card">
           <span class="card-badge">عرض VIP ✨</span>
           <div class="card-img-wrap">
-            <img src="images/box-1800.jpeg" width="300" height="280" loading="lazy" onerror="tryNext(this, ['images/box-1800.jpg', 'images/box-1800.png', 'images/box-1800.jpeg.jpeg', 'images/box-1800.jp.jpeg'])" alt="بوكس المجموعة الذهبية VIP">
+            <img src="images/box-1800.jpeg" width="300" height="280" loading="lazy" alt="بوكس المجموعة الذهبية VIP">
           </div>
           <div class="card-body">
             <h3 class="card-title">بوكس المجموعة الذهبية VIP</h3>
@@ -864,194 +845,14 @@
             </div>
           </div>
         </article>
-
       </section>
 
-      <!-- قسم المنتجات الإضافية التفاعلية من لوحة التحكم -->
-      <div id="dynamicProductsSection" style="display: none; margin-bottom: 20px;">
-        <h2 class="section-title"><i class="fa-solid fa-sparkles"></i> منتجات جديدة ومميزة</h2>
-        <section class="grid" id="dynamicProductsGrid"></section>
-      </div>
-
-      <!-- المنتجات الفردية الطبيعية -->
-      <h2 class="section-title"><i class="fa-solid fa-spa"></i> المنتجات الفردية الطبيعية</h2>
-      <section class="grid">
-        <article class="card">
-          <div class="card-img-wrap"><img src="images/enbat.jpeg" width="280" height="280" loading="lazy" onerror="tryNext(this, ['images/enbat.jpg', 'images/enbat.png', 'images/enbat.jpeg.jpeg'])" alt="زيت الإنبات والإطالة"></div>
-          <div class="card-body">
-            <h3 class="card-title">زيت الإنبات والإطالة</h3>
-            <p class="card-desc">تركيبة مركزة لتحفيز بصيلات الشعر وملء الفراغات وتكثيف الشعر.</p>
-            <div class="card-footer">
-              <div class="card-price">349 ج.م</div>
-              <button class="add-btn" onclick="addToCart('زيت الإنبات والإطالة', 349)"><i class="fa-solid fa-cart-plus"></i> أضف للسلة</button>
-            </div>
-          </div>
-        </article>
-
-        <article class="card">
-          <div class="card-img-wrap"><img src="images/herbs.jpeg" width="280" height="280" loading="lazy" onerror="tryNext(this, ['images/herbs.jpg', 'images/herbs.png', 'images/herbs.jpeg.jpeg'])" alt="مجموعة الأعشاب الطبيعية"></div>
-          <div class="card-body">
-            <h3 class="card-title">مجموعة الأعشاب الطبيعية</h3>
-            <p class="card-desc">توليفة ممتازة من أنقى الأعشاب لتغذية فروة الرأس وتقوية الجذور.</p>
-            <div class="card-footer">
-              <div class="card-price">149 ج.م</div>
-              <button class="add-btn" onclick="addToCart('مجموعة الأعشاب الطبيعية', 149)"><i class="fa-solid fa-cart-plus"></i> أضف للسلة</button>
-            </div>
-          </div>
-        </article>
-
-        <article class="card">
-          <div class="card-img-wrap"><img src="images/sedr.jpeg" width="280" height="280" loading="lazy" onerror="tryNext(this, ['images/sedr.jpg', 'images/sedr.png', 'images/sedr.jpeg.jpeg'])" alt="سدر مطحون نقي"></div>
-          <div class="card-body">
-            <h3 class="card-title">سدر مطحون نقي</h3>
-            <p class="card-desc">سدر عضوي نقي 100% لتنظيف الفروة وإعطاء كثافة ولمعان فائق للشعر.</p>
-            <div class="card-footer">
-              <div class="card-price">149 ج.م</div>
-              <button class="add-btn" onclick="addToCart('سدر مطحون نقي', 149)"><i class="fa-solid fa-cart-plus"></i> أضف للسلة</button>
-            </div>
-          </div>
-        </article>
-
-        <article class="card">
-          <div class="card-img-wrap"><img src="images/meshat.jpeg" width="280" height="280" loading="lazy" onerror="tryNext(this, ['images/meshat.jpg', 'images/meshat.png', 'images/meshat.jpeg.jpeg'])" alt="مشاط بني أصلي"></div>
-          <div class="card-body">
-            <h3 class="card-title">مشاط بني أصلي</h3>
-            <p class="card-desc">خلطة المشاط التراثية الأصيلة لتعطير الشعر وتنعيمه وتقويته.</p>
-            <div class="card-footer">
-              <div class="card-price">249 ج.م</div>
-              <button class="add-btn" onclick="addToCart('مشاط بني أصلي', 249)"><i class="fa-solid fa-cart-plus"></i> أضف للسلة</button>
-            </div>
-          </div>
-        </article>
-
-        <article class="card">
-          <div class="card-img-wrap"><img src="images/henna.jpeg" width="280" height="280" loading="lazy" onerror="tryNext(this, ['images/henna.jpg', 'images/henna.png', 'images/henna.jpeg.jpeg'])" alt="حنة طبيعية فاخرة"></div>
-          <div class="card-body">
-            <h3 class="card-title">حنة طبيعية فاخرة</h3>
-            <p class="card-desc">حنة نقية معالجة ومغذية تمنح الشعر حيوية ولون طبيعي جذاب.</p>
-            <div class="card-footer">
-              <div class="card-price">149 ج.م</div>
-              <button class="add-btn" onclick="addToCart('حنة طبيعية فاخرة', 149)"><i class="fa-solid fa-cart-plus"></i> أضف للسلة</button>
-            </div>
-          </div>
-        </article>
-
-        <!-- مسك الصبار الطبيعي -->
-        <article class="card">
-          <div class="card-img-wrap">
-            <img src="images/aloe-vera-musk.jpeg" width="280" height="280" loading="lazy" onerror="tryNext(this, ['images/aloe-vera-musk.jpg', 'images/aloe-vera-musk.png', 'images/aloe-vera-musk.jpeg.jpeg', 'images/aloe.jpeg', 'images/aloe.jpg', 'images/aloe.png', 'images/aloe-vera.jpeg', 'images/aloe-vera.jpg', 'images/aloe-vera-musk.jpeg.jpg'])" alt="مسك الصبار الطبيعي">
-          </div>
-          <div class="card-body">
-            <h3 class="card-title">مسك الصبار الطبيعي</h3>
-            <p class="card-desc">خلاصة الصبار الطبيعي مع لمسات المسك المنعش لترطيب وتغذية وتعطير الشعر بعمق.</p>
-            <div class="card-footer">
-              <div class="card-price">199 ج.م</div>
-              <button class="add-btn" onclick="addToCart('مسك الصبار الطبيعي', 199)"><i class="fa-solid fa-cart-plus"></i> أضف للسلة</button>
-            </div>
-          </div>
-        </article>
-      </section>
-
-      <!-- أدوات العناية الفاخرة -->
-      <h2 class="section-title"><i class="fa-solid fa-wand-magic-sparkles"></i> أدوات العناية الفاخرة</h2>
-      <section class="grid">
-        <article class="card">
-          <div class="card-img-wrap"><img src="images/comb.jpeg" width="280" height="280" loading="lazy" onerror="tryNext(this, ['images/comb.jpg', 'images/comb.png', 'images/comb.jpeg.jpeg'])" alt="مشط خشب طبيعي"></div>
-          <div class="card-body">
-            <h3 class="card-title">مشط خشب طبيعي</h3>
-            <p class="card-desc">مشط خشبي عريض الأسنان لفك التشابك بلطف ومنع تقصف وتكسر الشعر.</p>
-            <div class="card-footer">
-              <div class="card-price">59 ج.م</div>
-              <button class="add-btn" onclick="addToCart('مشط خشب طبيعي', 59)"><i class="fa-solid fa-cart-plus"></i> أضف للسلة</button>
-            </div>
-          </div>
-        </article>
-
-        <article class="card">
-          <div class="card-img-wrap"><img src="images/towel.jpeg" width="280" height="280" loading="lazy" onerror="tryNext(this, ['images/towel.jpg', 'images/towel.png', 'images/towel.jpeg.jpeg'])" alt="فوطة مايكروفايبر فاخرة"></div>
-          <div class="card-body">
-            <h3 class="card-title">فوطة مايكروفايبر فاخرة</h3>
-            <p class="card-desc">فوطة ناعمة جداً فائقة الامتصاص لتجفيف الشعر بدون نفشة أو ضرر.</p>
-            <div class="card-footer">
-              <div class="card-price">69 ج.م</div>
-              <button class="add-btn" onclick="addToCart('فوطة مايكروفايبر فاخرة', 69)"><i class="fa-solid fa-cart-plus"></i> أضف للسلة</button>
-            </div>
-          </div>
-        </article>
-
-        <article class="card">
-          <div class="card-img-wrap"><img src="images/satin-bonnet.jpeg" width="280" height="280" loading="lazy" onerror="tryNext(this, ['images/satin-bonnet.jpg', 'images/satin-bonnet.png', 'images/satin-bonnet.jpeg.jpeg'])" alt="بونيه ستان حريري"></div>
-          <div class="card-body">
-            <h3 class="card-title">بونيه ستان حريري</h3>
-            <p class="card-desc">بونيه ستان ناعم يحافظ على ترطيب الشعر والزيوت ويمنع الهيشان أثناء النوم.</p>
-            <div class="card-footer">
-              <div class="card-price">59 ج.م</div>
-              <button class="add-btn" onclick="addToCart('بونيه ستان حريري', 59)"><i class="fa-solid fa-cart-plus"></i> أضف للسلة</button>
-            </div>
-          </div>
-        </article>
-
-        <article class="card">
-          <div class="card-img-wrap"><img src="images/plastic-bonnet.jpeg" width="280" height="280" loading="lazy" onerror="tryNext(this, ['images/plastic-bonnet.jpg', 'images/plastic-bonnet.png', 'images/plastic-bonnet.jpeg.jpeg'])" alt="بونيه بلاستيك حراري"></div>
-          <div class="card-body">
-            <h3 class="card-title">بونيه بلاستيك حراري</h3>
-            <p class="card-desc">مثالي للاستخدام مع حمامات الزيت والحنة لتفتيح المسام ومضاعفة الامتصاص.</p>
-            <div class="card-footer">
-              <div class="card-price">49 ج.م</div>
-              <button class="add-btn" onclick="addToCart('بونيه بلاستيك حراري', 49)"><i class="fa-solid fa-cart-plus"></i> أضف للسلة</button>
-            </div>
-          </div>
-        </article>
-
-        <!-- الفرشاة السيليكون -->
-        <article class="card">
-          <div class="card-img-wrap">
-            <img src="images/silicone-brush.jpeg" width="280" height="280" loading="lazy" onerror="tryNext(this, ['images/silicone-brush.jpeg.jpeg', 'images/silicone-brush.jpeg.jpg', 'images/silicone-brush.jpeg.png', 'images/silicone-brush.jpg', 'images/silicone-brush.png', 'images/brush.jpeg', 'images/brush.jpg'])" alt="فرشاة مساج سيليكون">
-          </div>
-          <div class="card-body">
-            <h3 class="card-title">فرشاة مساج سيليكون</h3>
-            <p class="card-desc">فرشاة مرنة لتدليك الفروة وتنشيط الدورة الدموية وتوزيع الزيوت والشامبو بعمق.</p>
-            <div class="card-footer">
-              <div class="card-price">49 ج.م</div>
-              <button class="add-btn" onclick="addToCart('فرشاة مساج سيليكون', 49)"><i class="fa-solid fa-cart-plus"></i> أضف للسلة</button>
-            </div>
-          </div>
-        </article>
-      </section>
-
-      <!-- قسم آراء وتقييمات العملاء المباشر -->
       <section class="reviews-section" aria-label="آراء وتجارب العملاء">
         <h2 class="section-title" style="margin-bottom: 5px;"><i class="fa-solid fa-star"></i> آراء وتجارب عميلاتنا</h2>
         <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 20px;">نعتز بثقة آلاف العميلات اللاتي خضن تجربة العناية الطبيعية مع د. شروق محمد</p>
         
-        <div class="reviews-grid" id="reviewsGrid">
-          <div class="review-card">
-            <div class="review-header">
-              <span class="review-name">مريم الأحمدي - القاهرة</span>
-              <div class="stars">★★★★★</div>
-            </div>
-            <p class="review-text">"زيت الإنبات غير شعري تماماً في 3 أسابيع، الفراغات اللي في مقدمة الرأس بدأت تملأ وشعري بطل يتساقط نهائياً، بجد تسلم إيدك دكتورة شروق."</p>
-            <span class="review-badge">مشترية مؤكدة ✓</span>
-          </div>
-          <div class="review-card">
-            <div class="review-header">
-              <span class="review-name">نور الهدى - الإسكندرية</span>
-              <div class="stars">★★★★★</div>
-            </div>
-            <p class="review-text">"طلبت بوكس الـ VIP كامل.. السدر نقي جداً والمشط الخشب والبونيه تحفة وفرقوا في الروتين. جودة المنتجات والتغليف فوق الممتاز."</p>
-            <span class="review-badge">مشترية مؤكدة ✓</span>
-          </div>
-          <div class="review-card">
-            <div class="review-header">
-              <span class="review-name">أسماء خالد - المنصورة</span>
-              <div class="stars">★★★★★</div>
-            </div>
-            <p class="review-text">"مسك الصبار ريحته بتفضل في الشعر أيام مع ترطيب ولمعان طبيعي خطير، ومجموعة التوفير الأساسية سعرها مناسب جداً لكمية المنتجات."</p>
-            <span class="review-badge">مشترية مؤكدة ✓</span>
-          </div>
-        </div>
+        <div class="reviews-grid" id="reviewsGrid"></div>
 
-        <!-- زر يفتح نافذة كتابة الرأي -->
         <div class="add-review-btn-box">
           <button class="btn-add-review" onclick="toggleReviewModal(true)">
             <i class="fa-solid fa-pen-to-square"></i> شاركينا رأيك وتجربتك
@@ -1059,19 +860,17 @@
         </div>
       </section>
 
-      <!-- قسم الأسئلة الشائعة وسياسة الاسترجاع -->
       <section class="faq-section" aria-label="الأسئلة الشائعة">
         <h2 class="section-title"><i class="fa-solid fa-circle-question"></i> الأسئلة الشائعة وسياسة الاستبدال</h2>
         
-        <!-- خانة الاسترجاع والضمان (خلال أسبوع) -->
         <div class="faq-item" onclick="toggleFaq(this)">
           <div class="faq-question">
             <span><i class="fa-solid fa-rotate-left" style="color:var(--gold); margin-left:8px;"></i> ما هي سياسة وضمان الاسترجاع؟ (خلال أسبوع)</span>
             <i class="fa-solid fa-chevron-down"></i>
           </div>
           <div class="faq-answer">
-            نضمن لكِ حق الاسترجاع أو الاستبدال خلال <strong>7 أيام (أسبوع)</strong> من تاريخ استلام الشحنة، بشرط توضيح سبب الاسترجاع بشكل واضح ومفصل (مثل وجود تلف في الشحن، أو عدم مطابقة المنتج).<br>
-            <a href="https://wa.me/201013275211?text=%D9%85%D8%B1%D8%AD%D8%A8%D8%A7%D9%8B%D8%8C%20%D8%A3%D8%B1%D9%8A%D8%AF%20%D8%AA%D9%82%D8%AF%D9%8A%D9%85%20%D8%B7%D9%84%D8%A8%20%D8%A7%D8%B3%D8%AA%D8%B1%D8%AC%D8%A7%D8%B9%20%D8%A3%D9%88%20%D8%A7%D8%B3%D8%AA%D8%A8%D8%AF%D8%A7%D9%84%20%D9%84%D9%84%D8%B4%D8%AD%D9%86%D8%A9%20%D8%AE%D9%84%D8%A7%D9%84%20%D9%85%D8%AF%D8%A9%20%D8%A7%D9%84%D8%A3%D8%B3%D8%A8%D9%88%D8%B9%D8%8C%20%D9%88%D8%A7%D9%84%D8%B3%D8%A8%D8%A8%20%D9%87%D9%88%3A%20" target="_blank" rel="noopener noreferrer" class="return-btn-wa">
+            نضمن لكِ حق الاسترجاع أو الاستبدال خلال <strong>7 أيام (أسبوع)</strong> من تاريخ استلام الشحنة، بشرط توضيح سبب الاسترجاع بشكل واضح ومفصل.<br>
+            <a href="https://wa.me/201013275211?text=%D9%85%D8%B1%D8%AD%D8%A8%D8%A7%D9%8B%D8%8C%20%D8%A3%D8%B1%D9%8A%D8%AF%20%D8%AA%D9%82%D8%AF%D9%8A%D9%85%20%D8%B7%D9%84%D8%A8%20%D8%A7%D8%B3%D8%AA%D8%B1%D8%AC%D8%A7%D8%B9" id="faqReturnLink" target="_blank" rel="noopener noreferrer" class="return-btn-wa">
               <i class="fa-brands fa-whatsapp"></i> تقديم طلب استرجاع عبر الواتساب مع ذكر السبب
             </a>
           </div>
@@ -1111,11 +910,10 @@
     </div>
   </main>
 
-  <!-- نافذة كتابة الرأي المنبثقة -->
   <div class="review-modal" id="reviewModal">
     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
       <h3 style="font-size:16px; color:var(--primary); font-weight:800;"><i class="fa-solid fa-star"></i> أضيفي تقييمك ورأيك</h3>
-      <button onclick="toggleReviewModal(false)" aria-label="إغلاق النافذة" style="background:none; border:none; font-size:22px; cursor:pointer; color:#777;">&times;</button>
+      <button onclick="toggleReviewModal(false)" aria-label="إغلاق النافذة" style="background:none; border:none; font-size:22px; cursor:pointer; color:#777;">×</button>
     </div>
     <div class="form-group">
       <label for="revName">اسمك الكريم (أو الاسم والمحافظة):</label>
@@ -1140,13 +938,11 @@
     </button>
   </div>
 
-  <!-- زر واتساب عائم -->
-  <a href="https://wa.me/201013275211?text=%D9%85%D8%B1%D8%AD%D8%A8%D8%A7%D9%8B%D8%8C%20%D8%A3%D8%B1%D9%8A%D8%AF%20%D8%A7%D8%B3%D8%AA%D8%B4%D8%A7%D8%B1%D8%A9%20%D8%AD%D9%88%D9%84%20%D9%83%D9%88%D8%B1%D8%B3%20%D8%A7%D9%84%D8%B9%D9%86%D8%A7%D9%8A%D8%A9%20%D8%A8%D8%A7%D9%84%D8%B4%D8%B9%D8%B1%20%D9%85%D9%86%20Natural%20Oils" target="_blank" rel="noopener noreferrer" class="whatsapp-float-btn" title="تحدثي مع د. شروق محمد عبر واتساب" aria-label="تواصل عبر الواتساب">
+  <a href="https://wa.me/201013275211" target="_blank" rel="noopener noreferrer" class="whatsapp-float-btn" id="waFloatBtn" title="تحدثي مع د. شروق محمد عبر واتساب" aria-label="تواصل عبر الواتساب">
     <i class="fa-brands fa-whatsapp"></i>
     <span>استشارة مجانية عبر واتساب</span>
   </a>
 
-  <!-- إشعار المبيعات والتقييمات التفاعلي المزدوج -->
   <div class="live-toast" id="liveToast" aria-live="polite">
     <div class="toast-icon" id="toastIcon"><i class="fa-solid fa-bag-shopping"></i></div>
     <div class="toast-content">
@@ -1155,27 +951,25 @@
     </div>
   </div>
 
-  <!-- الفوتر -->
   <footer>
     <div class="social-title">تواصل مع دكتورة شروق محمد</div>
     <div class="social-subtitle">تابعي حساباتنا الرسمية على منصات التواصل الاجتماعي للحصول على نصائح العناية وأحدث العروض</div>
     <div class="social-links">
-      <a href="https://youtu.be/dKHqsPOXI7I" target="_blank" rel="noopener noreferrer" class="social-link yt" title="حلقة د. شروق محمد على قناة هي TV (برنامج سر الحكاية)" aria-label="يوتيوب"><i class="fa-brands fa-youtube"></i></a>
-      <a href="https://www.instagram.com/natural_oils_1?igsh=ZWZ1cjh6Y2V4cDNu" target="_blank" rel="noopener noreferrer" class="social-link insta" title="انستجرام دكتورة شروق محمد" aria-label="انستجرام"><i class="fa-brands fa-instagram"></i></a>
-      <a href="https://www.facebook.com/share/g/1C8ozZvEVx/" target="_blank" rel="noopener noreferrer" class="social-link fb" title="مجموعة فيسبوك دكتورة شروق محمد" aria-label="فيسبوك"><i class="fa-brands fa-facebook-f"></i></a>
-      <a href="https://www.tiktok.com/@sh0sh0224?_r=1&_t=ZS-99FTJNk7CFx" target="_blank" rel="noopener noreferrer" class="social-link tt" title="تيك توك دكتورة شروق محمد" aria-label="تيك توك"><i class="fa-brands fa-tiktok"></i></a>
-      <a href="https://wa.me/201013275211" target="_blank" rel="noopener noreferrer" class="social-link wa" title="واتساب دكتورة شروق محمد" aria-label="واتساب"><i class="fa-brands fa-whatsapp"></i></a>
+      <a href="https://youtu.be/dKHqsPOXI7I" target="_blank" rel="noopener noreferrer" class="social-link yt" id="footerYtLink" title="حلقة د. شروق محمد" aria-label="يوتيوب"><i class="fa-brands fa-youtube"></i></a>
+      <a href="https://www.instagram.com/natural_oils_1?igsh=ZWZ1cjh6Y2V4cDNu" target="_blank" rel="noopener noreferrer" class="social-link insta" title="انستجرام" aria-label="انستجرام"><i class="fa-brands fa-instagram"></i></a>
+      <a href="https://www.facebook.com/share/g/1C8ozZvEVx/" target="_blank" rel="noopener noreferrer" class="social-link fb" title="فيسبوك" aria-label="فيسبوك"><i class="fa-brands fa-facebook-f"></i></a>
+      <a href="https://www.tiktok.com/@sh0sh0224?_r=1&_t=ZS-99FTJNk7CFx" target="_blank" rel="noopener noreferrer" class="social-link tt" title="تيك توك" aria-label="تيك توك"><i class="fa-brands fa-tiktok"></i></a>
+      <a href="https://wa.me/201013275211" target="_blank" rel="noopener noreferrer" class="social-link wa" id="footerWaLink" title="واتساب" aria-label="واتساب"><i class="fa-brands fa-whatsapp"></i></a>
     </div>
     <div class="footer-copy">جميع الحقوق محفوظة © متجر دكتورة شروق محمد Natural Oils</div>
   </footer>
 
   <div class="overlay" id="overlay" onclick="closeAllModals()"></div>
 
-  <!-- سلة المشتريات -->
   <div class="cart-drawer" id="cartDrawer">
     <div class="cart-header">
       <h3 style="font-size: 16px;"><i class="fa-solid fa-bag-shopping"></i> سلة مشترياتك</h3>
-      <button class="close-cart" onclick="toggleCart()" aria-label="إغلاق السلة">&times;</button>
+      <button class="close-cart" onclick="toggleCart()" aria-label="إغلاق السلة">×</button>
     </div>
     <div class="cart-items" id="cartItems">
       <p style="text-align:center; color: #888; margin-top: 50px;">السلة فارغة حالياً</p>
@@ -1201,7 +995,6 @@
         </button>
       </div>
 
-      <!-- خيارات الدفع -->
       <div class="form-group">
         <label>طريقة الدفع:</label>
         <div class="payment-options">
@@ -1217,7 +1010,7 @@
 
         <div id="instaDetails" class="instapay-box">
           <strong><i class="fa-solid fa-circle-info"></i> التحويل عبر إنستاباي:</strong><br>
-          • رقم التحويل: <strong>01013275211</strong><br>
+          • رقم التحويل: <strong id="instaNumberDisplay">01013275211</strong><br>
           <span style="color:#666; font-size:11px;">* يرجى إرسال صورة التحويل بعد إرسال رسالة الواتساب.</span>
         </div>
       </div>
@@ -1236,14 +1029,11 @@
       }
     }
 
-    // استعادة السلة
     let cart = JSON.parse(localStorage.getItem('shrouk_cart')) || [];
-    const whatsappPhone = "201013275211";
+    window.whatsappPhone = "201013275211";
     let selectedPaymentMethod = "الدفع عند الاستلام (نقدي)";
     let customerLocationUrl = "";
     let selectedStarCount = 5;
-
-    // قائمة التقييمات الموثقة من السحابة لتغذية الإشعارات
     window.cloudReviewsList = [];
 
     function saveCart() {
@@ -1262,7 +1052,7 @@
             btn.innerHTML = '<i class="fa-solid fa-check-circle"></i> تم تحديد الموقع بنجاح 📍';
             btn.classList.add('detected');
           },
-          function(error) {
+          function() {
             btn.innerHTML = '<i class="fa-solid fa-location-crosshairs"></i> تعذر تحديد الموقع تلقائياً';
           }
         );
@@ -1287,17 +1077,17 @@
       }
     }
 
-    function addToCart(title, price) {
+    window.addToCart = function(title, price) {
       const existing = cart.find(item => item.title === title);
       if(existing) {
         existing.qty += 1;
       } else {
-        cart.push({ title, price, qty: 1 });
+        cart.push({ title, price: Number(price), qty: 1 });
       }
       saveCart();
       updateCart();
       toggleCart(true);
-    }
+    };
 
     function updateCart() {
       const cartItemsDiv = document.getElementById('cartItems');
@@ -1307,8 +1097,10 @@
       const totalCount = cart.reduce((sum, item) => sum + item.qty, 0);
       const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
       
-      cartCount.innerText = totalCount;
-      cartTotal.innerText = totalPrice + ' ج.م';
+      if (cartCount) cartCount.innerText = totalCount;
+      if (cartTotal) cartTotal.innerText = totalPrice + ' ج.م';
+
+      if(!cartItemsDiv) return;
 
       if(cart.length === 0) {
         cartItemsDiv.innerHTML = '<p style="text-align:center; color: #888; margin-top: 50px;">السلة فارغة حالياً</p>';
@@ -1330,14 +1122,14 @@
       `).join('');
     }
 
-    function changeQty(index, delta) {
+    window.changeQty = function(index, delta) {
       cart[index].qty += delta;
       if(cart[index].qty <= 0) cart.splice(index, 1);
       saveCart();
       updateCart();
-    }
+    };
 
-    function toggleCart(forceOpen = false) {
+    window.toggleCart = function(forceOpen = false) {
       const drawer = document.getElementById('cartDrawer');
       const overlay = document.getElementById('overlay');
       if(forceOpen) {
@@ -1347,14 +1139,13 @@
         drawer.classList.toggle('active');
         overlay.classList.toggle('active');
       }
-    }
+    };
 
-    function toggleFaq(element) {
+    window.toggleFaq = function(element) {
       element.classList.toggle('active');
-    }
+    };
 
-    // إدارة نافذة التقييمات
-    function toggleReviewModal(show) {
+    window.toggleReviewModal = function(show) {
       const modal = document.getElementById('reviewModal');
       const overlay = document.getElementById('overlay');
       if (show) {
@@ -1364,18 +1155,18 @@
         modal.classList.remove('active');
         overlay.classList.remove('active');
       }
-    }
+    };
 
-    function closeAllModals() {
+    window.closeAllModals = function() {
       const drawer = document.getElementById('cartDrawer');
       const modal = document.getElementById('reviewModal');
       const overlay = document.getElementById('overlay');
-      drawer.classList.remove('active');
-      modal.classList.remove('active');
-      overlay.classList.remove('active');
-    }
+      if (drawer) drawer.classList.remove('active');
+      if (modal) modal.classList.remove('active');
+      if (overlay) overlay.classList.remove('active');
+    };
 
-    function setRating(stars) {
+    window.setRating = function(stars) {
       selectedStarCount = stars;
       const starIcons = document.querySelectorAll('#starRatingSelect i');
       starIcons.forEach((star, idx) => {
@@ -1385,9 +1176,8 @@
           star.classList.remove('active');
         }
       });
-    }
+    };
 
-    // نظام الإشعارات الذكي (مبيعات + تقييمات موثقة بالتبادل)
     const buyers = [
       { name: "سارة من القاهرة", item: "مجموعة التوفير الأساسية" },
       { name: "ندى من الإسكندرية", item: "بوكس المجموعة الذهبية VIP" },
@@ -1405,11 +1195,13 @@
       const itemElem = document.getElementById('toastProduct');
       const iconElem = document.getElementById('toastIcon');
 
+      if (!toast || !custElem || !itemElem || !iconElem) return;
+
       if (showReviewNext && window.cloudReviewsList && window.cloudReviewsList.length > 0) {
         const rev = window.cloudReviewsList[reviewIdx % window.cloudReviewsList.length];
         iconElem.innerHTML = '<i class="fa-solid fa-star" style="color:#f59e0b;"></i>';
         custElem.innerHTML = `⭐ تقييم موثق من <strong>${rev.name}</strong>`;
-        const shortText = rev.text.length > 55 ? rev.text.substring(0, 52) + '...' : rev.text;
+        const shortText = rev.text && rev.text.length > 55 ? rev.text.substring(0, 52) + '...' : (rev.text || '');
         itemElem.innerText = `"${shortText}"`;
         reviewIdx++;
         showReviewNext = false;
@@ -1462,11 +1254,11 @@
       saveCart();
       updateCart();
 
-      const whatsappUrl = "https://api.whatsapp.com/send?phone=" + whatsappPhone + "&text=" + encodeURIComponent(msg);
+      const whatsappUrl = "https://api.whatsapp.com/send?phone=" + window.whatsappPhone + "&text=" + encodeURIComponent(msg);
       window.location.href = whatsappUrl;
     }
 
-    function checkout() {
+    window.checkout = function() {
       if(cart.length === 0) {
         alert('السلة فارغة! يرجى اختيار منتجات أولاً.');
         return;
@@ -1489,7 +1281,7 @@
             customerLocationUrl = `https://maps.google.com/?q=${position.coords.latitude},${position.coords.longitude}`;
             sendOrder(customerLocationUrl);
           },
-          function(error) {
+          function() {
             sendOrder("");
           },
           { timeout: 3500 }
@@ -1497,17 +1289,16 @@
       } else {
         sendOrder(customerLocationUrl);
       }
-    }
+    };
 
     document.addEventListener('DOMContentLoaded', () => {
       updateCart();
     });
   </script>
 
-  <!-- تحميل كود Firebase بشكل متوازي بعد تحميل الصفحة لتسريع فتح المتجر -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
-    import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
+    import { getFirestore, collection, doc, addDoc, onSnapshot, query, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyDR8aJ2Q27x7KESwV0LTEKJ38SyoptLWA0",
@@ -1523,16 +1314,69 @@
     const db = getFirestore(app);
     const reviewsCol = collection(db, "reviews");
     const productsCol = collection(db, "products");
+    const settingsDoc = doc(db, "config", "siteSettings");
 
-    // قراءة المنتجات المضافة من لوحة التحكم في الوقت الفعلي
-    onSnapshot(productsCol, (snapshot) => {
-      const dynamicGrid = document.getElementById('dynamicProductsGrid');
-      const dynamicSection = document.getElementById('dynamicProductsSection');
-      
-      if (snapshot.empty) {
-        if (dynamicSection) dynamicSection.style.display = 'none';
-        return;
+    // 1. مزامنة إعدادات المتجر العامة (الألوان، البنر، الواتساب) حياً
+    onSnapshot(settingsDoc, (snap) => {
+      if(!snap.exists()) return;
+      const data = snap.data();
+
+      // الألوان الرئيسية
+      if(data.primaryColor) {
+        document.documentElement.style.setProperty('--primary', data.primaryColor);
+        document.documentElement.style.setProperty('--primary-dark', data.primaryColor);
       }
+      if(data.goldColor) {
+        document.documentElement.style.setProperty('--gold', data.goldColor);
+      }
+
+      // نصوص البنر والشريط العلوي
+      if(data.announcement) {
+        const ann = document.getElementById('announcementText');
+        if(ann) ann.innerText = data.announcement;
+      }
+      if(data.heroSub) {
+        const sub = document.getElementById('heroSubtitle');
+        if(sub) sub.innerText = data.heroSub;
+      }
+      if(data.docTitle) {
+        const dt = document.getElementById('doctorTitle');
+        if(dt) dt.innerText = data.docTitle;
+      }
+      if(data.heroDesc) {
+        const desc = document.getElementById('heroDesc');
+        if(desc) desc.innerText = data.heroDesc;
+      }
+
+      // تحديث أرقام الواتساب وإنستاباي
+      if(data.waPhone) {
+        window.whatsappPhone = data.waPhone;
+        const waUrl = `https://wa.me/${data.waPhone}`;
+        const waFloat = document.getElementById('waFloatBtn');
+        const footerWa = document.getElementById('footerWaLink');
+        const faqReturn = document.getElementById('faqReturnLink');
+        if(waFloat) waFloat.href = waUrl;
+        if(footerWa) footerWa.href = waUrl;
+        if(faqReturn) faqReturn.href = `${waUrl}?text=${encodeURIComponent('مرحباً، أريد تقديم طلب استرجاع')}`;
+      }
+
+      if(data.instaNumber) {
+        const instaElem = document.getElementById('instaNumberDisplay');
+        if(instaElem) instaElem.innerText = data.instaNumber;
+      }
+
+      if(data.ytInterview) {
+        const tvBadge = document.getElementById('tvInterviewLink');
+        const footerYt = document.getElementById('footerYtLink');
+        if(tvBadge) tvBadge.href = data.ytInterview;
+        if(footerYt) footerYt.href = data.ytInterview;
+      }
+    });
+
+    // 2. مزامنة وعرض جميع المنتجات من Firebase بديناميكية كاملة
+    onSnapshot(productsCol, (snapshot) => {
+      const grid = document.getElementById('mainProductsGrid');
+      if (!grid || snapshot.empty) return;
 
       let html = '';
       snapshot.forEach(docSnap => {
@@ -1544,9 +1388,9 @@
 
         html += `
           <article class="card">
-            <span class="card-badge" style="background: var(--primary);">جديد ✨</span>
+            <span class="card-badge">طبيعي 100% ✨</span>
             <div class="card-img-wrap">
-              <img src="${img}" width="280" height="280" loading="lazy" alt="${safeTitle}">
+              <img src="${img}" width="280" height="280" loading="lazy" alt="${safeTitle}" onerror="this.src='images/logo.jpeg'">
             </div>
             <div class="card-body">
               <h3 class="card-title">${prod.name}</h3>
@@ -1562,49 +1406,19 @@
         `;
       });
 
-      if (dynamicGrid && dynamicSection) {
-        dynamicGrid.innerHTML = html;
-        dynamicSection.style.display = 'block';
-      }
+      grid.innerHTML = html;
     });
 
-    const defaultReviewsHtml = `
-      <div class="review-card">
-        <div class="review-header">
-          <span class="review-name">مريم الأحمدي - القاهرة</span>
-          <div class="stars">★★★★★</div>
-        </div>
-        <p class="review-text">"زيت الإنبات غير شعري تماماً في 3 أسابيع، الفراغات اللي في مقدمة الرأس بدأت تملأ وشعري بطل يتساقط نهائياً، بجد تسلم إيدك دكتورة شروق."</p>
-        <span class="review-badge">مشترية مؤكدة ✓</span>
-      </div>
-      <div class="review-card">
-        <div class="review-header">
-          <span class="review-name">نور الهدى - الإسكندرية</span>
-          <div class="stars">★★★★★</div>
-        </div>
-        <p class="review-text">"طلبت بوكس الـ VIP كامل.. السدر نقي جداً والمشط الخشب والبونيه تحفة وفرقوا في الروتين. جودة المنتجات والتغليف فوق الممتاز."</p>
-        <span class="review-badge">مشترية مؤكدة ✓</span>
-      </div>
-      <div class="review-card">
-        <div class="review-header">
-          <span class="review-name">أسماء خالد - المنصورة</span>
-          <div class="stars">★★★★★</div>
-        </div>
-        <p class="review-text">"مسك الصبار ريحته بتفضل في الشعر أيام مع ترطيب ولمعان طبيعي خطير، ومجموعة التوفير الأساسية سعرها مناسب جداً لكمية المنتجات."</p>
-        <span class="review-badge">مشترية مؤكدة ✓</span>
-      </div>
-    `;
-
-    // قراءة التقييمات في الوقت الفعلي وتغذية الإشعارات
+    // 3. قراءة التقييمات في الوقت الفعلي
     const q = query(reviewsCol, orderBy("createdAt", "desc"));
     onSnapshot(q, (snapshot) => {
-      let liveReviewsHtml = '';
+      let reviewsHtml = '';
       const fetchedList = [];
       snapshot.forEach(doc => {
         const data = doc.data();
         fetchedList.push(data);
         const starsStr = '★'.repeat(data.stars || 5) + '☆'.repeat(5 - (data.stars || 5));
-        liveReviewsHtml += `
+        reviewsHtml += `
           <div class="review-card" style="border-right: 4px solid var(--gold);">
             <div class="review-header">
               <span class="review-name">${data.name}</span>
@@ -1616,10 +1430,13 @@
         `;
       });
       window.cloudReviewsList = fetchedList;
-      document.getElementById('reviewsGrid').innerHTML = liveReviewsHtml + defaultReviewsHtml;
+      const reviewsGrid = document.getElementById('reviewsGrid');
+      if (reviewsGrid) {
+        reviewsGrid.innerHTML = reviewsHtml || '<p style="text-align:center; color:#888;">لا توجد تقييمات منشورة حالياً.</p>';
+      }
     });
 
-    // إرسال التقييم لقاعدة البيانات السحابية
+    // 4. إرسال تقييم جديد
     window.submitUserReview = async function() {
       const name = document.getElementById('revName').value.trim();
       const text = document.getElementById('revText').value.trim();
@@ -1644,7 +1461,7 @@
         toggleReviewModal(false);
         document.getElementById('revName').value = '';
         document.getElementById('revText').value = '';
-        alert('شكراً لمشاركتك رأيك وتجربتك القيّمة معنا 🌿');
+        alert('شكراً لمشاركتك تجربتك القيّمة معنا 🌿');
       } catch (err) {
         alert('حدث خطأ أثناء إرسال التقييم: ' + err.message);
       } finally {
@@ -1654,7 +1471,6 @@
     };
   </script>
 
-  <!-- كود إحصائيات Vercel Analytics -->
   <script defer src="/_vercel/insights/script.js"></script>
   <script defer src="/_vercel/speed-insights/script.js"></script>
 </body>
