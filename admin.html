@@ -14,10 +14,11 @@
       --danger: #ef4444;
       --gold: #9e6f28;
       --blue: #2563eb;
+      --blue-hover: #1d4ed8;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
     body { background-color: var(--bg); color: var(--text); padding: 20px; }
-    .container { max-width: 900px; margin: 0 auto; }
+    .container { max-width: 950px; margin: 0 auto; }
     header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; flex-wrap: wrap; gap: 10px; }
     .card { background: var(--card-bg); border-radius: 12px; padding: 25px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); margin-bottom: 25px; }
     h2 { margin-bottom: 15px; font-size: 1.25rem; }
@@ -27,9 +28,7 @@
     input:focus, textarea:focus { border-color: var(--primary); }
     button { background-color: var(--primary); color: white; border: none; padding: 10px 20px; border-radius: 8px; font-size: 1rem; cursor: pointer; transition: 0.2s; font-weight: 600; }
     button:hover { background-color: var(--primary-hover); }
-    .btn-sync { background-color: var(--gold); }
-    .btn-sync:hover { background-color: #7a5214; }
-    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 15px; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 15px; }
     .product-item { background: var(--card-bg); border-radius: 10px; border: 1px solid #e5e7eb; overflow: hidden; display: flex; flex-direction: column; }
     .product-img { width: 100%; height: 160px; object-fit: cover; background: #e5e7eb; }
     .product-info { padding: 15px; flex-grow: 1; display: flex; flex-direction: column; }
@@ -37,16 +36,56 @@
     .product-price { color: var(--primary); font-weight: bold; font-size: 1.1rem; margin-bottom: 8px; }
     .product-desc { font-size: 0.85rem; color: #6b7280; margin-bottom: 15px; flex-grow: 1; }
     .btn-actions { display: flex; gap: 8px; align-self: flex-start; }
-    .btn-edit { background-color: var(--blue); font-size: 0.85rem; padding: 6px 12px; }
-    .btn-edit:hover { background-color: #1d4ed8; }
-    .btn-delete { background-color: var(--danger); font-size: 0.85rem; padding: 6px 12px; }
+    .btn-edit { background-color: var(--blue); font-size: 0.85rem; padding: 6px 14px; }
+    .btn-edit:hover { background-color: var(--blue-hover); }
+    .btn-delete { background-color: var(--danger); font-size: 0.85rem; padding: 6px 14px; }
     .btn-delete:hover { background-color: #dc2626; }
+    
+    /* شاشة الدخول */
     #login-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); display: flex; align-items: center; justify-content: center; z-index: 100; }
     .login-box { background: white; padding: 30px; border-radius: 12px; width: 100%; max-width: 350px; text-align: center; }
+
+    /* نافذة التعديل الشامل المنبثقة */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 200;
+      padding: 15px;
+    }
+    .modal-content {
+      background: #ffffff;
+      width: 100%;
+      max-width: 500px;
+      border-radius: 14px;
+      padding: 25px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    }
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      border-bottom: 1px solid #e5e7eb;
+      padding-bottom: 10px;
+    }
+    .modal-close {
+      background: none;
+      border: none;
+      font-size: 24px;
+      color: #9ca3af;
+      cursor: pointer;
+      padding: 0;
+    }
+    .modal-close:hover { color: #111; }
   </style>
 </head>
 <body>
 
+  <!-- شاشة الدخول -->
   <div id="login-overlay">
     <div class="login-box">
       <h3 style="margin-bottom:15px;">تسجيل دخول المسؤول</h3>
@@ -61,6 +100,7 @@
       <h1>لوحة إدارة المنتجات</h1>
     </header>
 
+    <!-- إضافة منتج -->
     <div class="card">
       <h2>إضافة منتج جديد</h2>
       <form id="add-product-form">
@@ -84,11 +124,45 @@
       </form>
     </div>
 
+    <!-- قائمة المنتجات -->
     <div class="card">
       <h2>المنتجات الحالية في لوحة التحكم</h2>
       <div class="grid" id="products-list">
         <p style="color:#6b7280;">جاري التحميل...</p>
       </div>
+    </div>
+  </div>
+
+  <!-- نافذة التعديل الشامل (Modal) -->
+  <div class="modal-overlay" id="edit-modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>تعديل بيانات المنتج</h3>
+        <button class="modal-close" onclick="closeEditModal()">&times;</button>
+      </div>
+      <form id="edit-product-form">
+        <input type="hidden" id="edit-id">
+        <div class="form-group">
+          <label>اسم المنتج</label>
+          <input type="text" id="edit-name" required>
+        </div>
+        <div class="form-group">
+          <label>السعر (ج.م)</label>
+          <input type="number" id="edit-price" required>
+        </div>
+        <div class="form-group">
+          <label>رابط الصورة</label>
+          <input type="text" id="edit-image" required>
+        </div>
+        <div class="form-group">
+          <label>وصف المنتج</label>
+          <textarea id="edit-desc" rows="3"></textarea>
+        </div>
+        <div style="display:flex; gap:10px;">
+          <button type="submit" id="update-btn" style="background-color: var(--blue); flex:1;">حفظ التعديلات</button>
+          <button type="button" onclick="closeEditModal()" style="background-color:#9ca3af;">إلغاء</button>
+        </div>
+      </form>
     </div>
   </div>
 
@@ -110,10 +184,13 @@
     const db = getFirestore(app);
     const productsRef = collection(db, "products");
 
+    let allProductsData = {};
+
     async function loadProducts() {
       const container = document.getElementById("products-list");
       container.innerHTML = "";
       const querySnapshot = await getDocs(productsRef);
+      allProductsData = {};
       
       if (querySnapshot.empty) {
         container.innerHTML = "<p>لا توجد منتجات مضافة بعد.</p>";
@@ -123,6 +200,8 @@
       querySnapshot.forEach((documentItem) => {
         const p = documentItem.data();
         const id = documentItem.id;
+        allProductsData[id] = p;
+
         const div = document.createElement("div");
         div.className = "product-item";
         div.innerHTML = `
@@ -132,7 +211,7 @@
             <div class="product-price">${p.price} ج.م</div>
             <div class="product-desc">${p.desc || ''}</div>
             <div class="btn-actions">
-              <button class="btn-edit" onclick="editProductPrice('${id}', ${p.price}, '${p.name}')">تعديل السعر</button>
+              <button class="btn-edit" onclick="openEditModal('${id}')">تعديل</button>
               <button class="btn-delete" onclick="removeProduct('${id}')">حذف</button>
             </div>
           </div>
@@ -141,18 +220,46 @@
       });
     }
 
-    // دالة تعديل السعر
-    window.editProductPrice = async function(id, currentPrice, name) {
-      const newPrice = prompt(`تعديل سعر (${name}):\nالسعر الحالي هو ${currentPrice} ج.م\n\nأدخل السعر الجديد:`, currentPrice);
-      if (newPrice !== null && newPrice.trim() !== "" && !isNaN(newPrice)) {
-        await updateDoc(doc(db, "products", id), {
-          price: Number(newPrice)
-        });
-        loadProducts();
-      }
+    // فتح نافذة التعديل وتعبئة البيانات القديمة
+    window.openEditModal = function(id) {
+      const prod = allProductsData[id];
+      if (!prod) return;
+
+      document.getElementById("edit-id").value = id;
+      document.getElementById("edit-name").value = prod.name || "";
+      document.getElementById("edit-price").value = prod.price || "";
+      document.getElementById("edit-image").value = prod.image || "";
+      document.getElementById("edit-desc").value = prod.desc || "";
+
+      document.getElementById("edit-modal").style.display = "flex";
     };
 
-    // إضافة منتج
+    window.closeEditModal = function() {
+      document.getElementById("edit-modal").style.display = "none";
+    };
+
+    // حفظ كل التعديلات
+    document.getElementById("edit-product-form").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const id = document.getElementById("edit-id").value;
+      const updateBtn = document.getElementById("update-btn");
+      updateBtn.disabled = true;
+      updateBtn.innerText = "جاري الحفظ...";
+
+      await updateDoc(doc(db, "products", id), {
+        name: document.getElementById("edit-name").value,
+        price: Number(document.getElementById("edit-price").value),
+        image: document.getElementById("edit-image").value,
+        desc: document.getElementById("edit-desc").value
+      });
+
+      updateBtn.disabled = false;
+      updateBtn.innerText = "حفظ التعديلات";
+      closeEditModal();
+      loadProducts();
+    });
+
+    // إضافة منتج جديد
     document.getElementById("add-product-form").addEventListener("submit", async (e) => {
       e.preventDefault();
       const saveBtn = document.getElementById("save-btn");
