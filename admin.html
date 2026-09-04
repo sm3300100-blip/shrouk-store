@@ -12,11 +12,12 @@
       --card-bg: #ffffff;
       --text: #1f2937;
       --danger: #ef4444;
+      --gold: #9e6f28;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
     body { background-color: var(--bg); color: var(--text); padding: 20px; }
     .container { max-width: 900px; margin: 0 auto; }
-    header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
+    header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; flex-wrap: wrap; gap: 10px; }
     .card { background: var(--card-bg); border-radius: 12px; padding: 25px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); margin-bottom: 25px; }
     h2 { margin-bottom: 15px; font-size: 1.25rem; }
     .form-group { margin-bottom: 15px; }
@@ -25,6 +26,8 @@
     input:focus, textarea:focus { border-color: var(--primary); }
     button { background-color: var(--primary); color: white; border: none; padding: 10px 20px; border-radius: 8px; font-size: 1rem; cursor: pointer; transition: 0.2s; font-weight: 600; }
     button:hover { background-color: var(--primary-hover); }
+    .btn-sync { background-color: var(--gold); }
+    .btn-sync:hover { background-color: #7a5214; }
     .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 15px; }
     .product-item { background: var(--card-bg); border-radius: 10px; border: 1px solid #e5e7eb; overflow: hidden; display: flex; flex-direction: column; }
     .product-img { width: 100%; height: 160px; object-fit: cover; background: #e5e7eb; }
@@ -40,7 +43,7 @@
 </head>
 <body>
 
-  <!-- شاشة الدخول السرية -->
+  <!-- شاشة الدخول -->
   <div id="login-overlay">
     <div class="login-box">
       <h3 style="margin-bottom:15px;">تسجيل دخول المسؤول</h3>
@@ -53,9 +56,11 @@
   <div class="container" id="admin-content" style="display:none;">
     <header>
       <h1>لوحة إدارة المنتجات</h1>
+      <!-- زر الاستيراد السريع -->
+      <button id="sync-btn" class="btn-sync" onclick="importCurrentProducts()">⚡ استيراد منتجات المتجر الحالية دفعة واحدة</button>
     </header>
 
-    <!-- نموذج الإضافة -->
+    <!-- نموذج الإضافة اليدوية -->
     <div class="card">
       <h2>إضافة منتج جديد</h2>
       <form id="add-product-form">
@@ -69,25 +74,26 @@
         </div>
         <div class="form-group">
           <label>رابط الصورة</label>
-          <input type="url" id="p-image" required placeholder="https://example.com/image.jpg">
+          <input type="text" id="p-image" required placeholder="images/enbat.jpeg أو رابط إنترنت">
         </div>
         <div class="form-group">
           <label>وصف المنتج</label>
           <textarea id="p-desc" rows="3" placeholder="اكتب تفاصيل المنتج..."></textarea>
         </div>
-        <button type="submit" id="save-btn">إضافة المنتج</button>
+        <button type="submit" id="save-btn">إضافة المنتج إلى المتجر</button>
       </form>
     </div>
 
-    <!-- قائمة المنتجات -->
+    <!-- قائمة المنتجات الحالية -->
     <div class="card">
-      <h2>المنتجات الحالية</h2>
+      <h2>المنتجات الحالية في لوحة التحكم</h2>
       <div class="grid" id="products-list">
         <p style="color:#6b7280;">جاري التحميل...</p>
       </div>
     </div>
   </div>
 
+  <!-- سكربت Firebase -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
     import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
@@ -106,13 +112,51 @@
     const db = getFirestore(app);
     const productsRef = collection(db, "products");
 
+    // قائمة جميع منتجات المتجر الحالية
+    const initialProducts = [
+      { name: "مجموعة التوفير الأساسية", price: 1099, image: "images/offer1099.jpg", desc: "مجموعة العناية المتكاملة لتغذية وإصلاح وترطيب الشعر بالكامل مع شحن سريع." },
+      { name: "بوكس المجموعة الذهبية VIP", price: 1799, image: "images/box-1800.jpeg", desc: "الكورس المتكامل الأكبر بجميع منتجات البراند بأحجام ممتدة مع أدوات العناية الفاخرة." },
+      { name: "زيت الإنبات والإطالة", price: 349, image: "images/enbat.jpeg", desc: "تركيبة مركزة لتحفيز بصيلات الشعر وملء الفراغات وتكثيف الشعر." },
+      { name: "مجموعة الأعشاب الطبيعية", price: 149, image: "images/herbs.jpeg", desc: "توليفة ممتازة من أنقى الأعشاب لتغذية فروة الرأس وتقوية الجذور." },
+      { name: "سدر مطحون نقي", price: 149, image: "images/sedr.jpeg", desc: "سدر عضوي نقي 100% لتنظيف الفروة وإعطاء كثافة ولمعان فائق للشعر." },
+      { name: "مشاط بني أصلي", price: 249, image: "images/meshat.jpeg", desc: "خلطة المشاط التراثية الأصيلة لتعطير الشعر وتنعيمه وتقويته." },
+      { name: "حنة طبيعية فاخرة", price: 149, image: "images/henna.jpeg", desc: "حنة نقية معالجة ومغذية تمنح الشعر حيوية ولون طبيعي جذاب." },
+      { name: "مسك الصبار الطبيعي", price: 199, image: "images/aloe-vera-musk.jpeg", desc: "خلاصة الصبار الطبيعي مع لمسات المسك المنعش لترطيب وتغذية وتعطير الشعر بعمق." },
+      { name: "مشط خشب طبيعي", price: 59, image: "images/comb.jpeg", desc: "مشط خشبي عريض الأسنان لفك التشابك بلطف ومنع تقصف وتكسر الشعر." },
+      { name: "فوطة مايكروفايبر فاخرة", price: 69, image: "images/towel.jpeg", desc: "فوطة ناعمة جداً فائقة الامتصاص لتجفيف الشعر بدون نفشة أو ضرر." },
+      { name: "بونيه ستان حريري", price: 59, image: "images/satin-bonnet.jpeg", desc: "بونيه ستان ناعم يحافظ على ترطيب الشعر والزيوت ويمنع الهيشان أثناء النوم." },
+      { name: "بونيه بلاستيك حراري", price: 49, image: "images/plastic-bonnet.jpeg", desc: "مثالي للاستخدام مع حمامات الزيت والحنة لتفتيح المسام ومضاعفة الامتصاص." },
+      { name: "فرشاة مساج سيليكون", price: 49, image: "images/silicone-brush.jpeg", desc: "فرشاة مرنة لتدليك الفروة وتنشيط الدورة الدموية وتوزيع الزيوت والشامبو بعمق." }
+    ];
+
+    // دالة استيراد المنتجات بضغطة زر
+    window.importCurrentProducts = async function() {
+      const btn = document.getElementById("sync-btn");
+      if (!confirm("هل تريد استيراد ورفع جميع منتجات المتجر الـ 13 إلى لوحة التحكم الآن؟")) return;
+
+      btn.disabled = true;
+      btn.innerText = "جاري استيراد المنتجات...";
+
+      for (const item of initialProducts) {
+        await addDoc(productsRef, {
+          ...item,
+          createdAt: new Date().toISOString()
+        });
+      }
+
+      alert("تم استيراد جميع المنتجات بنجاح!");
+      btn.style.display = "none";
+      loadProducts();
+    };
+
+    // جلب المنتجات وعرضها
     async function loadProducts() {
       const container = document.getElementById("products-list");
       container.innerHTML = "";
       const querySnapshot = await getDocs(productsRef);
       
       if (querySnapshot.empty) {
-        container.innerHTML = "<p>لا توجد منتجات مضافة بعد.</p>";
+        container.innerHTML = "<p>لا توجد منتجات مضافة بعد. يمكنك الضغط على زر الاستيراد بالأعلى لجلبها فوراً.</p>";
         return;
       }
 
@@ -134,6 +178,7 @@
       });
     }
 
+    // إضافة منتج يدوي
     document.getElementById("add-product-form").addEventListener("submit", async (e) => {
       e.preventDefault();
       const saveBtn = document.getElementById("save-btn");
@@ -151,12 +196,13 @@
       await addDoc(productsRef, newProduct);
       document.getElementById("add-product-form").reset();
       saveBtn.disabled = false;
-      saveBtn.innerText = "إضافة المنتج";
+      saveBtn.innerText = "إضافة المنتج إلى المتجر";
       loadProducts();
     });
 
+    // حذف منتج
     window.removeProduct = async function(id) {
-      if (confirm("هل تريد حذف هذا المنتج بالتأكيد؟")) {
+      if (confirm("هل أنت متأكد من رغبتك في حذف هذا المنتج؟")) {
         await deleteDoc(doc(db, "products", id));
         loadProducts();
       }
