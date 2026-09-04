@@ -475,6 +475,7 @@
       font-weight: 700;
       margin-top: 10px;
       transition: 0.2s;
+      cursor: pointer;
     }
     .return-btn-wa:hover { background: #1eb956; }
 
@@ -508,6 +509,7 @@
       font-size: 20px;
       text-decoration: none;
       transition: all 0.3s ease;
+      cursor: pointer;
     }
     .social-link.yt:hover { background: #ff0000; color: #ffffff; transform: translateY(-4px); }
     .social-link.insta:hover { background: linear-gradient(135deg, #f9ce34, #ee2a7b, #6228d7); color: #ffffff; transform: translateY(-4px); }
@@ -533,6 +535,7 @@
       box-shadow: 0 8px 24px rgba(37, 211, 102, 0.4);
       z-index: 1200;
       transition: all 0.3s ease;
+      cursor: pointer;
     }
     .whatsapp-float-btn:hover { background-color: #1eb956; transform: translateY(-3px) scale(1.03); }
     .whatsapp-float-btn i { font-size: 22px; }
@@ -1033,7 +1036,7 @@
           </div>
           <div class="faq-answer">
             نضمن لكِ حق الاسترجاع أو الاستبدال خلال <strong>7 أيام (أسبوع)</strong> من تاريخ استلام الشحنة، بشرط توضيح سبب الاسترجاع بشكل واضح ومفصل.<br>
-            <a href="https://wa.me/201013275211?text=%D9%85%D8%B1%D8%AD%D8%A8%D8%A7%D9%8B%D8%8C%20%D8%A3%D8%B1%D9%8A%D8%AF%20%D8%AA%D9%82%D8%AF%D9%8A%D9%85%20%D8%B7%D9%84%D8%A8%20%D8%A7%D8%B3%D8%AA%D8%B1%D8%AC%D8%A7%D8%B9" target="_blank" rel="noopener noreferrer" class="return-btn-wa">
+            <a href="javascript:void(0)" onclick="openDirectWhatsApp('مرحباً، أريد تقديم طلب استرجاع أو استبدال للشحنة خلال مدة الأسبوع، والسبب هو: ')" class="return-btn-wa">
               <i class="fa-brands fa-whatsapp"></i> تقديم طلب استرجاع عبر الواتساب مع ذكر السبب
             </a>
           </div>
@@ -1102,8 +1105,8 @@
     </button>
   </div>
 
-  <!-- زر واتساب عائم -->
-  <a href="https://wa.me/201013275211" target="_blank" rel="noopener noreferrer" class="whatsapp-float-btn" title="تحدثي مع د. شروق محمد عبر واتساب" aria-label="تواصل عبر الواتساب">
+  <!-- زر واتساب عائم مباشر -->
+  <a href="javascript:void(0)" onclick="openDirectWhatsApp('مرحباً، أريد استشارة حول كورس العناية بالشعر من Natural Oils')" class="whatsapp-float-btn" title="تحدثي مع د. شروق محمد عبر واتساب" aria-label="تواصل عبر الواتساب">
     <i class="fa-brands fa-whatsapp"></i>
     <span>استشارة مجانية عبر واتساب</span>
   </a>
@@ -1126,7 +1129,7 @@
       <a href="https://www.instagram.com/natural_oils_1?igsh=ZWZ1cjh6Y2V4cDNu" target="_blank" rel="noopener noreferrer" class="social-link insta" title="انستجرام دكتورة شروق محمد" aria-label="انستجرام"><i class="fa-brands fa-instagram"></i></a>
       <a href="https://www.facebook.com/share/g/1C8ozZvEVx/" target="_blank" rel="noopener noreferrer" class="social-link fb" title="مجموعة فيسبوك دكتورة شروق محمد" aria-label="فيسبوك"><i class="fa-brands fa-facebook-f"></i></a>
       <a href="https://www.tiktok.com/@sh0sh0224?_r=1&_t=ZS-99FTJNk7CFx" target="_blank" rel="noopener noreferrer" class="social-link tt" title="تيك توك دكتورة شروق محمد" aria-label="تيك توك"><i class="fa-brands fa-tiktok"></i></a>
-      <a href="https://wa.me/201013275211" target="_blank" rel="noopener noreferrer" class="social-link wa" title="واتساب دكتورة شروق محمد" aria-label="واتساب"><i class="fa-brands fa-whatsapp"></i></a>
+      <a href="javascript:void(0)" onclick="openDirectWhatsApp('مرحباً دكتورة شروق محمد')" class="social-link wa" title="واتساب دكتورة شروق محمد" aria-label="واتساب"><i class="fa-brands fa-whatsapp"></i></a>
     </div>
     <div class="footer-copy">جميع الحقوق محفوظة © متجر دكتورة شروق محمد Natural Oils</div>
   </footer>
@@ -1206,6 +1209,41 @@
 
     window.cloudReviewsList = [];
 
+    // دالة الفتح الإجباري المباشر للواتساب لكسر متصفح فيسبوك وإنستغرام
+    window.openDirectWhatsApp = function(textMsg) {
+      const cleanPhone = whatsappPhone.replace(/[^0-9]/g, '');
+      const encodedMsg = encodeURIComponent(textMsg);
+      const isAndroid = /Android/i.test(navigator.userAgent);
+      const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+      // إنشاء رابط نقر وهمي للنقر البرمجي لتخطي نافذة المتصفح الداخلي
+      const link = document.createElement('a');
+      link.style.display = 'none';
+
+      if (isAndroid) {
+        // نداء نظام أندرويد المباشر لتشغيل التطبيق وتخطي صفحة الويب
+        link.href = `intent://send?phone=${cleanPhone}&text=${encodedMsg}#Intent;scheme=whatsapp;package=com.whatsapp;end`;
+      } else if (isIOS) {
+        link.href = `whatsapp://send?phone=${cleanPhone}&text=${encodedMsg}`;
+      } else {
+        link.href = `https://wa.me/${cleanPhone}?text=${encodedMsg}`;
+        link.target = '_blank';
+      }
+
+      document.body.appendChild(link);
+      link.click();
+
+      // مسار احتياطي فوري إذا تعذر على الجهاز التعرف على الـ Intent
+      setTimeout(() => {
+        if (document.hidden) return;
+        window.location.href = `whatsapp://send?phone=${cleanPhone}&text=${encodedMsg}`;
+      }, 500);
+
+      setTimeout(() => {
+        document.body.removeChild(link);
+      }, 1000);
+    };
+
     function saveCart() {
       localStorage.setItem('shrouk_cart', JSON.stringify(cart));
     }
@@ -1225,7 +1263,7 @@
           function(error) {
             btn.innerHTML = '<i class="fa-solid fa-location-crosshairs"></i> تعذر تحديد الموقع تلقائياً';
           },
-          { timeout: 5000 }
+          { timeout: 4000 }
         );
       }
     }
@@ -1253,7 +1291,7 @@
       if(existing) {
         existing.qty += 1;
       } else {
-        cart.push({ title, price, qty: 1 });
+        cart.push({ title, price: Number(price), qty: 1 });
       }
       saveCart();
       updateCart();
@@ -1426,8 +1464,8 @@
         checkBtn.innerHTML = '<i class="fa-brands fa-whatsapp"></i> تأكيد الطلب عبر الواتساب';
       }
 
-      // فتح محادثة الواتساب مباشرة دون تعليق
-      window.location.href = "https://wa.me/" + whatsappPhone + "?text=" + encodeURIComponent(msg);
+      // استدعاء نظام الفتح المباشر الخارق لمتصفح فيسبوك
+      openDirectWhatsApp(msg);
     }
 
     function checkout() {
@@ -1447,7 +1485,7 @@
       const checkBtn = document.getElementById('checkoutBtn');
       checkBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> جاري فتح الواتساب...';
 
-      // إرسال الطلب فوراً دون تعليق بانتظار الـ GPS
+      // تنفيذ فوري ومباشر دون تعليق
       sendOrder(customerLocationUrl);
     }
 
