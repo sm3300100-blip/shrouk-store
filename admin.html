@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>لوحة التحكم الشاملة | متجر Natural Oils</title>
+  <title>لوحة التحكم الشاملة | متجر د. شروق محمد</title>
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -17,6 +17,7 @@
       --primary-light: #eef8f2;
       --gold: #9e6f28;
       --gold-light: #f6eedf;
+      --gold-dark: #7a5214;
       --danger: #dc2626;
       --danger-light: #fee2e2;
       --card-bg: #ffffff;
@@ -148,13 +149,33 @@
       outline: none;
     }
     .form-control:focus { border-color: var(--primary); }
-    .color-input-wrap { display: flex; align-items: center; gap: 10px; }
-    .color-input-wrap input[type="color"] {
-      width: 45px;
-      height: 40px;
-      border: 1px solid var(--border);
+
+    .file-upload-box {
+      border: 1.5px dashed var(--gold);
+      background: var(--gold-light);
+      padding: 10px 14px;
       border-radius: 8px;
       cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--gold-dark);
+      margin-bottom: 8px;
+      transition: 0.2s;
+    }
+    .file-upload-box:hover { background: #ede0cb; }
+
+    .preview-img-box {
+      width: 75px;
+      height: 75px;
+      border-radius: 8px;
+      border: 1.5px solid var(--border);
+      object-fit: cover;
+      margin-top: 6px;
+      display: none;
     }
 
     .btn-submit {
@@ -178,6 +199,17 @@
     td { padding: 12px; border-bottom: 1px solid #f3f4f6; vertical-align: middle; }
     .prod-thumb { width: 44px; height: 44px; border-radius: 8px; object-fit: cover; background: #eee; }
 
+    .badge-cat {
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 6px;
+      display: inline-block;
+    }
+    .badge-packages { background: #fef3c7; color: #b45309; }
+    .badge-singles { background: #dcfce7; color: #15803d; }
+    .badge-tools { background: #e0f2fe; color: #0369a1; }
+
     .action-btns { display: flex; gap: 6px; }
     .btn-edit {
       background: #eff6ff;
@@ -200,18 +232,6 @@
       font-size: 12px;
     }
 
-    .review-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      padding: 12px;
-      border: 1px solid #f3f4f6;
-      border-radius: 10px;
-      margin-bottom: 10px;
-      background: #fafafa;
-    }
-    .review-stars { color: #f59e0b; font-size: 12px; margin: 2px 0; }
-
     .modal-overlay {
       position: fixed;
       inset: 0;
@@ -229,16 +249,18 @@
       border-radius: 16px;
       width: 90%;
       max-width: 480px;
+      max-height: 90vh;
+      overflow-y: auto;
     }
   </style>
 </head>
 <body>
 
-  <!-- شاشة الحماية برقم سري (1234) -->
+  <!-- شاشة الدخول برقم سري: 1234 -->
   <div id="loginOverlay">
     <div class="login-card">
       <i class="fa-solid fa-shield-halved" style="font-size: 40px; color: var(--primary); margin-bottom: 15px;"></i>
-      <h2 style="font-size: 18px; font-weight: 800; margin-bottom: 8px;">لوحة تحكم المتجر الشاملة</h2>
+      <h2 style="font-size: 18px; font-weight: 800; margin-bottom: 8px;">لوحة تحكم المتجر</h2>
       <input type="password" id="adminPin" class="form-control" placeholder="••••" style="text-align: center; font-size: 18px; letter-spacing: 4px; margin-bottom: 14px;">
       <button onclick="checkAdminPin()" class="btn-submit" style="width: 100%; justify-content: center;">تسجيل الدخول</button>
       <p id="loginError" style="color: var(--danger); font-size: 12px; margin-top: 10px; display: none;">رمز المرور غير صحيح!</p>
@@ -248,56 +270,70 @@
   <header>
     <div class="header-title">
       <i class="fa-solid fa-sliders" style="font-size: 20px; color: var(--primary);"></i>
-      <h1>إدارة إعدادات ومحتوى المتجر</h1>
+      <h1>إدارة أقسام ومنتجات المتجر</h1>
     </div>
     <a href="index.html" class="view-store-btn" target="_blank">
-      <i class="fa-solid fa-arrow-up-right-from-square"></i> عرض المتجر
+      <i class="fa-solid fa-arrow-up-right-from-square"></i> عرض المتجر مباشرة
     </a>
   </header>
 
   <main class="dashboard-container">
     
-    <!-- الأقسام والتبويبات -->
     <div class="tabs-nav">
-      <button class="tab-btn active" onclick="switchTab('tabProducts')"><i class="fa-solid fa-box-open"></i> المنتجات والأسعار</button>
+      <button class="tab-btn active" onclick="switchTab('tabProducts')"><i class="fa-solid fa-box-open"></i> المنتجات والأقسام</button>
       <button class="tab-btn" onclick="switchTab('tabGeneral')"><i class="fa-solid fa-paint-roller"></i> الألوان والهوية والبنر</button>
       <button class="tab-btn" onclick="switchTab('tabContact')"><i class="fa-solid fa-phone"></i> التواصل والدفع</button>
-      <button class="tab-btn" onclick="switchTab('tabReviews')"><i class="fa-solid fa-star"></i> إدارة التقييمات</button>
     </div>
 
-    <!-- تبويب 1: المنتجات -->
+    <!-- تبويب المنتجات والأسعار -->
     <div id="tabProducts" class="tab-content active">
-      <div style="display: grid; grid-template-columns: 340px 1fr; gap: 20px;">
+      <div style="display: grid; grid-template-columns: 350px 1fr; gap: 20px;">
+        
+        <!-- نموذج إضافة منتج -->
         <aside class="panel-card">
           <h2 class="panel-title"><i class="fa-solid fa-plus-circle"></i> إضافة منتج جديد</h2>
           <form id="addProductForm" onsubmit="handleNewProduct(event)">
             <div class="form-group">
               <label>اسم المنتج:</label>
-              <input type="text" id="prodName" class="form-control" required>
+              <input type="text" id="prodName" class="form-control" placeholder="مثال: زيت الإنبات" required>
+            </div>
+            <div class="form-group">
+              <label>القسم / التصنيف:</label>
+              <select id="prodCategory" class="form-control" required>
+                <option value="packages">1. باقات المجموعات الكاملة (عروض التوفير)</option>
+                <option value="singles" selected>2. المنتجات الفردية الطبيعية</option>
+                <option value="tools">3. أدوات العناية الفاخرة</option>
+              </select>
             </div>
             <div class="form-group">
               <label>السعر (ج.م):</label>
-              <input type="number" id="prodPrice" class="form-control" required>
+              <input type="number" id="prodPrice" class="form-control" placeholder="مثال: 349" required>
             </div>
             <div class="form-group">
-              <label>رابط أو مسار الصورة:</label>
-              <input type="text" id="prodImage" class="form-control" placeholder="images/enbat.jpeg" required>
+              <label>صورة المنتج:</label>
+              <label class="file-upload-box">
+                <i class="fa-solid fa-camera"></i> اختيار صورة من الموبايل أو اللاب
+                <input type="file" accept="image/*" style="display: none;" onchange="handleFileSelect(this, 'prodImage', 'prodImgPreview')">
+              </label>
+              <input type="text" id="prodImage" class="form-control" placeholder="أو مسار الصورة: images/enbat.jpeg" required>
+              <img id="prodImgPreview" class="preview-img-box" alt="معاينة الصورة">
             </div>
             <div class="form-group">
               <label>الوصف:</label>
-              <textarea id="prodDesc" class="form-control" rows="3"></textarea>
+              <textarea id="prodDesc" class="form-control" rows="2" placeholder="فوائد المنتج..."></textarea>
             </div>
             <button type="submit" id="addProdBtn" class="btn-submit" style="width: 100%; justify-content: center;">
-              <i class="fa-solid fa-cloud-arrow-up"></i> نشر المنتج
+              <i class="fa-solid fa-cloud-arrow-up"></i> نشر المنتج بالمتجر
             </button>
           </form>
         </aside>
 
+        <!-- جدول المنتجات -->
         <section class="panel-card">
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
-            <h2 class="panel-title" style="margin: 0; border: none;"><i class="fa-solid fa-list-check"></i> المنتجات الحالية</h2>
-            <button onclick="syncAllProductsToFirebase()" class="btn-submit" style="font-size: 12px; padding: 6px 12px; background: #2563eb;">
-              <i class="fa-solid fa-arrows-rotate"></i> رفع المنتجات الأساسية للسحابة
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; flex-wrap: wrap; gap: 10px;">
+            <h2 class="panel-title" style="margin: 0; border: none;"><i class="fa-solid fa-list-check"></i> المنتجات الحالية بالمتجر</h2>
+            <button onclick="syncAllProductsToFirebase()" class="btn-submit" style="font-size: 12px; padding: 7px 12px; background: #2563eb;">
+              <i class="fa-solid fa-arrows-rotate"></i> رفع وترتيب المنتجات الأساسية بالسحابة
             </button>
           </div>
           <div class="table-wrap">
@@ -306,12 +342,13 @@
                 <tr>
                   <th>الصورة</th>
                   <th>الاسم</th>
+                  <th>القسم</th>
                   <th>السعر</th>
                   <th>الإجراءات</th>
                 </tr>
               </thead>
               <tbody id="productsTableBody">
-                <tr><td colspan="4" style="text-align:center; padding: 20px; color:#888;">جاري التحميل...</td></tr>
+                <tr><td colspan="5" style="text-align:center; padding: 20px; color:#888;">جاري التحميل...</td></tr>
               </tbody>
             </table>
           </div>
@@ -319,28 +356,22 @@
       </div>
     </div>
 
-    <!-- تبويب 2: الألوان والبنر -->
+    <!-- تبويب المظهر والبنر -->
     <div id="tabGeneral" class="tab-content">
       <div class="panel-card">
         <h2 class="panel-title"><i class="fa-solid fa-palette"></i> ألوان وهوية الموقع</h2>
         <div class="form-grid">
           <div class="form-group">
             <label>اللون الرئيسي للمتجر:</label>
-            <div class="color-input-wrap">
-              <input type="color" id="setPrimaryColor" value="#194837">
-              <input type="text" id="setPrimaryColorText" class="form-control" value="#194837">
-            </div>
+            <input type="color" id="setPrimaryColor" value="#194837" style="height: 40px; cursor: pointer; width: 100%;">
           </div>
           <div class="form-group">
             <label>اللون الذهبي الثانوي:</label>
-            <div class="color-input-wrap">
-              <input type="color" id="setGoldColor" value="#9e6f28">
-              <input type="text" id="setGoldColorText" class="form-control" value="#9e6f28">
-            </div>
+            <input type="color" id="setGoldColor" value="#9e6f28" style="height: 40px; cursor: pointer; width: 100%;">
           </div>
         </div>
 
-        <h2 class="panel-title" style="margin-top: 25px;"><i class="fa-solid fa-bullhorn"></i> شريط الإعلان العلوي والبنر</h2>
+        <h2 class="panel-title" style="margin-top: 25px;"><i class="fa-solid fa-bullhorn"></i> شريط الإعلان والبنر</h2>
         <div class="form-group">
           <label>نص الشريط الإعلاني العلوي:</label>
           <input type="text" id="setTopAnnouncement" class="form-control">
@@ -351,28 +382,28 @@
             <input type="text" id="setHeroSub" class="form-control">
           </div>
           <div class="form-group">
-            <label>اسم الطبيب/المتخصص في البنر:</label>
+            <label>اسم الطبيب/المتخصص:</label>
             <input type="text" id="setDocTitle" class="form-control">
           </div>
         </div>
         <div class="form-group">
-          <label>الوصف الرئيسي تحت عنوان البنر:</label>
+          <label>وصف البنر:</label>
           <textarea id="setHeroDesc" class="form-control" rows="2"></textarea>
         </div>
 
         <button onclick="saveSiteSettings()" class="btn-submit">
-          <i class="fa-solid fa-floppy-disk"></i> حفظ إعدادات المظهر والبنر
+          <i class="fa-solid fa-floppy-disk"></i> حفظ الإعدادات
         </button>
       </div>
     </div>
 
-    <!-- تبويب 3: التواصل والدفع -->
+    <!-- تبويب التواصل -->
     <div id="tabContact" class="tab-content">
       <div class="panel-card">
-        <h2 class="panel-title"><i class="fa-brands fa-whatsapp"></i> قنوات التواصل واستلام الطلبات</h2>
+        <h2 class="panel-title"><i class="fa-brands fa-whatsapp"></i> قنوات التواصل واستقبال الطلبات</h2>
         <div class="form-grid">
           <div class="form-group">
-            <label>رقم الواتساب (مع كود الدولة):</label>
+            <label>رقم الواتساب لاستلام الطلبات (مع كود الدولة):</label>
             <input type="text" id="setWaPhone" class="form-control" placeholder="201013275211">
           </div>
           <div class="form-group">
@@ -390,42 +421,53 @@
       </div>
     </div>
 
-    <!-- تبويب 4: التقييمات -->
-    <div id="tabReviews" class="tab-content">
-      <div class="panel-card">
-        <h2 class="panel-title"><i class="fa-solid fa-star"></i> إدارة تقييمات العميلات</h2>
-        <div id="reviewsContainer">
-          <p style="text-align:center; color:#888; padding: 15px;">جاري تحميل التقييمات...</p>
-        </div>
-      </div>
-    </div>
-
   </main>
 
-  <!-- نافذة تعديل المنتج -->
+  <!-- نافذة تعديل بيانات المنتج -->
   <div class="modal-overlay" id="editModal">
     <div class="modal-card">
-      <h3 style="font-size:16px; color:var(--primary); font-weight:800; margin-bottom:15px;"><i class="fa-solid fa-pen-to-square"></i> تعديل بيانات المنتج</h3>
+      <h3 style="font-size:16px; color:var(--primary); font-weight:800; margin-bottom:15px;">
+        <i class="fa-solid fa-pen-to-square"></i> تعديل بيانات المنتج
+      </h3>
       <input type="hidden" id="editProdId">
+      
       <div class="form-group">
         <label>اسم المنتج:</label>
         <input type="text" id="editProdName" class="form-control">
       </div>
+
+      <div class="form-group">
+        <label>القسم / التصنيف:</label>
+        <select id="editProdCategory" class="form-control">
+          <option value="packages">1. باقات المجموعات الكاملة (عروض التوفير)</option>
+          <option value="singles">2. المنتجات الفردية الطبيعية</option>
+          <option value="tools">3. أدوات العناية الفاخرة</option>
+        </select>
+      </div>
+      
       <div class="form-group">
         <label>السعر (ج.م):</label>
         <input type="number" id="editProdPrice" class="form-control">
       </div>
+      
       <div class="form-group">
-        <label>مسار الصورة:</label>
-        <input type="text" id="editProdImage" class="form-control">
+        <label>صورة المنتج:</label>
+        <label class="file-upload-box">
+          <i class="fa-solid fa-camera"></i> اختيار صورة جديدة من الموبايل أو اللاب
+          <input type="file" accept="image/*" style="display: none;" onchange="handleFileSelect(this, 'editProdImage', 'editImgPreview')">
+        </label>
+        <input type="text" id="editProdImage" class="form-control" placeholder="مسار أو رابط الصورة">
+        <img id="editImgPreview" class="preview-img-box" alt="معاينة الصورة">
       </div>
+      
       <div class="form-group">
         <label>الوصف:</label>
         <textarea id="editProdDesc" class="form-control" rows="2"></textarea>
       </div>
+      
       <div style="display:flex; justify-content:flex-end; gap:8px; margin-top:15px;">
         <button onclick="closeEditModal()" class="btn-submit" style="background:#6b7280;">إلغاء</button>
-        <button onclick="saveProductChanges()" class="btn-submit" style="background:#2563eb;">حفظ</button>
+        <button onclick="saveProductChanges()" class="btn-submit" style="background:#2563eb;">حفظ التعديلات</button>
       </div>
     </div>
   </div>
@@ -452,32 +494,71 @@
       document.getElementById(tabId).classList.add('active');
     }
 
-    document.getElementById('setPrimaryColor').oninput = (e) => document.getElementById('setPrimaryColorText').value = e.target.value;
-    document.getElementById('setPrimaryColorText').oninput = (e) => document.getElementById('setPrimaryColor').value = e.target.value;
-    document.getElementById('setGoldColor').oninput = (e) => document.getElementById('setGoldColorText').value = e.target.value;
-    document.getElementById('setGoldColorText').oninput = (e) => document.getElementById('setGoldColor').value = e.target.value;
+    // دالة ضغط وتحويل الصورة من الموبايل/اللاب توب تلقائياً
+    function handleFileSelect(input, targetInputId, previewImgId) {
+      if (!input.files || !input.files[0]) return;
+      const file = input.files[0];
+      const reader = new FileReader();
 
+      reader.onload = function(e) {
+        const img = new Image();
+        img.src = e.target.result;
+        img.onload = function() {
+          const canvas = document.createElement('canvas');
+          const maxDim = 600;
+          let w = img.width;
+          let h = img.height;
+
+          if (w > h && w > maxDim) {
+            h = Math.round((h * maxDim) / w);
+            w = maxDim;
+          } else if (h > maxDim) {
+            w = Math.round((w * maxDim) / h);
+            h = maxDim;
+          }
+
+          canvas.width = w;
+          canvas.height = h;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, w, h);
+
+          const compressedBase64 = canvas.toDataURL('image/jpeg', 0.82);
+          document.getElementById(targetInputId).value = compressedBase64;
+          
+          const preview = document.getElementById(previewImgId);
+          preview.src = compressedBase64;
+          preview.style.display = 'block';
+        };
+      };
+      reader.readAsDataURL(file);
+    }
+
+    // قائمة المنتجات الأساسية مصنفة بالأقسام
     const defaultStoreProducts = [
-      { name: "مجموعة التوفير الأساسية", price: 1099, image: "images/offer1099.jpg", desc: "مجموعة العناية المتكاملة لتغذية وإصلاح وترطيب الشعر بالكامل مع شحن سريع." },
-      { name: "بوكس المجموعة الذهبية VIP", price: 1799, image: "images/box-1800.jpeg", desc: "الكورس المتكامل الأكبر بجميع منتجات البراند بأحجام ممتدة مع أدوات العناية الفاخرة." },
-      { name: "زيت الإنبات والإطالة", price: 349, image: "images/enbat.jpeg", desc: "تركيبة مركزة لتحفيز بصيلات الشعر وملء الفراغات وتكثيف الشعر." },
-      { name: "مجموعة الأعشاب الطبيعية", price: 149, image: "images/herbs.jpeg", desc: "توليفة ممتازة من أنقى الأعشاب لتغذية فروة الرأس وتقوية الجذور." },
-      { name: "سدر مطحون نقي", price: 149, image: "images/sedr.jpeg", desc: "سدر عضوي نقي 100% لتنظيف الفروة وإعطاء كثافة ولمعان فائق للشعر." },
-      { name: "مشاط بني أصلي", price: 249, image: "images/meshat.jpeg", desc: "خلطة المشاط التراثية الأصيلة لتعطير الشعر وتنعيمه وتقويته." },
-      { name: "حنة طبيعية فاخرة", price: 149, image: "images/henna.jpeg", desc: "حنة نقية معالجة ومغذية تمنح الشعر حيوية ولون طبيعي جذاب." },
-      { name: "مسك الصبار الطبيعي", price: 199, image: "images/aloe-vera-musk.jpeg", desc: "خلاصة الصبار الطبيعي مع لمسات المسك المنعش لترطيب وتغذية وتعطير الشعر بعمق." },
-      { name: "مشط خشب طبيعي", price: 59, image: "images/comb.jpeg", desc: "مشط خشبي عريض الأسنان لفك التشابك بلطف ومنع تقصف وتكسر الشعر." },
-      { name: "فوطة مايكروفايبر فاخرة", price: 69, image: "images/towel.jpeg", desc: "فوطة ناعمة جداً فائقة الامتصاص لتجفيف الشعر بدون نفشة أو ضرر." },
-      { name: "بونيه ستان حريري", price: 59, image: "images/satin-bonnet.jpeg", desc: "بونيه ستان ناعم يحافظ على ترطيب الشعر والزيوت ويمنع الهيشان أثناء النوم." },
-      { name: "بونيه بلاستيك حراري", price: 49, image: "images/plastic-bonnet.jpeg", desc: "مثالي للاستخدام مع حمامات الزيت والحنة لتفتيح المسام ومضاعفة الامتصاص." },
-      { name: "فرشاة مساج سيليكون", price: 49, image: "images/silicone-brush.jpeg", desc: "فرشاة مرنة لتدليك الفروة وتنشيط الدورة الدموية وتوزيع الزيوت والشامبو بعمق." }
+      // 1. باقات ومجموعات (packages)
+      { name: "مجموعة التوفير الأساسية", price: 1099, image: "images/offer1099.jpg", category: "packages", desc: "مجموعة العناية المتكاملة لتغذية وإصلاح وترطيب الشعر بالكامل مع شحن سريع." },
+      { name: "بوكس المجموعة الذهبية VIP", price: 1799, image: "images/box-1800.jpeg", category: "packages", desc: "الكورس المتكامل الأكبر بجميع منتجات البراند بأحجام ممتدة مع أدوات العناية الفاخرة." },
+      
+      // 2. المنتجات الفردية (singles)
+      { name: "زيت الإنبات والإطالة", price: 349, image: "images/enbat.jpeg", category: "singles", desc: "تركيبة مركزة لتحفيز بصيلات الشعر وملء الفراغات وتكثيف الشعر." },
+      { name: "مجموعة الأعشاب الطبيعية", price: 149, image: "images/herbs.jpeg", category: "singles", desc: "توليفة ممتازة من أنقى الأعشاب لتغذية فروة الرأس وتقوية الجذور." },
+      { name: "سدر مطحون نقي", price: 149, image: "images/sedr.jpeg", category: "singles", desc: "سدر عضوي نقي 100% لتنظيف الفروة وإعطاء كثافة ولمعان فائق للشعر." },
+      { name: "مشاط بني أصلي", price: 249, image: "images/meshat.jpeg", category: "singles", desc: "خلطة المشاط التراثية الأصيلة لتعطير الشعر وتنعيمه وتقويته." },
+      { name: "حنة طبيعية فاخرة", price: 149, image: "images/henna.jpeg", category: "singles", desc: "حنة نقية معالجة ومغذية تمنح الشعر حيوية ولون طبيعي جذاب." },
+      { name: "مسك الصبار الطبيعي", price: 199, image: "images/aloe-vera-musk.jpeg", category: "singles", desc: "خلاصة الصبار الطبيعي مع لمسات المسك المنعش لترطيب وتغذية وتعطير الشعر بعمق." },
+      
+      // 3. أدوات العناية (tools)
+      { name: "مشط خشب طبيعي", price: 59, image: "images/comb.jpeg", category: "tools", desc: "مشط خشبي عريض الأسنان لفك التشابك بلطف ومنع تقصف وتكسر الشعر." },
+      { name: "فوطة مايكروفايبر فاخرة", price: 69, image: "images/towel.jpeg", category: "tools", desc: "فوطة ناعمة جداً فائقة الامتصاص لتجفيف الشعر بدون نفشة أو ضرر." },
+      { name: "بونيه ستان حريري", price: 59, image: "images/satin-bonnet.jpeg", category: "tools", desc: "بونيه ستان ناعم يحافظ على ترطيب الشعر والزيوت ويمنع الهيشان أثناء النوم." },
+      { name: "بونيه بلاستيك حراري", price: 49, image: "images/plastic-bonnet.jpeg", category: "tools", desc: "مثالي للاستخدام مع حمامات الزيت والحنة لتفتيح المسام ومضاعفة الامتصاص." },
+      { name: "فرشاة مساج سيليكون", price: 49, image: "images/silicone-brush.jpeg", category: "tools", desc: "فرشاة مرنة لتدليك الفروة وتنشيط الدورة الدموية وتوزيع الزيوت والشامبو بعمق." }
     ];
   </script>
 
-  <!-- اتصال Firebase الموحد للوحة التحكم -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
-    import { getFirestore, collection, doc, setDoc, getDoc, addDoc, updateDoc, deleteDoc, onSnapshot, query, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
+    import { getFirestore, collection, doc, setDoc, getDoc, addDoc, updateDoc, deleteDoc, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyDR8aJ2Q27x7KESwV0LTEKJ38SyoptLWA0",
@@ -492,24 +573,16 @@
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
     const productsCol = collection(db, "products");
-    const reviewsCol = collection(db, "reviews");
     const settingsDoc = doc(db, "config", "siteSettings");
 
     let currentProducts = [];
 
-    // تحميل الإعدادات الحالية في حقول لوحة التحكم
     async function loadSettings() {
       const snap = await getDoc(settingsDoc);
       if(snap.exists()) {
         const d = snap.data();
-        if(d.primaryColor) {
-          document.getElementById('setPrimaryColor').value = d.primaryColor;
-          document.getElementById('setPrimaryColorText').value = d.primaryColor;
-        }
-        if(d.goldColor) {
-          document.getElementById('setGoldColor').value = d.goldColor;
-          document.getElementById('setGoldColorText').value = d.goldColor;
-        }
+        if(d.primaryColor) document.getElementById('setPrimaryColor').value = d.primaryColor;
+        if(d.goldColor) document.getElementById('setGoldColor').value = d.goldColor;
         if(d.announcement) document.getElementById('setTopAnnouncement').value = d.announcement;
         if(d.heroSub) document.getElementById('setHeroSub').value = d.heroSub;
         if(d.docTitle) document.getElementById('setDocTitle').value = d.docTitle;
@@ -521,7 +594,6 @@
     }
     loadSettings();
 
-    // حفظ إعدادات الموقع
     window.saveSiteSettings = async function() {
       const data = {
         primaryColor: document.getElementById('setPrimaryColor').value,
@@ -537,13 +609,13 @@
 
       try {
         await setDoc(settingsDoc, data, { merge: true });
-        alert('تم حفظ إعدادات المتجر وتحديث المظهر فوراً! 🌿');
+        alert('تم حفظ إعدادات المتجر بنجاح!');
       } catch(err) {
-        alert('خطأ أثناء حفظ الإعدادات: ' + err.message);
+        alert('خطأ أثناء الحفظ: ' + err.message);
       }
     };
 
-    // مزامنة وعرض المنتجات
+    // مزامنة وعرض المنتجات في الجدول مع تحديد قسم كل منتج
     onSnapshot(productsCol, (snapshot) => {
       currentProducts = [];
       snapshot.forEach(docSnap => {
@@ -552,16 +624,21 @@
 
       const tbody = document.getElementById('productsTableBody');
       if(currentProducts.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="4" style="text-align:center; padding: 15px;">لا توجد منتجات بالسحابة بعد، اضغط على زر الرفع أعلاه.</td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="5" style="text-align:center; padding: 20px;">لا توجد منتجات، اضغط على زر "رفع وترتيب المنتجات الأساسية" أعلاه.</td></tr>`;
         return;
       }
 
       let rows = '';
       currentProducts.forEach(p => {
+        let catBadge = '<span class="badge-cat badge-singles">فردي</span>';
+        if(p.category === 'packages') catBadge = '<span class="badge-cat badge-packages">باقة كاملة</span>';
+        if(p.category === 'tools') catBadge = '<span class="badge-cat badge-tools">أداة عناية</span>';
+
         rows += `
           <tr>
             <td><img src="${p.image || 'images/logo.jpeg'}" class="prod-thumb" alt="${p.name}" onerror="this.src='images/logo.jpeg'"></td>
             <td><strong>${p.name}</strong></td>
+            <td>${catBadge}</td>
             <td><strong style="color:var(--primary);">${p.price} ج.م</strong></td>
             <td>
               <div class="action-btns">
@@ -576,11 +653,11 @@
     });
 
     window.syncAllProductsToFirebase = async function() {
-      if(!confirm('رفع كل المنتجات الأساسية لتتمكن من تعديلها؟')) return;
+      if(!confirm('هل تريد رفع كل المنتجات وترتيبها بالأقسام (باقات، منتجات، أدوات)؟')) return;
       for(const item of defaultStoreProducts) {
         await addDoc(productsCol, { ...item, createdAt: serverTimestamp() });
       }
-      alert('تم رفع المنتجات بنجاح!');
+      alert('تم رفع وترتيب المنتجات بنجاح!');
     };
 
     window.openEditModal = function(id) {
@@ -588,9 +665,19 @@
       if(!prod) return;
       document.getElementById('editProdId').value = prod.id;
       document.getElementById('editProdName').value = prod.name || '';
+      document.getElementById('editProdCategory').value = prod.category || 'singles';
       document.getElementById('editProdPrice').value = prod.price || 0;
       document.getElementById('editProdImage').value = prod.image || '';
       document.getElementById('editProdDesc').value = prod.desc || '';
+      
+      const preview = document.getElementById('editImgPreview');
+      if(prod.image) {
+        preview.src = prod.image;
+        preview.style.display = 'block';
+      } else {
+        preview.style.display = 'none';
+      }
+
       document.getElementById('editModal').classList.add('active');
     };
 
@@ -600,12 +687,13 @@
       const id = document.getElementById('editProdId').value;
       await updateDoc(doc(db, "products", id), {
         name: document.getElementById('editProdName').value.trim(),
+        category: document.getElementById('editProdCategory').value,
         price: Number(document.getElementById('editProdPrice').value),
         image: document.getElementById('editProdImage').value.trim(),
         desc: document.getElementById('editProdDesc').value.trim()
       });
       closeEditModal();
-      alert('تم تحديث المنتج!');
+      alert('تم تحديث بيانات المنتج بنجاح!');
     };
 
     window.deleteProduct = async function(id) {
@@ -616,44 +704,15 @@
       e.preventDefault();
       await addDoc(productsCol, {
         name: document.getElementById('prodName').value.trim(),
+        category: document.getElementById('prodCategory').value,
         price: Number(document.getElementById('prodPrice').value),
         image: document.getElementById('prodImage').value.trim(),
         desc: document.getElementById('prodDesc').value.trim(),
         createdAt: serverTimestamp()
       });
       document.getElementById('addProductForm').reset();
-      alert('تمت إضافة المنتج بنجاح!');
-    };
-
-    // مزامنة التقييمات وحذفها
-    const reviewsQ = query(reviewsCol, orderBy("createdAt", "desc"));
-    onSnapshot(reviewsQ, (snapshot) => {
-      const container = document.getElementById('reviewsContainer');
-      if (snapshot.empty) {
-        container.innerHTML = '<p style="text-align:center; color:#888; padding: 15px;">لا توجد تقييمات منشورة.</p>';
-        return;
-      }
-      let html = '';
-      snapshot.forEach(docSnap => {
-        const r = docSnap.data();
-        const rid = docSnap.id;
-        const stars = '★'.repeat(r.stars || 5);
-        html += `
-          <div class="review-item">
-            <div>
-              <strong>${r.name}</strong>
-              <div class="review-stars">${stars}</div>
-              <p style="font-size: 13px; color:#4b5563;">"${r.text}"</p>
-            </div>
-            <button class="btn-del" onclick="deleteReview('${rid}')"><i class="fa-solid fa-trash"></i> حذف</button>
-          </div>
-        `;
-      });
-      container.innerHTML = html;
-    });
-
-    window.deleteReview = async function(id) {
-      if(confirm('حذف هذا التقييم؟')) await deleteDoc(doc(db, "reviews", id));
+      document.getElementById('prodImgPreview').style.display = 'none';
+      alert('تم نشر المنتج بالقسم المختار بنجاح!');
     };
   </script>
 </body>
