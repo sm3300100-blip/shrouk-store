@@ -8,7 +8,7 @@
   <meta name="google-site-verification" content="77x_UO-V5Mri3M9MoJL-U1WkD4L7D4jFNdK4dQrhhKA" />
   
   <title>شروق محمد Natural Oils - منتجات طبيعية 100% للعناية بالشعر</title>
-  <meta name="description" content="متجر دكتورة شروق محمد Natural Oils - كورس العناية الطبيعية المتكامل، زيوت وأعشاب طبيعية 100% وسدر ومشاط والحنة لتكثيف وتطويل الشعر.">
+  <meta name="description" content="متجر دكتورة شروق محمد Natural Oils - كورس العناية الطبيعية المتكامل، زيوت وأعشاب طبيعية 100% وسدر ومشاط وحنة لتكثيف وتطويل الشعر.">
 
   <!-- Open Graph / Meta Social -->
   <meta property="og:type" content="website">
@@ -1063,7 +1063,7 @@
             <i class="fa-solid fa-chevron-down"></i>
           </div>
           <div class="faq-answer">
-            يتوفر الدفع نقداً عند استلاستام الشحنة، أو الدفع المسبق عبر تطبيق إنستاباي (InstaPay). مدة التوصيل من 2 إلى 4 أيام عمل لجميع المحافظات.
+            يتوفر الدفع نقداً عند استلام الشحنة، أو الدفع المسبق عبر تطبيق إنستاباي (InstaPay). مدة التوصيل من 2 إلى 4 أيام عمل لجميع المحافظات.
           </div>
         </div>
       </section>
@@ -1274,7 +1274,7 @@
         return;
       }
 
-      cartItemsDiv.innerHTML = cart.map((item, index) => `
+      let html = cart.map((item, index) => `
         <div class="cart-item">
           <div>
             <div class="cart-item-title">${item.title}</div>
@@ -1287,6 +1287,24 @@
           </div>
         </div>
       `).join('');
+
+      html += `
+        <div style="text-align: center; margin-top: 15px;">
+          <button onclick="clearCartManually()" style="background: none; border: none; color: #d32f2f; font-size: 12px; font-weight: 700; cursor: pointer; text-decoration: underline;">
+            <i class="fa-solid fa-trash-can"></i> تفريغ السلة يدوياً
+          </button>
+        </div>
+      `;
+
+      cartItemsDiv.innerHTML = html;
+    }
+
+    function clearCartManually() {
+      if (confirm('هل أنت متأكد من تفريغ السلة؟')) {
+        cart = [];
+        saveCart();
+        updateCart();
+      }
     }
 
     function changeQty(index, delta) {
@@ -1423,19 +1441,8 @@
       const cleanPhone = whatsappPhone.replace(/[^0-9]/g, '');
       const encodedMsg = encodeURIComponent(msg);
 
-      // فتح الواتساب بـ window.open لتفادي مشكلة تفريغ السلة المبكرة في متصفحات السوشيال ميديا
-      const waWindow = window.open(`https://wa.me/${cleanPhone}?text=${encodedMsg}`, '_blank');
-      
-      if (!waWindow) {
-        window.location.href = `https://wa.me/${cleanPhone}?text=${encodedMsg}`;
-      }
-
-      // تفريغ السلة بعد التأكد من فتح نافذة الواتساب
-      setTimeout(() => {
-        cart = [];
-        saveCart();
-        updateCart();
-      }, 2000);
+      // توجيه العميل للواتساب بدون تفريغ مبكر للسلة لتفادي اختفائها بسبب تحذيرات متصفح فيسبوك
+      window.location.href = `https://wa.me/${cleanPhone}?text=${encodedMsg}`;
     }
 
     function checkout() {
