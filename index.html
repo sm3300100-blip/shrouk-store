@@ -867,6 +867,12 @@
 
       </section>
 
+      <!-- قسم المنتجات الإضافية التفاعلية من لوحة التحكم -->
+      <div id="dynamicProductsSection" style="display: none; margin-bottom: 20px;">
+        <h2 class="section-title"><i class="fa-solid fa-sparkles"></i> منتجات جديدة ومميزة</h2>
+        <section class="grid" id="dynamicProductsGrid"></section>
+      </div>
+
       <!-- المنتجات الفردية الطبيعية -->
       <h2 class="section-title"><i class="fa-solid fa-spa"></i> المنتجات الفردية الطبيعية</h2>
       <section class="grid">
@@ -1504,18 +1510,63 @@
     import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
 
     const firebaseConfig = {
-      apiKey: "AIzaSyDR0aJ2Q27x7KESwV0lTEkJ30SyoptLWA0",
+      apiKey: "AIzaSyDR8aJ2Q27x7KESwV0LTEKJ38SyoptLWA0",
       authDomain: "natural-oils-ce42c.firebaseapp.com",
       projectId: "natural-oils-ce42c",
       storageBucket: "natural-oils-ce42c.firebasestorage.app",
       messagingSenderId: "1048327604490",
-      appId: "1:1048327604490:web:8ef3b04d27db750ea112f3",
+      appId: "1:1048327604490:web:8ef3b04d27d0750ea112f3",
       measurementId: "G-6M58J89NN3"
     };
 
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
     const reviewsCol = collection(db, "reviews");
+    const productsCol = collection(db, "products");
+
+    // قراءة المنتجات المضافة من لوحة التحكم في الوقت الفعلي
+    onSnapshot(productsCol, (snapshot) => {
+      const dynamicGrid = document.getElementById('dynamicProductsGrid');
+      const dynamicSection = document.getElementById('dynamicProductsSection');
+      
+      if (snapshot.empty) {
+        if (dynamicSection) dynamicSection.style.display = 'none';
+        return;
+      }
+
+      let html = '';
+      snapshot.forEach(docSnap => {
+        const prod = docSnap.data();
+        const safeTitle = (prod.name || '').replace(/'/g, "\\'");
+        const price = Number(prod.price) || 0;
+        const img = prod.image || 'images/logo.jpeg';
+        const desc = prod.desc || '';
+
+        html += `
+          <article class="card">
+            <span class="card-badge" style="background: var(--primary);">جديد ✨</span>
+            <div class="card-img-wrap">
+              <img src="${img}" width="280" height="280" loading="lazy" alt="${safeTitle}">
+            </div>
+            <div class="card-body">
+              <h3 class="card-title">${prod.name}</h3>
+              <p class="card-desc">${desc}</p>
+              <div class="card-footer">
+                <div class="card-price">${price} ج.م</div>
+                <button class="add-btn" onclick="addToCart('${safeTitle}', ${price})">
+                  <i class="fa-solid fa-cart-plus"></i> أضف للسلة
+                </button>
+              </div>
+            </div>
+          </article>
+        `;
+      });
+
+      if (dynamicGrid && dynamicSection) {
+        dynamicGrid.innerHTML = html;
+        dynamicSection.style.display = 'block';
+      }
+    });
 
     const defaultReviewsHtml = `
       <div class="review-card">
