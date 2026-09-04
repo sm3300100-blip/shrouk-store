@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>لوحة التحكم | إدارة المتجر</title>
+  <style>
+    :root {
+      --primary: #10b981;
+      --primary-hover: #059669;
+      --bg: #f3f4f6;
+      --card-bg: #ffffff;
+      --text: #1f2937;
+      --danger: #ef4444;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+    body { background-color: var(--bg); color: var(--text); padding: 20px; }
+    .container { max-width: 900px; margin: 0 auto; }
+    header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
+    .card { background: var(--card-bg); border-radius: 12px; padding: 25px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); margin-bottom: 25px; }
+    h2 { margin-bottom: 15px; font-size: 1.25rem; }
+    .form-group { margin-bottom: 15px; }
+    label { display: block; margin-bottom: 6px; font-weight: 600; font-size: 0.9rem; }
+    input, textarea { width: 100%; padding: 10px 14px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 0.95rem; outline: none; }
+    input:focus, textarea:focus { border-color: var(--primary); }
+    button { background-color: var(--primary); color: white; border: none; padding: 10px 20px; border-radius: 8px; font-size: 1rem; cursor: pointer; transition: 0.2s; font-weight: 600; }
+    button:hover { background-color: var(--primary-hover); }
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 15px; }
+    .product-item { background: var(--card-bg); border-radius: 10px; border: 1px solid #e5e7eb; overflow: hidden; display: flex; flex-direction: column; }
+    .product-img { width: 100%; height: 160px; object-fit: cover; background: #e5e7eb; }
+    .product-info { padding: 15px; flex-grow: 1; display: flex; flex-direction: column; }
+    .product-title { font-weight: bold; font-size: 1.1rem; margin-bottom: 5px; }
+    .product-price { color: var(--primary); font-weight: bold; font-size: 1.1rem; margin-bottom: 8px; }
+    .product-desc { font-size: 0.85rem; color: #6b7280; margin-bottom: 15px; flex-grow: 1; }
+    .btn-delete { background-color: var(--danger); font-size: 0.85rem; padding: 6px 12px; align-self: flex-start; }
+    .btn-delete:hover { background-color: #dc2626; }
+    #login-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); display: flex; align-items: center; justify-content: center; z-index: 100; }
+    .login-box { background: white; padding: 30px; border-radius: 12px; width: 100%; max-width: 350px; text-align: center; }
+  </style>
+</head>
+<body>
+
+  <!-- شاشة الدخول السرية -->
+  <div id="login-overlay">
+    <div class="login-box">
+      <h3 style="margin-bottom:15px;">تسجيل دخول المسؤول</h3>
+      <input type="password" id="admin-pass" placeholder="أدخل كلمة المرور" style="margin-bottom:15px;">
+      <button onclick="checkAuth()" style="width:100%;">دخول</button>
+      <p id="auth-error" style="color:red; font-size:0.85rem; margin-top:10px; display:none;">كلمة المرور غير صحيحة</p>
+    </div>
+  </div>
+
+  <div class="container" id="admin-content" style="display:none;">
+    <header>
+      <h1>لوحة إدارة المنتجات</h1>
+    </header>
+
+    <!-- نموذج الإضافة -->
+    <div class="card">
+      <h2>إضافة منتج جديد</h2>
+      <form id="add-product-form">
+        <div class="form-group">
+          <label>اسم المنتج</label>
+          <input type="text" id="p-name" required placeholder="مثال: زيت الأرجان الطبيعي">
+        </div>
+        <div class="form-group">
+          <label>السعر (ج.م)</label>
+          <input type="number" id="p-price" required placeholder="مثال: 120">
+        </div>
+        <div class="form-group">
+          <label>رابط الصورة</label>
+          <input type="url" id="p-image" required placeholder="https://example.com/image.jpg">
+        </div>
+        <div class="form-group">
+          <label>وصف المنتج</label>
+          <textarea id="p-desc" rows="3" placeholder="اكتب تفاصيل المنتج..."></textarea>
+        </div>
+        <button type="submit" id="save-btn">إضافة المنتج</button>
+      </form>
+    </div>
+
+    <!-- قائمة المنتجات -->
+    <div class="card">
+      <h2>المنتجات الحالية</h2>
+      <div class="grid" id="products-list">
+        <p style="color:#6b7280;">جاري التحميل...</p>
+      </div>
+    </div>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDR8aJ2Q27x7KESwV0LTEKJ38SyoptLWA0",
+      authDomain: "natural-oils-ce42c.firebaseapp.com",
+      projectId: "natural-oils-ce42c",
+      storageBucket: "natural-oils-ce42c.firebasestorage.app",
+      messagingSenderId: "1048327604490",
+      appId: "1:1048327604490:web:8ef3b04d27d0750ea112f3",
+      measurementId: "G-6M58J89NN3"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    const productsRef = collection(db, "products");
+
+    async function loadProducts() {
+      const container = document.getElementById("products-list");
+      container.innerHTML = "";
+      const querySnapshot = await getDocs(productsRef);
+      
+      if (querySnapshot.empty) {
+        container.innerHTML = "<p>لا توجد منتجات مضافة بعد.</p>";
+        return;
+      }
+
+      querySnapshot.forEach((documentItem) => {
+        const p = documentItem.data();
+        const id = documentItem.id;
+        const div = document.createElement("div");
+        div.className = "product-item";
+        div.innerHTML = `
+          <img src="${p.image}" class="product-img" alt="${p.name}">
+          <div class="product-info">
+            <div class="product-title">${p.name}</div>
+            <div class="product-price">${p.price} ج.م</div>
+            <div class="product-desc">${p.desc || ''}</div>
+            <button class="btn-delete" onclick="removeProduct('${id}')">حذف المنتج</button>
+          </div>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    document.getElementById("add-product-form").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const saveBtn = document.getElementById("save-btn");
+      saveBtn.disabled = true;
+      saveBtn.innerText = "جاري الإضافة...";
+
+      const newProduct = {
+        name: document.getElementById("p-name").value,
+        price: Number(document.getElementById("p-price").value),
+        image: document.getElementById("p-image").value,
+        desc: document.getElementById("p-desc").value,
+        createdAt: new Date().toISOString()
+      };
+
+      await addDoc(productsRef, newProduct);
+      document.getElementById("add-product-form").reset();
+      saveBtn.disabled = false;
+      saveBtn.innerText = "إضافة المنتج";
+      loadProducts();
+    });
+
+    window.removeProduct = async function(id) {
+      if (confirm("هل تريد حذف هذا المنتج بالتأكيد؟")) {
+        await deleteDoc(doc(db, "products", id));
+        loadProducts();
+      }
+    };
+
+    window.loadProducts = loadProducts;
+  </script>
+
+  <script>
+    const ADMIN_PASSWORD = "admin123456";
+
+    function checkAuth() {
+      const pass = document.getElementById("admin-pass").value;
+      if (pass === ADMIN_PASSWORD) {
+        document.getElementById("login-overlay").style.display = "none";
+        document.getElementById("admin-content").style.display = "block";
+        window.loadProducts();
+      } else {
+        document.getElementById("auth-error").style.display = "block";
+      }
+    }
+  </script>
+</body>
+</html>
