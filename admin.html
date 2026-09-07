@@ -240,7 +240,7 @@
 </head>
 <body>
 
-  <!-- رمز المرور: 1234 -->
+  <!-- رمز المرور: SHROUK308 -->
   <div id="loginOverlay">
     <div class="login-card">
       <i class="fa-solid fa-shield-halved" style="font-size: 40px; color: var(--primary); margin-bottom: 15px;"></i>
@@ -434,7 +434,6 @@
       reader.readAsDataURL(file);
     }
 
-    // الترتيب الافتراضي المنسق
     const defaultStoreProducts = [
       { order: 1, name: "مجموعة التوفير الأساسية", price: 1099, image: "images/offer1099.jpg", category: "packages", desc: "مجموعة العناية المتكاملة لتغذية وإصلاح وترطيب الشعر بالكامل مع شحن سريع." },
       { order: 2, name: "بوكس المجموعة الذهبية VIP", price: 1799, image: "images/box-1800.jpeg", category: "packages", desc: "الكورس المتكامل الأكبر بجميع منتجات البراند بأحجام ممتدة مع أدوات العناية الفاخرة." },
@@ -472,7 +471,6 @@
 
     let currentProducts = [];
 
-    // قراءة المنتجات مرتبة تلقائياً بحسب رقم الترتيب order
     const qProds = query(productsCol, orderBy("order", "asc"));
     onSnapshot(qProds, (snapshot) => {
       currentProducts = [];
@@ -523,7 +521,6 @@
       tbody.innerHTML = rows;
     });
 
-    // دالة تبديل ترتيب المنتجات (تحريك لأعلى أو لأسفل)
     window.moveItem = async function(index, direction) {
       const targetIndex = index + direction;
       if (targetIndex < 0 || targetIndex >= currentProducts.length) return;
@@ -532,7 +529,7 @@
       const targetItem = currentProducts[targetIndex];
 
       const currentOrder = currentItem.order;
-      const targetOrder = targetItem.order === currentOrder ? (targetOrder + direction) : targetItem.order;
+      const targetOrder = targetItem.order;
 
       try {
         await updateDoc(doc(db, "products", currentItem.id), { order: targetOrder });
@@ -542,7 +539,6 @@
       }
     };
 
-    // إعادة ضبط وترتيب المنتجات الأساسية وحذف القديمة المكررة
     window.syncAllProductsToFirebase = async function() {
       if(!confirm('هل تريد مسح المنتجات وإعادة ترتيبها بالترتيب الافتراضي المنسق؟')) return;
       
