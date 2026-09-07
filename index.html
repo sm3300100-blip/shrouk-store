@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>شروق محمد Natural Oils - منتجات طبيعية 100% للعناية بالشعر</title>
-  <meta name="description" content="متجر دكتورة شروق محمد Natural Oils - كورس العناية الطبيعية المتكامل، زيوت وأعشاب طبيعية 100%.">
+  <meta name="description" content="متجر دكتورة شروق محمد Natural Oils - كورس العناية الطبيعية المتكامل، زيوت وأعشاب طبيعية 100% وسدر ومشاط وحنة لتكثيف وتطويل الشعر.">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -26,15 +26,59 @@
       --radius: 18px;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Tajawal', sans-serif; }
+    html { scroll-behavior: smooth; }
     body { background-color: var(--bg-cream); color: var(--text-dark); direction: rtl; overflow-x: hidden; }
-    header { background: #ffffff; padding: 12px 5%; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.04); display: flex; justify-content: space-between; align-items: center; }
+    
+    .top-announcement {
+      background: linear-gradient(90deg, #0f3024, #194837, #9e6f28);
+      color: #fff; font-size: 13px; font-weight: 700; text-align: center;
+      padding: 8px 15px; display: flex; justify-content: center; align-items: center; gap: 15px; flex-wrap: wrap;
+    }
+
+    header {
+      background: #ffffff; padding: 12px 5%; position: sticky; top: 0; z-index: 1000;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.04); display: flex; justify-content: space-between; align-items: center;
+    }
     .header-brand { display: flex; align-items: center; gap: 12px; }
     .header-logo-img { width: 48px; height: 48px; border-radius: 50%; border: 1.5px solid var(--gold); object-fit: cover; }
-    .cart-pill-btn { background-color: var(--gold-light); color: var(--gold-dark); border: 1px solid #ebd7b9; padding: 8px 18px; border-radius: 30px; cursor: pointer; font-weight: 800; display: flex; align-items: center; gap: 8px; font-size: 15px; }
+    .brand-titles .brand-name { font-size: 18px; font-weight: 800; color: var(--primary); }
+    .brand-titles p { font-size: 13px; color: var(--text-muted); }
+    
+    .cart-pill-btn {
+      background-color: var(--gold-light); color: var(--gold-dark); border: 1px solid #ebd7b9;
+      padding: 8px 18px; border-radius: 30px; cursor: pointer; font-weight: 800; display: flex; align-items: center; gap: 8px; font-size: 15px;
+    }
+    .cart-pill-btn:hover { background-color: #eddeca; transform: scale(1.03); }
+
+    .hero-wrapper { text-align: center; padding: 25px 15px 15px; max-width: 900px; margin: 0 auto; }
+    .hero-text-box {
+      background-color: rgba(255, 255, 255, 0.85); border-radius: 24px; padding: 45px 20px;
+      margin-bottom: 25px; border: 1.5px solid rgba(179, 134, 70, 0.3); box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+    }
+    .hero-main-title { font-size: 38px; font-weight: 900; line-height: 1.3; margin-bottom: 8px; }
+    .title-green { color: var(--primary); }
+    .title-gold { color: var(--gold); }
+    .doctor-title { font-size: 18px; font-weight: 900; color: var(--gold-dark); letter-spacing: 1.5px; margin-bottom: 15px; display: inline-block; border-bottom: 2px solid var(--gold); padding-bottom: 4px; }
+    
+    .shop-now-btn {
+      background-color: var(--primary); color: #ffffff; padding: 14px 42px; border-radius: 12px;
+      font-size: 18px; font-weight: 800; border: none; cursor: pointer; display: inline-block; text-decoration: none;
+      box-shadow: 0 6px 16px rgba(25, 72, 55, 0.35); transition: 0.3s;
+    }
+    .shop-now-btn:hover { background-color: var(--primary-dark); transform: translateY(-2px); }
+
     .container { max-width: 1200px; margin: 20px auto 60px; padding: 0 20px; }
-    .section-title { font-size: 22px; font-weight: 800; color: var(--primary); margin-bottom: 25px; display: flex; align-items: center; gap: 10px; border-right: 5px solid var(--gold); padding-right: 15px; }
+    .section-title {
+      font-size: 22px; font-weight: 800; color: var(--primary); margin-bottom: 25px;
+      display: flex; align-items: center; gap: 10px; border-right: 5px solid var(--gold); padding-right: 15px;
+    }
+    
     .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 25px; margin-bottom: 50px; }
-    .card { background: var(--card-bg); border-radius: var(--radius); overflow: hidden; box-shadow: 0 6px 20px rgba(0,0,0,0.04); display: flex; flex-direction: column; border: 1px solid #ede8de; }
+    .card {
+      background: var(--card-bg); border-radius: var(--radius); overflow: hidden;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.04); display: flex; flex-direction: column; border: 1px solid #ede8de; transition: 0.3s;
+    }
+    .card:hover { transform: translateY(-4px); box-shadow: 0 10px 25px rgba(0,0,0,0.08); }
     .card-img-wrap { width: 100%; height: 280px; background: #ffffff; display: flex; align-items: center; justify-content: center; overflow: hidden; padding: 10px; }
     .card img { width: 100%; height: 100%; object-fit: contain; }
     .card-body { padding: 20px; display: flex; flex-direction: column; flex-grow: 1; }
@@ -42,75 +86,94 @@
     .card-desc { font-size: 13.5px; color: var(--text-muted); margin-bottom: 15px; line-height: 1.6; flex-grow: 1; }
     .card-footer { display: flex; justify-content: space-between; align-items: center; margin-top: auto; padding-top: 15px; border-top: 1px solid #f2eee6; }
     .card-price { font-size: 21px; font-weight: 900; color: var(--primary); }
-    .add-btn { background: var(--primary); color: white; border: none; padding: 10px 18px; border-radius: 10px; cursor: pointer; font-weight: 700; font-size: 14px; display: flex; align-items: center; gap: 6px; }
-    .cart-drawer { position: fixed; top: 0; left: -100%; width: 100%; max-width: 420px; height: 100%; background: white; z-index: 2000; box-shadow: 10px 0 30px rgba(0,0,0,0.2); transition: 0.3s; display: flex; flex-direction: column; }
+    
+    .add-btn {
+      background: var(--primary); color: white; border: none; padding: 10px 18px;
+      border-radius: 10px; cursor: pointer; font-weight: 700; font-size: 14px; display: flex; align-items: center; gap: 6px;
+    }
+    .add-btn:hover { background: var(--primary-dark); }
+
+    footer { background: #ffffff; border-top: 1px solid #ede8de; padding: 40px 20px; text-align: center; margin-top: 50px; }
+
+    .whatsapp-float-btn {
+      position: fixed; bottom: 25px; left: 25px; background-color: #25d366; color: #fff;
+      padding: 12px 20px; border-radius: 50px; display: flex; align-items: center; gap: 10px;
+      font-size: 15px; font-weight: 800; text-decoration: none; box-shadow: 0 8px 24px rgba(37, 211, 102, 0.4); z-index: 1200;
+    }
+
+    .cart-drawer {
+      position: fixed; top: 0; left: -100%; width: 100%; max-width: 420px; height: 100%;
+      background: white; z-index: 2000; box-shadow: 10px 0 30px rgba(0,0,0,0.2); transition: 0.3s; display: flex; flex-direction: column;
+    }
     .cart-drawer.active { left: 0; }
     .cart-header { padding: 18px 20px; background: var(--primary); color: white; display: flex; justify-content: space-between; align-items: center; }
     .close-cart { background: none; border: none; color: white; font-size: 24px; cursor: pointer; }
     .cart-items { flex-grow: 1; overflow-y: auto; padding: 20px; }
     .cart-item { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; padding-bottom: 12px; border-bottom: 1px solid #eee; }
+    
     .cart-footer-box { padding: 20px; background: #faf8f5; border-top: 1px solid #eee; max-height: 65vh; overflow-y: auto; }
     .form-group { margin-bottom: 12px; }
     .form-group label { display: block; font-size: 12px; font-weight: 700; margin-bottom: 5px; }
     .form-control { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 8px; font-size: 13px; outline: none; }
-    .checkout-btn { width: 100%; background: #25D366; color: white; border: none; padding: 14px; border-radius: 12px; font-size: 16px; font-weight: 800; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 10px; }
+    
+    .checkout-btn {
+      width: 100%; background: #25D366; color: white; border: none; padding: 14px;
+      border-radius: 12px; font-size: 16px; font-weight: 800; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 10px;
+    }
     .overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 1500; display: none; }
     .overlay.active { display: block; }
   </style>
 </head>
 <body>
 
+  <aside class="top-announcement">
+    <span>🌿 خصومات حصرية على باقات العناية المتكاملة لفترة محدودة</span>
+    <span>•</span>
+    <span>🚚 شحن لجميع محافظات مصر والدفع عند الاستلام</span>
+  </aside>
+
   <header>
     <div class="header-brand">
-      <img src="images/logo.jpeg" width="48" height="48" alt="لوجو المتجر" class="header-logo-img">
-      <div>
-        <span style="font-size:18px; font-weight:800; color:var(--primary);">Natural Oils</span>
-        <p style="font-size:13px; color:var(--text-muted);">زيوت وأعشاب طبيعية</p>
+      <img src="images/logo.jpeg" width="48" height="48" alt="لوجو شروق محمد" class="header-logo-img">
+      <div class="brand-titles">
+        <span class="brand-name">Natural Oils</span>
+        <p>زيوت وأعشاب طبيعية</p>
       </div>
     </div>
     <button class="cart-pill-btn" onclick="toggleCart()"><i class="fa-solid fa-cart-shopping"></i> (<span id="cart-count">0</span>)</button>
   </header>
 
-  <main class="container">
-    <h2 class="section-title"><i class="fa-solid fa-spa"></i> منتجات العناية الطبيعية</h2>
-    <section class="grid">
-      <article class="card">
-        <div class="card-img-wrap"><img src="images/offer1099.jpg" alt="مجموعة التوفير الأساسية"></div>
-        <div class="card-body">
-          <h3 class="card-title">مجموعة التوفير الأساسية</h3>
-          <p class="card-desc">مجموعة العناية المتكاملة لتغذية وإصلاح وترطيب الشعر بالكامل.</p>
-          <div class="card-footer">
-            <div class="card-price">1099 ج.م</div>
-            <button class="add-btn" onclick="addToCart('مجموعة التوفير الأساسية', 1099)"><i class="fa-solid fa-cart-plus"></i> أضف للسلة</button>
-          </div>
-        </div>
-      </article>
-
-      <article class="card">
-        <div class="card-img-wrap"><img src="images/box-1800.jpeg" alt="بوكس المجموعة الذهبية VIP"></div>
-        <div class="card-body">
-          <h3 class="card-title">بوكس المجموعة الذهبية VIP</h3>
-          <p class="card-desc">الكورس المتكامل الأكبر بجميع منتجات البراند بأحجام ممتدة.</p>
-          <div class="card-footer">
-            <div class="card-price">1799 ج.م</div>
-            <button class="add-btn" onclick="addToCart('بوكس المجموعة الذهبية VIP', 1799)"><i class="fa-solid fa-cart-plus"></i> أضف للسلة</button>
-          </div>
-        </div>
-      </article>
-
-      <article class="card">
-        <div class="card-img-wrap"><img src="images/enbat.jpeg" alt="زيت الإنبات والإطالة"></div>
-        <div class="card-body">
-          <h3 class="card-title">زيت الإنبات والإطالة</h3>
-          <p class="card-desc">تركيبة مركزة لتحفيز بصيلات الشعر وملء الفراغات وتكثيف الشعر.</p>
-          <div class="card-footer">
-            <div class="card-price">349 ج.م</div>
-            <button class="add-btn" onclick="addToCart('زيت الإنبات والإطالة', 349)"><i class="fa-solid fa-cart-plus"></i> أضف للسلة</button>
-          </div>
-        </div>
-      </article>
+  <main>
+    <section class="hero-wrapper">
+      <div class="hero-text-box">
+        <div class="hero-subtitle" style="color:var(--gold-dark); font-weight:800; margin-bottom:8px;">من الطبيعة إلى روتينك</div>
+        <h1 class="hero-main-title">
+          <span class="title-green">جمال طبيعي</span><br>
+          <span class="title-gold">بلمسة مصرية</span>
+        </h1>
+        <div class="doctor-title">DR SHROUK MOHAMED</div>
+        <p style="color:var(--text-muted); font-size:15px; margin-bottom:20px; font-weight:700;">اكتشفي أرقى منتجات العناية بالشعر الطبيعية 100% تحت إشراف د. شروق محمد.</p>
+        <a href="#products-start" class="shop-now-btn">تسوقي المنتجات الآن</a>
+      </div>
     </section>
+
+    <div class="container" id="products-start">
+      <h2 class="section-title"><i class="fa-solid fa-spa"></i> منتجات وعروض المتجر</h2>
+      <section class="grid" id="productsGrid">
+        <!-- المنتجات تظهر تلقائياً هنا من لوحة التحكم أو المنتجات الافتراضية -->
+      </section>
+    </div>
   </main>
+
+  <a href="https://wa.me/201013275211" target="_blank" rel="noopener noreferrer" class="whatsapp-float-btn">
+    <i class="fa-brands fa-whatsapp" style="font-size:22px;"></i>
+    <span>استشارة عبر واتساب</span>
+  </a>
+
+  <footer>
+    <div style="font-size:16px; font-weight:800; color:var(--primary); margin-bottom:5px;">متجر دكتورة شروق محمد Natural Oils</div>
+    <div style="font-size:13px; color:var(--text-muted);">جميع الحقوق محفوظة © 2026</div>
+  </footer>
 
   <div class="overlay" id="overlay" onclick="toggleCart()"></div>
 
@@ -138,7 +201,7 @@
       </div>
       <div class="form-group">
         <label>العنوان بالتفصيل:</label>
-        <input type="text" id="custAddress" class="form-control" placeholder="المحافظة - المدينة - اسم الشارع">
+        <input type="text" id="custAddress" class="form-control" placeholder="المحافظة - المدينة - الشارع">
       </div>
       <div class="form-group">
         <label>طريقة الدفع:</label>
@@ -147,10 +210,11 @@
           <option value="إنستاباي (InstaPay)">إنستاباي (InstaPay)</option>
         </select>
       </div>
-      <button class="checkout-btn" id="checkoutBtn" onclick="checkout()"><i class="fa-brands fa-whatsapp"></i> تأكيد الطلب عبر الواتساب</button>
+      <button class="checkout-btn" onclick="checkout()"><i class="fa-brands fa-whatsapp"></i> تأكيد الطلب عبر الواتساب</button>
     </div>
   </div>
 
+  <!-- سكربت التشغيل وتفريغ السلة والتوجيه المباشر -->
   <script>
     let cart = JSON.parse(localStorage.getItem('shrouk_cart')) || [];
     const whatsappPhone = "201013275211";
@@ -161,11 +225,7 @@
 
     function addToCart(title, price) {
       const existing = cart.find(item => item.title === title);
-      if(existing) {
-        existing.qty += 1;
-      } else {
-        cart.push({ title, price, qty: 1 });
-      }
+      if(existing) { existing.qty += 1; } else { cart.push({ title, price, qty: 1 }); }
       saveCart();
       updateCart();
       toggleCart();
@@ -194,9 +254,9 @@
             <div style="color:var(--primary); font-weight:800; font-size:13px;">${item.price} ج.م × ${item.qty}</div>
           </div>
           <div>
-            <button onclick="changeQty(${index}, -1)" style="padding:2px 8px;">-</button>
-            <span style="font-weight:800; margin:0 5px;">${item.qty}</span>
-            <button onclick="changeQty(${index}, 1)" style="padding:2px 8px;">+</button>
+            <button onclick="changeQty(${index}, -1)" style="padding:2px 8px; border:1px solid #ddd; background:#fff; border-radius:4px; font-weight:bold; cursor:pointer;">-</button>
+            <span style="font-weight:800; margin:0 6px;">${item.qty}</span>
+            <button onclick="changeQty(${index}, 1)" style="padding:2px 8px; border:1px solid #ddd; background:#fff; border-radius:4px; font-weight:bold; cursor:pointer;">+</button>
           </div>
         </div>
       `).join('');
@@ -229,6 +289,7 @@
         return;
       }
 
+      // تنسيق رسالة الواتساب الفاخرة والمنمقة
       let msg = `✨🌟 *طلب جديد من متجر دكتورة شروق محمد* 🌟✨\n`;
       msg += `━━━━━━━━━━━━━━━━━━━━\n`;
       msg += `👤 *بيانات العميل الكريم:*\n`;
@@ -249,13 +310,13 @@
       msg += `💰 *إجمالي الفاتورة النهائية:* *${total} ج.م*\n`;
       msg += `✨ *برجاء تأكيد الطلب والبدء في التجهيز والشحن.*`;
 
-      // تفريغ السلة تلقائياً وفوراً بعد الضغط وتوليد الرسالة
+      // تفريغ السلة تلقائياً وفوراً
       cart = [];
       saveCart();
       updateCart();
       toggleCart();
 
-      // فتح التطبيق أو المتصفح الخارجي للواتساب مباشرة
+      // فتح المتصفح الخارجي وتجاوز متصفح فيسبوك الداخلي مباشرة
       const cleanPhone = whatsappPhone.replace(/[^0-9]/g, '');
       const waUrl = `https://wa.me/${cleanPhone}?text=${encodeURIComponent(msg)}`;
       
@@ -270,6 +331,63 @@
 
     document.addEventListener('DOMContentLoaded', () => {
       updateCart();
+    });
+  </script>
+
+  <!-- جلب المنتجات تلقائياً من لوحة التحكم عبر Firebase -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
+    import { getFirestore, collection, onSnapshot, query, orderBy } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDR8aJ2Q27x7KESwV0LTEKJ38SyoptLWA0",
+      authDomain: "natural-oils-ce42c.firebaseapp.com",
+      projectId: "natural-oils-ce42c",
+      storageBucket: "natural-oils-ce42c.firebasestorage.app",
+      messagingSenderId: "1048327604490",
+      appId: "1:1048327604490:web:8ef3b04d27d0750ea112f3",
+      measurementId: "G-6M58J89NN3"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    const productsCol = collection(db, "products");
+
+    const qProds = query(productsCol, orderBy("order", "asc"));
+    onSnapshot(qProds, (snapshot) => {
+      const grid = document.getElementById('productsGrid');
+      if (snapshot.empty) {
+        grid.innerHTML = '<p style="text-align:center; color:#888; grid-column: 1/-1;">لا توجد منتجات حالياً.</p>';
+        return;
+      }
+
+      let html = '';
+      snapshot.forEach(docSnap => {
+        const p = docSnap.data();
+        const safeTitle = (p.name || '').replace(/'/g, "\\'");
+        const price = Number(p.price) || 0;
+        const img = p.image || 'images/logo.jpeg';
+        const desc = p.desc || '';
+
+        html += `
+          <article class="card">
+            <div class="card-img-wrap">
+              <img src="${img}" width="280" height="280" loading="lazy" alt="${safeTitle}" onerror="this.src='images/logo.jpeg'">
+            </div>
+            <div class="card-body">
+              <h3 class="card-title">${p.name}</h3>
+              <p class="card-desc">${desc}</p>
+              <div class="card-footer">
+                <div class="card-price">${price} ج.م</div>
+                <button class="add-btn" onclick="addToCart('${safeTitle}', ${price})">
+                  <i class="fa-solid fa-cart-plus"></i> أضف للسلة
+                </button>
+              </div>
+            </div>
+          </article>
+        `;
+      });
+      grid.innerHTML = html;
     });
   </script>
 </body>
