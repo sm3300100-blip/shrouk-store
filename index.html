@@ -1413,24 +1413,27 @@
       const phone = document.getElementById('custPhone').value.trim();
       const address = document.getElementById('custAddress').value.trim();
 
-      let msg = `🌿 *طلب جديد من متجر دكتورة شروق محمد Natural Oils* 🌿\n\n`;
-      msg += `👤 *بيانات العميل:*\n`;
-      msg += `• الاسم: ${name}\n`;
-      msg += `• الهاتف: ${phone}\n`;
-      msg += `• العنوان: ${address}\n`;
+      let msg = `✨🌟 *طلب جديد من متجر دكتورة شروق محمد* 🌟✨\n`;
+      msg += `━━━━━━━━━━━━━━━━━━━━\n`;
+      msg += `👤 *بيانات العميل الكريم:*\n`;
+      msg += `• الاسم: *${name}*\n`;
+      msg += `• الهاتف: *${phone}*\n`;
+      msg += `• العنوان: *${address}*\n`;
       if (locUrl) {
-        msg += `📍 *موقع العميل (GPS):* ${locUrl}\n`;
+        msg += `📍 *الموقع (GPS):* ${locUrl}\n`;
       }
-      msg += `• طريقة الدفع: ${selectedPaymentMethod}\n\n`;
-      msg += `🛍️ *تفاصيل الطلب:*\n`;
+      msg += `• طريقة الدفع: *${selectedPaymentMethod}*\n`;
+      msg += `━━━━━━━━━━━━━━━━━━━━\n`;
+      msg += `🛍️ *تفاصيل الطلبات المنتقاة:*\n`;
       
       let total = 0;
       cart.forEach(item => {
-        msg += `• ${item.title} (الكمية: ${item.qty}) - ${item.price * item.qty} ج.م\n`;
+        msg += `▪️ ${item.title}\n   (الكمية: ${item.qty}) ⟵ الإجمالي: *${item.price * item.qty} ج.م*\n`;
         total += item.price * item.qty;
       });
 
-      msg += `\n💰 *إجمالي الفاتورة:* ${total} ج.م\n`;
+      msg += `━━━━━━━━━━━━━━━━━━━━\n`;
+      msg += `💰 *إجمالي الفاتورة النهائية:* *${total} ج.م*\n`;
       msg += `✨ *برجاء تأكيد الطلب والبدء في التجهيز والشحن.*`;
 
       const checkBtn = document.getElementById('checkoutBtn');
@@ -1441,8 +1444,21 @@
       const cleanPhone = whatsappPhone.replace(/[^0-9]/g, '');
       const encodedMsg = encodeURIComponent(msg);
 
-      // توجيه العميل للواتساب بدون تفريغ مبكر للسلة لتفادي اختفائها بسبب تحذيرات متصفح فيسبوك
-      window.location.href = `https://wa.me/${cleanPhone}?text=${encodedMsg}`;
+      // تفريغ السلة تلقائياً فوراً عند إتمام الطلب
+      cart = [];
+      saveCart();
+      updateCart();
+      toggleCart(false);
+
+      // فتح المتصفح الخارجي وتجاوز متصفح فيسبوك الداخلي
+      const waUrl = `https://wa.me/${cleanPhone}?text=${encodedMsg}`;
+      const anchor = document.createElement('a');
+      anchor.href = waUrl;
+      anchor.target = '_blank';
+      anchor.rel = 'noopener noreferrer';
+      document.body.appendChild(anchor);
+      anchor.click();
+      document.body.removeChild(anchor);
     }
 
     function checkout() {
