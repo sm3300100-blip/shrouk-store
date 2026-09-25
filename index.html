@@ -315,6 +315,7 @@
       justify-content: center; 
       overflow: hidden; 
       padding: 10px;
+      cursor: zoom-in;
     }
     .card img { 
       width: 100%; 
@@ -344,6 +345,37 @@
       gap: 6px;
     }
     .add-btn:hover { background: var(--primary-dark); transform: scale(1.02); }
+
+    /* Lightbox Modal تكبير الصور */
+    .image-modal {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.85);
+      z-index: 3000;
+      display: none;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+    .image-modal.active { display: flex; }
+    .image-modal img {
+      max-width: 90%;
+      max-height: 90vh;
+      border-radius: 12px;
+      object-fit: contain;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+    .close-image-modal {
+      position: absolute;
+      top: 20px;
+      left: 25px;
+      background: none;
+      border: none;
+      color: white;
+      font-size: 35px;
+      cursor: pointer;
+      z-index: 3010;
+    }
 
     .reviews-section {
       background: #fff;
@@ -792,194 +824,189 @@
       </div>
     </section>
 
-    <!-- قسم عرض المنتجات (الثابتة + القادمة من لوحة التحكم في قاعدة البيانات) -->
+    <!-- قسم عرض المنتجات (سيتم تعبئتها ديناميكياً من لوحة التحكم لتجنب التكرار وتقسيمها حسب الأقسام) -->
     <div class="container" id="products-start">
-      <h2 class="section-title"><i class="fa-solid fa-spa"></i> منتجات وعروض المتجر الطبيعية</h2>
-      <section class="packages-grid">
-        
-        <!-- 1. مجموعة التوفير الأساسية (1099 ج.م) -->
-        <article class="card">
-          <span class="card-badge">الأكثر طلباً ⭐</span>
-          <div class="card-img-wrap">
-            <img src="images/offer1099.jpg" width="300" height="280" loading="lazy" onerror="tryNext(this, ['images/offer1099.jpeg', 'images/offer1099.png', 'images/offer1099.jpg.jpg', 'images/offer1099.jpeg.jpeg'])" alt="مجموعة التوفير الأساسية للعناية بالشعر">
-          </div>
-          <div class="card-body">
-            <h3 class="card-title">مجموعة التوفير الأساسية</h3>
-            <p class="card-desc">مجموعة العناية المتكاملة لتغذية وإصلاح وترطيب الشعر بالكامل مع شحن سريع.</p>
-            <div class="card-footer">
-              <div class="card-price">1099 ج.م</div>
-              <button class="add-btn" onclick="addToCart('مجموعة التوفير الأساسية', 1099)"><i class="fa-solid fa-cart-plus"></i> أضف للسلة</button>
+      
+      <!-- 1. المجموعات والعروض -->
+      <div id="section-packages">
+        <h2 class="section-title"><i class="fa-solid fa-spa"></i> منتجات وعروض المتجر الطبيعية</h2>
+        <section class="packages-grid" id="grid-packages">
+          <!-- الباقات الأساسية الافتراضية لحين تحميل لوحة التحكم -->
+          <article class="card">
+            <span class="card-badge">الأكثر طلباً ⭐</span>
+            <div class="card-img-wrap" onclick="openImageModal('images/offer1099.jpg')">
+              <img src="images/offer1099.jpg" width="300" height="280" loading="lazy" onerror="tryNext(this, ['images/offer1099.jpeg', 'images/offer1099.png'])" alt="مجموعة التوفير الأساسية">
             </div>
-          </div>
-        </article>
-
-        <!-- 2. بوكس المجموعة الذهبية VIP (1799 ج.م) -->
-        <article class="card">
-          <span class="card-badge">عرض VIP ✨</span>
-          <div class="card-img-wrap">
-            <img src="images/box-1800.jpeg" width="300" height="280" loading="lazy" onerror="tryNext(this, ['images/box-1800.jpg', 'images/box-1800.png', 'images/box-1800.jpeg.jpeg', 'images/box-1800.jp.jpeg'])" alt="بوكس المجموعة الذهبية VIP">
-          </div>
-          <div class="card-body">
-            <h3 class="card-title">بوكس المجموعة الذهبية VIP</h3>
-            <p class="card-desc">الكورس المتكامل الأكبر بجميع منتجات البراند بأحجام ممتدة مع أدوات العناية الفاخرة.</p>
-            <div class="card-footer">
-              <div class="card-price">1799 ج.م</div>
-              <button class="add-btn" onclick="addToCart('بوكس المجموعة الذهبية VIP', 1799)"><i class="fa-solid fa-cart-plus"></i> أضف للسلة</button>
+            <div class="card-body">
+              <h3 class="card-title">مجموعة التوفير الأساسية</h3>
+              <p class="card-desc">مجموعة العناية المتكاملة لتغذية وإصلاح وترطيب الشعر بالكامل مع شحن سريع.</p>
+              <div class="card-footer">
+                <div class="card-price">1099 ج.م</div>
+                <button class="add-btn" onclick="addToCart('مجموعة التوفير الأساسية', 1099)"><i class="fa-solid fa-cart-plus"></i> أضف للسلة</button>
+              </div>
             </div>
-          </div>
-        </article>
+          </article>
 
-      </section>
-
-      <!-- قسم المنتجات الإضافية التفاعلية من لوحة التحكم -->
-      <div id="dynamicProductsSection" style="display: none; margin-bottom: 20px;">
-        <h2 class="section-title"><i class="fa-solid fa-sparkles"></i> منتجات جديدة ومميزة</h2>
-        <section class="grid" id="dynamicProductsGrid"></section>
+          <article class="card">
+            <span class="card-badge">عرض VIP ✨</span>
+            <div class="card-img-wrap" onclick="openImageModal('images/box-1800.jpeg')">
+              <img src="images/box-1800.jpeg" width="300" height="280" loading="lazy" onerror="tryNext(this, ['images/box-1800.jpg', 'images/box-1800.png'])" alt="بوكس المجموعة الذهبية VIP">
+            </div>
+            <div class="card-body">
+              <h3 class="card-title">بوكس المجموعة الذهبية VIP</h3>
+              <p class="card-desc">الكورس المتكامل الأكبر بجميع منتجات البراند بأحجام ممتدة مع أدوات العناية الفاخرة.</p>
+              <div class="card-footer">
+                <div class="card-price">1799 ج.م</div>
+                <button class="add-btn" onclick="addToCart('بوكس المجموعة الذهبية VIP', 1799)"><i class="fa-solid fa-cart-plus"></i> أضف للسلة</button>
+              </div>
+            </div>
+          </article>
+        </section>
       </div>
 
-      <!-- المنتجات الفردية الطبيعية -->
-      <h2 class="section-title"><i class="fa-solid fa-spa"></i> المنتجات الفردية الطبيعية</h2>
-      <section class="grid">
-        <article class="card">
-          <div class="card-img-wrap"><img src="images/enbat.jpeg" width="280" height="280" loading="lazy" onerror="tryNext(this, ['images/enbat.jpg', 'images/enbat.png', 'images/enbat.jpeg.jpeg'])" alt="زيت الإنبات والإطالة"></div>
-          <div class="card-body">
-            <h3 class="card-title">زيت الإنبات والإطالة</h3>
-            <p class="card-desc">تركيبة مركزة لتحفيز بصيلات الشعر وملء الفراغات وتكثيف الشعر.</p>
-            <div class="card-footer">
-              <div class="card-price">349 ج.م</div>
-              <button class="add-btn" onclick="addToCart('زيت الإنبات والإطالة', 349)"><i class="fa-solid fa-cart-plus"></i> أضف للسلة</button>
+      <!-- 2. المنتجات الفردية الطبيعية -->
+      <div id="section-singles">
+        <h2 class="section-title"><i class="fa-solid fa-spa"></i> المنتجات الفردية الطبيعية</h2>
+        <section class="grid" id="grid-singles">
+          <article class="card">
+            <div class="card-img-wrap" onclick="openImageModal('images/enbat.jpeg')"><img src="images/enbat.jpeg" width="280" height="280" loading="lazy" alt="زيت الإنبات والإطالة"></div>
+            <div class="card-body">
+              <h3 class="card-title">زيت الإنبات والإطالة</h3>
+              <p class="card-desc">تركيبة مركزة لتحفيز بصيلات الشعر وملء الفراغات وتكثيف الشعر.</p>
+              <div class="card-footer">
+                <div class="card-price">349 ج.م</div>
+                <button class="add-btn" onclick="addToCart('زيت الإنبات والإطالة', 349)"><i class="fa-solid fa-cart-plus"></i> أضف للسلة</button>
+              </div>
             </div>
-          </div>
-        </article>
+          </article>
 
-        <article class="card">
-          <div class="card-img-wrap"><img src="images/herbs.jpeg" width="280" height="280" loading="lazy" onerror="tryNext(this, ['images/herbs.jpg', 'images/herbs.png', 'images/herbs.jpeg.jpeg'])" alt="مجموعة الأعشاب الطبيعية"></div>
-          <div class="card-body">
-            <h3 class="card-title">مجموعة الأعشاب الطبيعية</h3>
-            <p class="card-desc">توليفة ممتازة من أنقى الأعشاب لتغذية فروة الرأس وتقوية الجذور.</p>
-            <div class="card-footer">
-              <div class="card-price">149 ج.م</div>
-              <button class="add-btn" onclick="addToCart('مجموعة الأعشاب الطبيعية', 149)"><i class="fa-solid fa-cart-plus"></i> أضف للسلة</button>
+          <article class="card">
+            <div class="card-img-wrap" onclick="openImageModal('images/herbs.jpeg')"><img src="images/herbs.jpeg" width="280" height="280" loading="lazy" alt="مجموعة الأعشاب الطبيعية"></div>
+            <div class="card-body">
+              <h3 class="card-title">مجموعة الأعشاب الطبيعية</h3>
+              <p class="card-desc">توليفة ممتازة من أنقى الأعشاب لتغذية فروة الرأس وتقوية الجذور.</p>
+              <div class="card-footer">
+                <div class="card-price">149 ج.م</div>
+                <button class="add-btn" onclick="addToCart('مجموعة الأعشاب الطبيعية', 149)"><i class="fa-solid fa-cart-plus"></i> أضف للسلة</button>
+              </div>
             </div>
-          </div>
-        </article>
+          </article>
 
-        <article class="card">
-          <div class="card-img-wrap"><img src="images/sedr.jpeg" width="280" height="280" loading="lazy" onerror="tryNext(this, ['images/sedr.jpg', 'images/sedr.png', 'images/sedr.jpeg.jpeg'])" alt="سدر مطحون نقي"></div>
-          <div class="card-body">
-            <h3 class="card-title">سدر مطحون نقي</h3>
-            <p class="card-desc">سدر عضوي نقي 100% لتنظيف الفروة وإعطاء كثافة ولمعان فائق للشعر.</p>
-            <div class="card-footer">
-              <div class="card-price">149 ج.م</div>
-              <button class="add-btn" onclick="addToCart('سدر مطحون نقي', 149)"><i class="fa-solid fa-cart-plus"></i> أضف للسلة</button>
+          <article class="card">
+            <div class="card-img-wrap" onclick="openImageModal('images/sedr.jpeg')"><img src="images/sedr.jpeg" width="280" height="280" loading="lazy" alt="سدر مطحون نقي"></div>
+            <div class="card-body">
+              <h3 class="card-title">سدر مطحون نقي</h3>
+              <p class="card-desc">سدر عضوي نقي 100% لتنظيف الفروة وإعطاء كثافة ولمعان فائق للشعر.</p>
+              <div class="card-footer">
+                <div class="card-price">149 ج.م</div>
+                <button class="add-btn" onclick="addToCart('سدر مطحون نقي', 149)"><i class="fa-solid fa-cart-plus"></i> أضف للسلة</button>
+              </div>
             </div>
-          </div>
-        </article>
+          </article>
 
-        <article class="card">
-          <div class="card-img-wrap"><img src="images/meshat.jpeg" width="280" height="280" loading="lazy" onerror="tryNext(this, ['images/meshat.jpg', 'images/meshat.png', 'images/meshat.jpeg.jpeg'])" alt="مشاط بني أصلي"></div>
-          <div class="card-body">
-            <h3 class="card-title">مشاط بني أصلي</h3>
-            <p class="card-desc">خلطة المشاط التراثية الأصيلة لتعطير الشعر وتنعيمه وتقويته.</p>
-            <div class="card-footer">
-              <div class="card-price">249 ج.م</div>
-              <button class="add-btn" onclick="addToCart('مشاط بني أصلي', 249)"><i class="fa-solid fa-cart-plus"></i> أضف للسلة</button>
+          <article class="card">
+            <div class="card-img-wrap" onclick="openImageModal('images/meshat.jpeg')"><img src="images/meshat.jpeg" width="280" height="280" loading="lazy" alt="مشاط بني أصلي"></div>
+            <div class="card-body">
+              <h3 class="card-title">مشاط بني أصلي</h3>
+              <p class="card-desc">خلطة المشاط التراثية الأصيلة لتعطير الشعر وتنعيمه وتقويته.</p>
+              <div class="card-footer">
+                <div class="card-price">249 ج.م</div>
+                <button class="add-btn" onclick="addToCart('مشاط بني أصلي', 249)"><i class="fa-solid fa-cart-plus"></i> أضف للسلة</button>
+              </div>
             </div>
-          </div>
-        </article>
+          </article>
 
-        <article class="card">
-          <div class="card-img-wrap"><img src="images/henna.jpeg" width="280" height="280" loading="lazy" onerror="tryNext(this, ['images/henna.jpg', 'images/henna.png', 'images/henna.jpeg.jpeg'])" alt="حنة طبيعية فاخرة"></div>
-          <div class="card-body">
-            <h3 class="card-title">حنة طبيعية فاخرة</h3>
-            <p class="card-desc">حنة نقية معالجة ومغذية تمنح الشعر حيوية ولون طبيعي جذاب.</p>
-            <div class="card-footer">
-              <div class="card-price">149 ج.م</div>
-              <button class="add-btn" onclick="addToCart('حنة طبيعية فاخرة', 149)"><i class="fa-solid fa-cart-plus"></i> أضف للسلة</button>
+          <article class="card">
+            <div class="card-img-wrap" onclick="openImageModal('images/henna.jpeg')"><img src="images/henna.jpeg" width="280" height="280" loading="lazy" alt="حنة طبيعية فاخرة"></div>
+            <div class="card-body">
+              <h3 class="card-title">حنة طبيعية فاخرة</h3>
+              <p class="card-desc">حنة نقية معالجة ومغذية تمنح الشعر حيوية ولون طبيعي جذاب.</p>
+              <div class="card-footer">
+                <div class="card-price">149 ج.م</div>
+                <button class="add-btn" onclick="addToCart('حنة طبيعية فاخرة', 149)"><i class="fa-solid fa-cart-plus"></i> أضف للسلة</button>
+              </div>
             </div>
-          </div>
-        </article>
+          </article>
 
-        <article class="card">
-          <div class="card-img-wrap">
-            <img src="images/aloe-vera-musk.jpeg" width="280" height="280" loading="lazy" onerror="tryNext(this, ['images/aloe-vera-musk.jpg', 'images/aloe-vera-musk.png', 'images/aloe-vera-musk.jpeg.jpeg', 'images/aloe.jpeg', 'images/aloe.jpg', 'images/aloe.png', 'images/aloe-vera.jpeg', 'images/aloe-vera.jpg', 'images/aloe-vera-musk.jpeg.jpg'])" alt="مسك الصبار الطبيعي">
-          </div>
-          <div class="card-body">
-            <h3 class="card-title">مسك الصبار الطبيعي</h3>
-            <p class="card-desc">خلاصة الصبار الطبيعي مع لمسات المسك المنعش لترطيب وتغذية وتعطير الشعر بعمق.</p>
-            <div class="card-footer">
-              <div class="card-price">199 ج.م</div>
-              <button class="add-btn" onclick="addToCart('مسك الصبار الطبيعي', 199)"><i class="fa-solid fa-cart-plus"></i> أضف للسلة</button>
+          <article class="card">
+            <div class="card-img-wrap" onclick="openImageModal('images/aloe-vera-musk.jpeg')"><img src="images/aloe-vera-musk.jpeg" width="280" height="280" loading="lazy" alt="مسك الصبار الطبيعي"></div>
+            <div class="card-body">
+              <h3 class="card-title">مسك الصبار الطبيعي</h3>
+              <p class="card-desc">خلاصة الصبار الطبيعي مع لمسات المسك المنعش لترطيب وتغذية وتعطير الشعر بعمق.</p>
+              <div class="card-footer">
+                <div class="card-price">199 ج.م</div>
+                <button class="add-btn" onclick="addToCart('مسك الصبار الطبيعي', 199)"><i class="fa-solid fa-cart-plus"></i> أضف للسلة</button>
+              </div>
             </div>
-          </div>
-        </article>
-      </section>
+          </article>
+        </section>
+      </div>
 
-      <!-- أدوات العناية الفاخرة -->
-      <h2 class="section-title"><i class="fa-solid fa-wand-magic-sparkles"></i> أدوات العناية الفاخرة</h2>
-      <section class="grid">
-        <article class="card">
-          <div class="card-img-wrap"><img src="images/comb.jpeg" width="280" height="280" loading="lazy" onerror="tryNext(this, ['images/comb.jpg', 'images/comb.png', 'images/comb.jpeg.jpeg'])" alt="مشط خشب طبيعي"></div>
-          <div class="card-body">
-            <h3 class="card-title">مشط خشب طبيعي</h3>
-            <p class="card-desc">مشط خشبي عريض الأسنان لفك التشابك بلطف ومنع تقصف وتكسر الشعر.</p>
-            <div class="card-footer">
-              <div class="card-price">59 ج.م</div>
-              <button class="add-btn" onclick="addToCart('مشط خشب طبيعي', 59)"><i class="fa-solid fa-cart-plus"></i> أضف للسلة</button>
+      <!-- 3. أدوات العناية الفاخرة -->
+      <div id="section-tools">
+        <h2 class="section-title"><i class="fa-solid fa-wand-magic-sparkles"></i> أدوات العناية الفاخرة</h2>
+        <section class="grid" id="grid-tools">
+          <article class="card">
+            <div class="card-img-wrap" onclick="openImageModal('images/comb.jpeg')"><img src="images/comb.jpeg" width="280" height="280" loading="lazy" alt="مشط خشب طبيعي"></div>
+            <div class="card-body">
+              <h3 class="card-title">مشط خشب طبيعي</h3>
+              <p class="card-desc">مشط خشبي عريض الأسنان لفك التشابك بلطف ومنع تقصف وتكسر الشعر.</p>
+              <div class="card-footer">
+                <div class="card-price">59 ج.م</div>
+                <button class="add-btn" onclick="addToCart('مشط خشب طبيعي', 59)"><i class="fa-solid fa-cart-plus"></i> أضف للسلة</button>
+              </div>
             </div>
-          </div>
-        </article>
+          </article>
 
-        <article class="card">
-          <div class="card-img-wrap"><img src="images/towel.jpeg" width="280" height="280" loading="lazy" onerror="tryNext(this, ['images/towel.jpg', 'images/towel.png', 'images/towel.jpeg.jpeg'])" alt="فوطة مايكروفايبر فاخرة"></div>
-          <div class="card-body">
-            <h3 class="card-title">فوطة مايكروفايبر فاخرة</h3>
-            <p class="card-desc">فوطة ناعمة جداً فائقة الامتصاص لتجفيف الشعر بدون نفشة أو ضرر.</p>
-            <div class="card-footer">
-              <div class="card-price">69 ج.م</div>
-              <button class="add-btn" onclick="addToCart('فوطة مايكروفايبر فاخرة', 69)"><i class="fa-solid fa-cart-plus"></i> أضف للسلة</button>
+          <article class="card">
+            <div class="card-img-wrap" onclick="openImageModal('images/towel.jpeg')"><img src="images/towel.jpeg" width="280" height="280" loading="lazy" alt="فوطة مايكروفايبر فاخرة"></div>
+            <div class="card-body">
+              <h3 class="card-title">فوطة مايكروفايبر فاخرة</h3>
+              <p class="card-desc">فوطة ناعمة جداً فائقة الامتصاص لتجفيف الشعر بدون نفشة أو ضرر.</p>
+              <div class="card-footer">
+                <div class="card-price">69 ج.م</div>
+                <button class="add-btn" onclick="addToCart('فوطة مايكروفايبر فاخرة', 69)"><i class="fa-solid fa-cart-plus"></i> أضف للسلة</button>
+              </div>
             </div>
-          </div>
-        </article>
+          </article>
 
-        <article class="card">
-          <div class="card-img-wrap"><img src="images/satin-bonnet.jpeg" width="280" height="280" loading="lazy" onerror="tryNext(this, ['images/satin-bonnet.jpg', 'images/satin-bonnet.png', 'images/satin-bonnet.jpeg.jpeg'])" alt="بونيه ستان حريري"></div>
-          <div class="card-body">
-            <h3 class="card-title">بونيه ستان حريري</h3>
-            <p class="card-desc">بونيه ستان ناعم يحافظ على ترطيب الشعر والزيوت ويمنع الهيشان أثناء النوم.</p>
-            <div class="card-footer">
-              <div class="card-price">59 ج.م</div>
-              <button class="add-btn" onclick="addToCart('بونيه ستان حريري', 59)"><i class="fa-solid fa-cart-plus"></i> أضف للسلة</button>
+          <article class="card">
+            <div class="card-img-wrap" onclick="openImageModal('images/satin-bonnet.jpeg')"><img src="images/satin-bonnet.jpeg" width="280" height="280" loading="lazy" alt="بونيه ستان حريري"></div>
+            <div class="card-body">
+              <h3 class="card-title">بونيه ستان حريري</h3>
+              <p class="card-desc">بونيه ستان ناعم يحافظ على ترطيب الشعر والزيوت ويمنع الهيشان أثناء النوم.</p>
+              <div class="card-footer">
+                <div class="card-price">59 ج.م</div>
+                <button class="add-btn" onclick="addToCart('بونيه ستان حريري', 59)"><i class="fa-solid fa-cart-plus"></i> أضف للسلة</button>
+              </div>
             </div>
-          </div>
-        </article>
+          </article>
 
-        <article class="card">
-          <div class="card-img-wrap"><img src="images/plastic-bonnet.jpeg" width="280" height="280" loading="lazy" onerror="tryNext(this, ['images/plastic-bonnet.jpg', 'images/plastic-bonnet.png', 'images/plastic-bonnet.jpeg.jpeg'])" alt="بونيه بلاستيك حراري"></div>
-          <div class="card-body">
-            <h3 class="card-title">بونيه بلاستيك حراري</h3>
-            <p class="card-desc">مثالي للاستخدام مع حمامات الزيت والحنة لتفتيح المسام ومضاعفة الامتصاص.</p>
-            <div class="card-footer">
-              <div class="card-price">49 ج.م</div>
-              <button class="add-btn" onclick="addToCart('بونيه بلاستيك حراري', 49)"><i class="fa-solid fa-cart-plus"></i> أضف للسلة</button>
+          <article class="card">
+            <div class="card-img-wrap" onclick="openImageModal('images/plastic-bonnet.jpeg')"><img src="images/plastic-bonnet.jpeg" width="280" height="280" loading="lazy" alt="بونيه بلاستيك حراري"></div>
+            <div class="card-body">
+              <h3 class="card-title">بونيه بلاستيك حراري</h3>
+              <p class="card-desc">مثالي للاستخدام مع حمامات الزيت والحنة لتفتيح المسام ومضاعفة الامتصاص.</p>
+              <div class="card-footer">
+                <div class="card-price">49 ج.م</div>
+                <button class="add-btn" onclick="addToCart('بونيه بلاستيك حراري', 49)"><i class="fa-solid fa-cart-plus"></i> أضف للسلة</button>
+              </div>
             </div>
-          </div>
-        </article>
+          </article>
 
-        <article class="card">
-          <div class="card-img-wrap">
-            <img src="images/silicone-brush.jpeg" width="280" height="280" loading="lazy" onerror="tryNext(this, ['images/silicone-brush.jpeg.jpeg', 'images/silicone-brush.jpeg.jpg', 'images/silicone-brush.jpeg.png', 'images/silicone-brush.jpg', 'images/silicone-brush.png', 'images/brush.jpeg', 'images/brush.jpg'])" alt="فرشاة مساج سيليكون">
-          </div>
-          <div class="card-body">
-            <h3 class="card-title">فرشاة مساج سيليكون</h3>
-            <p class="card-desc">فرشاة مرنة لتدليك الفروة وتنشيط الدورة الدموية وتوزيع الزيوت والشامبو بعمق.</p>
-            <div class="card-footer">
-              <div class="card-price">49 ج.م</div>
-              <button class="add-btn" onclick="addToCart('فرشاة مساج سيليكون', 49)"><i class="fa-solid fa-cart-plus"></i> أضف للسلة</button>
+          <article class="card">
+            <div class="card-img-wrap" onclick="openImageModal('images/silicone-brush.jpeg')"><img src="images/silicone-brush.jpeg" width="280" height="280" loading="lazy" alt="فرشاة مساج سيليكون"></div>
+            <div class="card-body">
+              <h3 class="card-title">فرشاة مساج سيليكون</h3>
+              <p class="card-desc">فرشاة مرنة لتدليك الفروة وتنشيط الدورة الدموية وتوزيع الزيوت والشامبو بعمق.</p>
+              <div class="card-footer">
+                <div class="card-price">49 ج.م</div>
+                <button class="add-btn" onclick="addToCart('فرشاة مساج سيليكون', 49)"><i class="fa-solid fa-cart-plus"></i> أضف للسلة</button>
+              </div>
             </div>
-          </div>
-        </article>
-      </section>
+          </article>
+        </section>
+      </div>
 
       <!-- قسم آراء وتقييمات العملاء المباشر -->
       <section class="reviews-section" aria-label="آراء وتجارب العملاء">
@@ -1063,13 +1090,19 @@
             <i class="fa-solid fa-chevron-down"></i>
           </div>
           <div class="faq-answer">
-            يتوفر الدفع نقداً عند استلام الشحنة، أو الدفع المسبق عبر تطبيق إنستاباي (InstaPay). مدة التوصيل من 2 إلى 4 أيام عمل لجميع المحافظات.
+            يتوفر الدفع نقداً عند استلاستلام الشحنة، أو الدفع المسبق عبر تطبيق إنستاباي (InstaPay). مدة التوصيل من 2 إلى 4 أيام عمل لجميع المحافظات.
           </div>
         </div>
       </section>
 
     </div>
   </main>
+
+  <!-- نافذة تكبير الصورة (Lightbox Modal) -->
+  <div class="image-modal" id="imageModal" onclick="closeImageModal()">
+    <button class="close-image-modal" onclick="closeImageModal()">&times;</button>
+    <img id="modalImg" src="" alt="صورة مكبرة">
+  </div>
 
   <!-- نافذة كتابة الرأي المنبثقة -->
   <div class="review-modal" id="reviewModal">
@@ -1196,6 +1229,19 @@
       }
     }
 
+    // دوال تكبير الصورة
+    function openImageModal(imgSrc) {
+      const modal = document.getElementById('imageModal');
+      const modalImg = document.getElementById('modalImg');
+      modalImg.src = imgSrc;
+      modal.classList.add('active');
+    }
+
+    function closeImageModal() {
+      const modal = document.getElementById('imageModal');
+      modal.classList.remove('active');
+    }
+
     let cart = JSON.parse(localStorage.getItem('shrouk_cart')) || [];
     const whatsappPhone = "201013275211";
     let selectedPaymentMethod = "الدفع عند الاستلام (نقدي)";
@@ -1208,7 +1254,6 @@
       localStorage.setItem('shrouk_cart', JSON.stringify(cart));
     }
 
-    // تم إصلاح دالة الـ GPS وتفعيلها بكفاءة عالية لتحديد الموقع وإحضار الإحداثيات فوراً
     function getLocation() {
       const btn = document.getElementById('locBtn');
       if (navigator.geolocation) {
@@ -1360,6 +1405,7 @@
       drawer.classList.remove('active');
       modal.classList.remove('active');
       overlay.classList.remove('active');
+      closeImageModal();
     }
 
     function setRating(stars) {
@@ -1452,7 +1498,6 @@
         checkBtn.innerHTML = '<i class="fa-brands fa-whatsapp"></i> تأكيد الطلب عبر الواتساب';
       }
 
-      // تفريغ السلة تلقائياً وفوراً
       cart = [];
       saveCart();
       updateCart();
@@ -1495,7 +1540,7 @@
     });
   </script>
 
-  <!-- تحميل المنتجات وقراءتها مباشرة من لوحة التحكم (Firebase) لتظهر تلقائياً -->
+  <!-- تحميل المنتجات وقرائتها مباشرة من لوحة التحكم (Firebase) مع تصنيفها للأقسام ومنع التكرار -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
     import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
@@ -1516,21 +1561,28 @@
     const productsCol = collection(db, "products");
 
     onSnapshot(query(productsCol, orderBy("order", "asc")), (snapshot) => {
-      const targetSection = document.getElementById('products-start');
       if (snapshot.empty) return;
 
-      let dynamicHtml = '';
+      let packagesHtml = '';
+      let singlesHtml = '';
+      let toolsHtml = '';
+
+      let hasPackages = false;
+      let hasSingles = false;
+      let hasTools = false;
+
       snapshot.forEach(docSnap => {
         const prod = docSnap.data();
         const safeTitle = (prod.name || '').replace(/'/g, "\\'");
         const price = Number(prod.price) || 0;
         const img = prod.image || 'images/logo.jpeg';
         const desc = prod.desc || '';
+        const cat = (prod.category || '').toLowerCase();
 
-        dynamicHtml += `
+        const cardHtml = `
           <article class="card">
             <span class="card-badge" style="background: var(--primary);">متوفر ✨</span>
-            <div class="card-img-wrap">
+            <div class="card-img-wrap" onclick="openImageModal('${img}')">
               <img src="${img}" width="280" height="280" loading="lazy" alt="${safeTitle}" onerror="this.src='images/logo.jpeg'">
             </div>
             <div class="card-body">
@@ -1545,19 +1597,45 @@
             </div>
           </article>
         `;
+
+        // تصنيف المنتجات حسب القسم المحدد من لوحة التحكم أو بناءً على الاسم
+        if (cat.includes('package') || cat.includes('مجموعة') || cat.includes('بوكس') || cat.includes('عروض')) {
+          packagesHtml += cardHtml;
+          hasPackages = true;
+        } else if (cat.includes('tool') || cat.includes('أدوات') || cat.includes('مشط') || cat.includes('فوطة') || cat.includes('بونيه') || cat.includes('فرشاة')) {
+          toolsHtml += cardHtml;
+          hasTools = true;
+        } else {
+          singlesHtml += cardHtml;
+          hasSingles = true;
+        }
       });
 
-      let dynamicContainer = document.getElementById('adminDynamicGrid');
-      if (!dynamicContainer) {
-        const wrapDiv = document.createElement('div');
-        wrapDiv.innerHTML = `
-          <h2 class="section-title" style="margin-top: 30px;"><i class="fa-solid fa-boxes-stacked"></i> المنتجات المتاحة (من لوحة التحكم)</h2>
-          <section class="grid" id="adminDynamicGrid"></section>
-        `;
-        targetSection.appendChild(wrapDiv);
-        dynamicContainer = document.getElementById('adminDynamicGrid');
+      // تحديث الأقسام في الصفحة ديناميكياً ومنع التكرار القديم
+      const secPackages = document.getElementById('section-packages');
+      const secSingles = document.getElementById('section-singles');
+      const secTools = document.getElementById('section-tools');
+
+      if (hasPackages) {
+        secPackages.style.display = 'block';
+        document.getElementById('grid-packages').innerHTML = packagesHtml;
+      } else {
+        secPackages.style.display = 'none';
       }
-      dynamicContainer.innerHTML = dynamicHtml;
+
+      if (hasSingles) {
+        secSingles.style.display = 'block';
+        document.getElementById('grid-singles').innerHTML = singlesHtml;
+      } else {
+        secSingles.style.display = 'none';
+      }
+
+      if (hasTools) {
+        secTools.style.display = 'block';
+        document.getElementById('grid-tools').innerHTML = toolsHtml;
+      } else {
+        secTools.style.display = 'none';
+      }
     });
 
     const defaultReviewsHtml = `
